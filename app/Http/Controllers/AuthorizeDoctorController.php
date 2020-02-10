@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Doctor;
-use App\User;
+use App\AuthorizeDoctor;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-class DoctorController extends Controller
+
+class AuthorizeDoctorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,8 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $docs = Doctor::all();
-        return view('doctor.index')->with('docs', $docs);
+        $apps = AuthorizeDoctor::all();
+        return view('application.doctor.index')->with('apps', $apps);
     }
 
     /**
@@ -26,7 +25,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        return view ('doctor.create');
+        return view('application.doctor.create');
     }
 
     /**
@@ -35,48 +34,40 @@ class DoctorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
-        $user = new User;
-
-        $user->name = $request->first_name.' '.$request->last_name;
-        $user->username = $request->username;
-        $user->password = Hash::make($request->password);
-        $user->role = 2;
-        $user->save();
-
-        $doc = new Doctor;
+        $doc = new AuthorizeDoctor();
         $doc->nid = $request->nid;
         $doc->first_name = $request->first_name;
         $doc->last_name = $request->last_name;
         $doc->email = $request->email;
-        $doc->speciality = $request->speciality;
         $doc->degree = $request->degree;
-        $doc->save();  
+        $doc->speciality = $request->speciality;
+        $doc->save();
 
-        return redirect()->route('doctor.index');
+        return redirect('/');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Doctor  $doctor
+     * @param  \App\AuthorizeDoctor  $authorizeDoctor
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $doc = Doctor::find($id);
+        $app = AuthorizeDoctor::find($id);
 
-        return view ('doctor.show')->with('doc', $doc);
+        return view('application.doctor.show')->with('app', $app);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Doctor  $doctor
+     * @param  \App\AuthorizeDoctor  $authorizeDoctor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Doctor $doctor)
+    public function edit(AuthorizeDoctor $authorizeDoctor)
     {
         //
     }
@@ -85,10 +76,10 @@ class DoctorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Doctor  $doctor
+     * @param  \App\AuthorizeDoctor  $authorizeDoctor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Doctor $doctor)
+    public function update(Request $request, AuthorizeDoctor $authorizeDoctor)
     {
         //
     }
@@ -96,10 +87,10 @@ class DoctorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Doctor  $doctor
+     * @param  \App\AuthorizeDoctor  $authorizeDoctor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Doctor $doctor)
+    public function destroy(AuthorizeDoctor $authorizeDoctor)
     {
         //
     }
