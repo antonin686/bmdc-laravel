@@ -52,6 +52,7 @@ class DoctorController extends Controller
         $doc->email = $request->email;
         $doc->speciality = $request->speciality;
         $doc->degree = $request->degree;
+        $doc->user_id = $user->id;
         $doc->save();  
 
         return redirect()->route('doctor.index');
@@ -78,7 +79,8 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
-        //
+        $doctor->username = User::find($doctor->user_id)->username;
+        return view('doctor.edit')->with('doc', $doctor);
     }
 
     /**
@@ -90,7 +92,15 @@ class DoctorController extends Controller
      */
     public function update(Request $request, Doctor $doctor)
     {
-        //
+        $doc = Doctor::find($doctor->id);
+        $doc->first_name = $request->first_name;
+        $doc->last_name = $request->last_name;
+        $doc->speciality = $request->speciality;
+        $doc->degree = $request->degree;
+        $doc->email = $request->email;
+        $doc->save();
+
+        return redirect()->route('doctor.show', $doc->id);
     }
 
     /**

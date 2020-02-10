@@ -37,5 +37,6 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/authorize/doctor/{id}', 'AuthorizeDoctorController@show')->name('authorizeDoctor.show');     Route::post('/authorize/doctor/{id}', 'DoctorController@store');
     Route::resources([
         'doctor' => 'DoctorController',
+        'medicine' => 'MedicineController',
     ]);
 });
