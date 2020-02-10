@@ -9,7 +9,7 @@
             <div class="card">
                 <div class="card-header">Add Doctor</div>
                 <div class="card-body">
-                    <form method="POST">
+                    <form method="POST" action="{{ route('doctor.store')}}">
                         @csrf
                         <div class="form-group">
                             <label for="nid">NID</label>
