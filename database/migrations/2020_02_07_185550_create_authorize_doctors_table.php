@@ -19,9 +19,10 @@ class CreateAuthorizeDoctorsTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email');
-            $table->string('speciality');
             $table->string('degree');
-            $table->string('doc_path')->nullable();
+            $table->string('institute');
+            $table->string('speciality');
+            $table->string('img_path');
             $table->integer('status')->default(0);
             $table->timestamps();
         });

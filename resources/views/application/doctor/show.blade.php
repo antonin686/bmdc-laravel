@@ -3,11 +3,12 @@
 @section('title', 'Home')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 mx-auto mt-3">
-            <div class="card">
-                <div class="card-body">
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+
                     <form method="POST">
                         @csrf
                         <div class="form-group">
@@ -36,6 +37,11 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="institute">institute</label>
+                            <input type="text" class="form-control" name="institute" value="{{ $app->institute }}">
+                        </div>
+
+                        <div class="form-group">
                             <label for="speciality">Speciality</label>
                             <input type="text" class="form-control" name="speciality" value="{{ $app->speciality }}">
                         </div>
@@ -50,9 +56,20 @@
                             <input type="password" class="form-control" name="password">
                         </div>
 
+                        <input type="hidden" name="img_path" value="{{$app->img_path}}">
+
                         <button type="submit" class="btn btn-primary">Approve</button>
                         <button type="button" class="btn btn-danger">Reject</button>
                     </form>
+
+                </div>
+                <div class="col-md-4 mx-auto m-3">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{ $app->img_path}}" class="card-img-top" alt="img">
+                        <div class="card-body">
+                            <h5 class="card-title">Image</h5>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

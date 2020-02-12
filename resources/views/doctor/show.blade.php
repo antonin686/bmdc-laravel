@@ -35,16 +35,19 @@
                                         <td> {{ $doc->degree }} </td>
                                     </tr>
 
+                                    <tr>
+                                        <th>Institute</th>
+                                        <td> {{ $doc->institute }} </td>
+                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card" style="width: 18rem;">
-                            <img src="" class="card-img-top" alt="img">
-                            <div class="card-body">
-                                
-                            </div>
+                            <img src="{{$doc->img_path}}" class="card-img-top" alt="img">
+                            
                         </div>
                     </div>
                 </div>

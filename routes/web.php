@@ -11,8 +11,6 @@
 |
 */
 
-use Illuminate\Support\Facades\Hash;
-
 Auth::routes();
 
 Route::get('/', function () {

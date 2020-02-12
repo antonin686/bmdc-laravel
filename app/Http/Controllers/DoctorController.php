@@ -53,10 +53,15 @@ class DoctorController extends Controller
         $doc->email = $request->email;
         $doc->speciality = $request->speciality;
         $doc->degree = $request->degree;
+        $doc->institute = $request->institute;
+        $doc->img_path = $request->img_path;
         $doc->user_id = $user->id;
         $doc->save();  
 
-        $authDoc = new AuthorizeDoctor;
+        $authDoc = AuthorizeDoctor::where('nid', '=', $request->nid)->first();
+
+        $authDoc->status = 1;
+        $authDoc->save();
         
         return redirect()->route('doctor.index');
     }

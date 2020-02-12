@@ -21,6 +21,8 @@ class CreateDoctorsTable extends Migration
             $table->string('email')->unique();
             $table->string('speciality');
             $table->string('degree');
+            $table->string('institute');
+            $table->string('img_path');
             $table->bigInteger('user_id');
             $table->timestamps();
         });

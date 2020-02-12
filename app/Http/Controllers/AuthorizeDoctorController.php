@@ -36,6 +36,17 @@ class AuthorizeDoctorController extends Controller
      */
     public function store(Request $request)
     {
+        $file = $request->file('image');
+        $name = "";
+
+        if($file)
+        {
+            $name = time() . rand() . '.' . $file->getClientOriginalExtension();
+            $file->move('uploads', $name);
+        }
+
+        $path = "/uploads/".$name;
+
         $doc = new AuthorizeDoctor();
         $doc->nid = $request->nid;
         $doc->first_name = $request->first_name;
@@ -43,6 +54,8 @@ class AuthorizeDoctorController extends Controller
         $doc->email = $request->email;
         $doc->degree = $request->degree;
         $doc->speciality = $request->speciality;
+        $doc->institute = $request->institute;
+        $doc->img_path = $path;
         $doc->save();
 
         return redirect('/');
