@@ -9,17 +9,17 @@
 
             <div class="card-body">
                 <div class="row mx-auto">
-                <a class="btn btn-primary m-3" href="{{ route('medicine.create')}}">Add New Medicine</a>
-                <a class="btn btn-danger m-3" href="{{ route('removedMedicine.index')}}">Show Removed Medicines</a>
+                    <a class="btn btn-primary m-3" href="{{ route('medicine.index')}}">Go back to Medicine List</a>
                 </div>
                 <div class="card card-body">
-                    <table class="table table-hover" id="table">
+                    <table class="table table-striped table-hover" id="table">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Brand Name</th>
                                 <th scope="col">Generic</th>
                                 <th scope="col">Dosage</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
@@ -30,18 +30,10 @@
                                 <td>{{ $med->brand_name }} <small>{{ $med->strength }}</small> </td>
                                 <td>{{ $med->generic_name }}</td>
                                 <td>{{ $med->dosage_form }}</td>
-                                <td>
-                                    <div class="row">
-                                    <a class="btn btn-info mr-1" href="{{ route('medicine.show', $med->id)}}"> <i
-                                            class="fas fa-info"></i> </a>
-                                    <a class="btn btn-primary mr-1" href="{{ route('medicine.edit', $med->id)}}"> <i
-                                            class="fas fa-pen-alt"></i> </a>
-                                    <form action="{{ route('medicine.destroy', $med->id)}}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
-                                    </form>
-                                    </div>
+                                <td>{{ $med->status }}</td>
+                                <td >
+                                    <a class="btn btn-info mr-1" href="{{ route('removedMedicine.undo', $med->id)}}">
+                                        <i class="fas fa-undo"></i> </a>
                                 </td>
                             </tr>
                             @endforeach

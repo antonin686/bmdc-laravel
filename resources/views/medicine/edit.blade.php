@@ -9,42 +9,47 @@
             <div class="card">
                 <div class="card-header">Edit Doctor Profile</div>
                 <div class="card-body">
-                    <form method="POST" action=" {{ route('doctor.update', $doc->id)}} ">
+                    <form method="POST" action=" {{ route('medicine.update', $medicine->id)}} ">
                         @csrf
                         @method('PATCH')
                         <div class="form-group">
-                            <label for="nid">NID</label>
-                            <input type="text" class="form-control" name="nid" value="{{ $doc->nid }}">
+                            <label for="brand_name">Brand name</label>
+                            <input type="text" class="form-control" name="brand_name" value="{{$medicine->brand_name}}">
                         </div>
 
                         <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" name="username" value="{{ $doc->username}}" readonly>
+                            <label for="dosage_form">Dosage Form</label>
+                            <input type="text" class="form-control" name="dosage_form"
+                                value="{{$medicine->dosage_form}}">
                         </div>
 
                         <div class="form-group">
-                            <label for="first_name">First Name</label>
-                            <input type="text" class="form-control" name="first_name" value="{{ $doc->first_name }}">
+                            <label for="generic">Generic</label>
+                            <select class="form-control" id="generic" name="generic">
+
+                                @foreach($generics as $generic)
+                                @if($medicine->generic_id == $generic->id)
+                                <option value="{{$generic->id}}" selected="selected">{{$generic->generic_name}}</option>
+                                @else
+                                <option value="{{$generic->id}}" selected="selected">{{$generic->generic_name}}</option>
+                                @endif
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="last_name">Last Name</label>
-                            <input type="text" class="form-control" name="last_name" value="{{ $doc->last_name }}">
+                            <label for="strength">Strength</label>
+                            <input type="text" class="form-control" name="strength" value="{{$medicine->strength}}">
                         </div>
 
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" name="email" value="{{ $doc->email }}">
+                            <label for="company">Company</label>
+                            <input type="text" class="form-control" name="company" value="{{$medicine->company}}">
                         </div>
 
                         <div class="form-group">
-                            <label for="degree">Degree</label>
-                            <input type="text" class="form-control" name="degree" value="{{ $doc->degree }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="speciality">Speciality</label>
-                            <input type="text" class="form-control" name="speciality" value="{{ $doc->speciality }}">
+                            <label for="price">Price</label>
+                            <input type="text" class="form-control" name="price" value="{{$medicine->price}}">
                         </div>
 
                         <button type="submit" class="btn btn-primary">Apply Changes</button>

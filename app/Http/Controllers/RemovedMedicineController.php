@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\AuthorizeDoctor;
+use App\RemovedMedicineController;
 use Illuminate\Http\Request;
 
-class AuthorizeDoctorController extends Controller
+class RemovedMedicineControllerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class AuthorizeDoctorController extends Controller
      */
     public function index()
     {
-        $apps = AuthorizeDoctor::where('status', '=', '0')->get();
-        return view('application.doctor.index')->with('apps', $apps);
+        //
     }
 
     /**
@@ -25,7 +24,7 @@ class AuthorizeDoctorController extends Controller
      */
     public function create()
     {
-        return view('application.doctor.create');
+        //
     }
 
     /**
@@ -36,38 +35,27 @@ class AuthorizeDoctorController extends Controller
      */
     public function store(Request $request)
     {
-        $doc = new AuthorizeDoctor();
-        $doc->nid = $request->nid;
-        $doc->first_name = $request->first_name;
-        $doc->last_name = $request->last_name;
-        $doc->email = $request->email;
-        $doc->degree = $request->degree;
-        $doc->speciality = $request->speciality;
-        $doc->save();
-
-        return redirect('/');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\AuthorizeDoctor  $authorizeDoctor
+     * @param  \App\RemovedMedicineController  $removedMedicineController
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(RemovedMedicineController $removedMedicineController)
     {
-        $app = AuthorizeDoctor::find($id);
-
-        return view('application.doctor.show')->with('app', $app);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\AuthorizeDoctor  $authorizeDoctor
+     * @param  \App\RemovedMedicineController  $removedMedicineController
      * @return \Illuminate\Http\Response
      */
-    public function edit(AuthorizeDoctor $authorizeDoctor)
+    public function edit(RemovedMedicineController $removedMedicineController)
     {
         //
     }
@@ -76,10 +64,10 @@ class AuthorizeDoctorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\AuthorizeDoctor  $authorizeDoctor
+     * @param  \App\RemovedMedicineController  $removedMedicineController
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AuthorizeDoctor $authorizeDoctor)
+    public function update(Request $request, RemovedMedicineController $removedMedicineController)
     {
         //
     }
@@ -87,10 +75,10 @@ class AuthorizeDoctorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\AuthorizeDoctor  $authorizeDoctor
+     * @param  \App\RemovedMedicineController  $removedMedicineController
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AuthorizeDoctor $authorizeDoctor)
+    public function destroy(RemovedMedicineController $removedMedicineController)
     {
         //
     }

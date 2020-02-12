@@ -43,13 +43,8 @@
 </div>
 
 <script>
-// $(document).ready(() => {
-//     $('#table').on('click', 'tr', (event) => {
-//         var id = $(event.currentTarget).attr("id");
-//         if (id != null) {
-//             window.location.href = `/admin/doctor/${id}`;
-//         }
-//     });
-// });
+$(document).ready( function () {
+    $('#table').DataTable();
+} );
 </script>
 @endsection

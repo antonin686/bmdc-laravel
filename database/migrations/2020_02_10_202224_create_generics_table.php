@@ -16,17 +16,17 @@ class CreateGenericsTable extends Migration
         Schema::create('generics', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('generic_name');
-            $table->string('indications');
+            $table->text('indications');
             $table->string('therapeutic_class');
-            $table->string('pharmacology');
-            $table->string('dosage_administration');
-            $table->string('interaction');
-            $table->string('contraindications');
-            $table->string('side_effects');
-            $table->string('pregnancy');
-            $table->string('precautions');
-            $table->string('overdose_effects');
-            $table->string('storage_conditions');
+            $table->text('pharmacology');
+            $table->text('dosage_administration')->nullable();
+            $table->text('interaction')->nullable();
+            $table->text('contraindications')->nullable();
+            $table->text('side_effects')->nullable();
+            $table->text('pregnancy')->nullable();
+            $table->text('precautions')->nullable();
+            $table->text('overdose_effects')->nullable();
+            $table->text('storage_conditions')->nullable();
             $table->timestamps();
         });
     }

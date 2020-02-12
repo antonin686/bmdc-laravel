@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Doctor;
 use App\User;
+use App\AuthorizeDoctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 class DoctorController extends Controller
@@ -55,6 +56,8 @@ class DoctorController extends Controller
         $doc->user_id = $user->id;
         $doc->save();  
 
+        $authDoc = new AuthorizeDoctor;
+        
         return redirect()->route('doctor.index');
     }
 
