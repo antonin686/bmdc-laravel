@@ -27,10 +27,12 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('/authorize/doctor/{id}', 'DoctorController@store');
     Route::get('/medicine/remove', 'MedicineController@removeIndex')->name('removedMedicine.index');
     Route::get('/medicine/remove/undo/{id}', 'MedicineController@removeUndo')->name('removedMedicine.undo');
+    Route::get('/medicine/list/generic/{id}', 'MedicineController@genericBased')->name('medicine.genericBased');
     
     Route::resources([
         'doctor' => 'DoctorController',
         'medicine' => 'MedicineController',
         'generic' => 'GenericController',
+        'prescription' => 'PrescriptionController',
     ]);
 });

@@ -5,12 +5,23 @@
 @section('content')
 <div class="row">
     <div class="col-md-12 mt-3">
-   
-        <div title="Generic">
-             <div class="h1 text-secondary mb-3 pb-3">{{ $generic->generic_name}}</div>
+
+        <div class="h3">
+            {{$medicine->brand_name}} <small title="Dosage Form">{{$medicine->dosage_form}}</small>
         </div>
-        
-        <a class="btn btn-info mb-3" href="{{ route('medicine.genericBased', $generic->id)}}">View All Brand Names</a>
+        <div title="Generic">
+            <a href="{{ route('generic.show',$generic->id)}}"> {{ $generic->generic_name}}</a>
+        </div>
+        <div title="Strength" class="h5 text-secondary">
+            {{$medicine->strength}}
+        </div>
+        <div title="Company" class="h5 text-secondary">
+            {{$medicine->company}}
+        </div>
+        <div title="Price" class="h5 text-secondary">
+            Unit Price: ৳ {{$medicine->price}}
+        </div>
+
         @foreach($generic_info as $key => $value)
         @if($value)
         <div class="col-md-12 m-0 p-0">

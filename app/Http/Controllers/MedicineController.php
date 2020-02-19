@@ -165,4 +165,22 @@ class MedicineController extends Controller
         
         return redirect()->route('medicine.index');   
     }
+
+    public function genericBased($id)
+    {
+        $list = DB::table('medicines')
+                ->join('generics', 'medicines.generic_id', '=', 'generics.id')
+                ->select('medicines.*', 'generics.generic_name')
+                ->where('medicines.generic_id', '=', $id)
+                ->get();
+
+        $gen = Generic::find($id);
+        
+        $meds = (object) [
+            'list' => $list,
+            'generic_name' => $gen->generic_name,
+        ];
+
+        return view('medicine.genericBased')->with('meds', $meds);
+    }
 }
