@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 12, 2020 at 06:31 PM
+-- Generation Time: Feb 25, 2020 at 11:19 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -49,6 +49,35 @@ CREATE TABLE `authorize_doctors` (
 
 INSERT INTO `authorize_doctors` (`id`, `nid`, `first_name`, `last_name`, `email`, `degree`, `institute`, `speciality`, `img_path`, `status`, `created_at`, `updated_at`) VALUES
 (1, 54164156, 'Magu', 'Ghosh', 'g@gmail.com', 'MBBS', 'Dhaka Medical College', 'Child & Women', '/uploads/1581528432859237024.jpg', 1, '2020-02-12 11:27:12', '2020-02-12 11:27:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `citizens`
+--
+
+CREATE TABLE `citizens` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nid` bigint(20) DEFAULT NULL,
+  `birthCer_id` bigint(20) NOT NULL,
+  `deathCer_id` bigint(20) DEFAULT NULL,
+  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dob` date NOT NULL,
+  `father_nid` bigint(20) NOT NULL,
+  `mother_nid` bigint(20) NOT NULL,
+  `current_address` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `premanent_address` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `citizens`
+--
+
+INSERT INTO `citizens` (`id`, `nid`, `birthCer_id`, `deathCer_id`, `first_name`, `last_name`, `dob`, `father_nid`, `mother_nid`, `current_address`, `premanent_address`, `created_at`, `updated_at`) VALUES
+(1, 5414354542, 5414354542, NULL, 'Antonin', 'Islam', '1998-04-11', 5414354540, 5414354541, 'dwaaaaaaaaaaa', 'adsssssssdada', '2020-02-23 12:27:23', NULL);
 
 -- --------------------------------------------------------
 
@@ -177,7 +206,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (18, '2020_02_11_115506_create_removed_medicines_table', 7),
 (20, '2020_02_07_105504_create_doctors_table', 8),
 (26, '2014_10_12_000000_create_users_table', 9),
-(27, '2020_02_07_185550_create_authorize_doctors_table', 9);
+(27, '2020_02_07_185550_create_authorize_doctors_table', 9),
+(31, '2020_02_19_091854_create_prescriptions_table', 12),
+(33, '2020_02_23_093851_create_citizens_table', 13);
 
 -- --------------------------------------------------------
 
@@ -190,6 +221,34 @@ CREATE TABLE `password_resets` (
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `prescriptions`
+--
+
+CREATE TABLE `prescriptions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `doctor_id` bigint(20) NOT NULL,
+  `citizen_id` bigint(20) NOT NULL,
+  `hospital_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mainbody` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `advice` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `disease` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `oe` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lx` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `prescriptions`
+--
+
+INSERT INTO `prescriptions` (`id`, `doctor_id`, `citizen_id`, `hospital_name`, `mainbody`, `advice`, `disease`, `cc`, `oe`, `lx`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'Dhaka Medical', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen b', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has', 'fever', NULL, NULL, NULL, '2020-02-23 12:21:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -246,6 +305,15 @@ ALTER TABLE `authorize_doctors`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `citizens`
+--
+ALTER TABLE `citizens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `citizens_birthcer_id_unique` (`birthCer_id`),
+  ADD UNIQUE KEY `citizens_nid_unique` (`nid`),
+  ADD UNIQUE KEY `citizens_deathcer_id_unique` (`deathCer_id`);
+
+--
 -- Indexes for table `doctors`
 --
 ALTER TABLE `doctors`
@@ -283,6 +351,12 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
+-- Indexes for table `prescriptions`
+--
+ALTER TABLE `prescriptions`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `removed_medicines`
 --
 ALTER TABLE `removed_medicines`
@@ -303,6 +377,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `authorize_doctors`
 --
 ALTER TABLE `authorize_doctors`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `citizens`
+--
+ALTER TABLE `citizens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
@@ -333,7 +413,13 @@ ALTER TABLE `medicines`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
+-- AUTO_INCREMENT for table `prescriptions`
+--
+ALTER TABLE `prescriptions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `removed_medicines`
