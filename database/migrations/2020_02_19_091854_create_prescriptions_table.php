@@ -17,12 +17,13 @@ class CreatePrescriptionsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('doctor_id');
             $table->bigInteger('citizen_id');
+            $table->string('hospital_name');
             $table->string('mainbody');
             $table->string('advice');
             $table->string('disease');
-            $table->string('cc');
-            $table->string('oe');
-            $table->string('lx');
+            $table->string('cc')->nullable();
+            $table->string('oe')->nullable();;
+            $table->string('lx')->nullable();;
             $table->timestamps();
         });
     }

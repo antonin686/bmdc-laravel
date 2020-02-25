@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use App\Prescription;
+use App\Citizen;
 use Illuminate\Http\Request;
 
-class PrescriptionController extends Controller
+class CitizenController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +14,7 @@ class PrescriptionController extends Controller
      */
     public function index()
     {
-        $prescs = DB::table('prescriptions')
-                ->join('doctors', 'doctors.id', '=', 'prescriptions.doctor_id')
-                ->select('prescriptions.*', 'doctors.id as doc_id', 'doctors.first_name', 'doctors.last_name')
-                ->get();
-        return view('prescription.index')->with('prescs', $prescs);
+        //
     }
 
     /**
@@ -46,21 +41,21 @@ class PrescriptionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Prescription  $prescription
+     * @param  \App\Citizen  $citizen
      * @return \Illuminate\Http\Response
      */
-    public function show(Prescription $prescription)
+    public function show(Citizen $citizen)
     {
-        return view('prescription.show')->with('presc', $prescription);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Prescription  $prescription
+     * @param  \App\Citizen  $citizen
      * @return \Illuminate\Http\Response
      */
-    public function edit(Prescription $prescription)
+    public function edit(Citizen $citizen)
     {
         //
     }
@@ -69,10 +64,10 @@ class PrescriptionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Prescription  $prescription
+     * @param  \App\Citizen  $citizen
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Prescription $prescription)
+    public function update(Request $request, Citizen $citizen)
     {
         //
     }
@@ -80,10 +75,10 @@ class PrescriptionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Prescription  $prescription
+     * @param  \App\Citizen  $citizen
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Prescription $prescription)
+    public function destroy(Citizen $citizen)
     {
         //
     }

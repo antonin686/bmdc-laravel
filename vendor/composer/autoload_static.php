@@ -416,6 +416,7 @@ class ComposerStaticInit1dce1faf5e03ea43086187de78448bfc
 
     public static $classMap = array (
         'App\\AuthorizeDoctor' => __DIR__ . '/../..' . '/app/AuthorizeDoctor.php',
+        'App\\Citizen' => __DIR__ . '/../..' . '/app/Citizen.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Doctor' => __DIR__ . '/../..' . '/app/Doctor.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
@@ -433,6 +434,7 @@ class ComposerStaticInit1dce1faf5e03ea43086187de78448bfc
         'App\\Http\\Controllers\\GenericController' => __DIR__ . '/../..' . '/app/Http/Controllers/GenericController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\MedicineController' => __DIR__ . '/../..' . '/app/Http/Controllers/MedicineController.php',
+        'App\\Http\\Controllers\\PrescriptionController' => __DIR__ . '/../..' . '/app/Http/Controllers/PrescriptionController.php',
         'App\\Http\\Controllers\\RemovedMedicineControllerController' => __DIR__ . '/../..' . '/app/Http/Controllers/RemovedMedicineController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',

@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\AuthorizeDoctor' => $baseDir . '/app/AuthorizeDoctor.php',
+    'App\\Citizen' => $baseDir . '/app/Citizen.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Doctor' => $baseDir . '/app/Doctor.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
@@ -24,6 +25,7 @@ return array(
     'App\\Http\\Controllers\\GenericController' => $baseDir . '/app/Http/Controllers/GenericController.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
     'App\\Http\\Controllers\\MedicineController' => $baseDir . '/app/Http/Controllers/MedicineController.php',
+    'App\\Http\\Controllers\\PrescriptionController' => $baseDir . '/app/Http/Controllers/PrescriptionController.php',
     'App\\Http\\Controllers\\RemovedMedicineControllerController' => $baseDir . '/app/Http/Controllers/RemovedMedicineController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',

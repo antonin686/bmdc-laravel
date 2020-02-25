@@ -1,42 +1,43 @@
 @extends('layouts.admin')
 
-@section('title', 'All Medicine')
+@section('title', 'All Prescription')
 
 @section('content')
 <div class="row">
     <div class="col-md-12 mx-auto mt-3">
         <div class="card">
-
+            <div class="card-header">
+             Medicine List
+            </div>
             <div class="card-body">
-                <div class="row mx-auto">
-                    <a class="btn btn-primary m-3" href="{{ route('medicine.create')}}">Add New Medicine</a>
-                    <a class="btn btn-danger m-3" href="{{ route('removedMedicine.index')}}">Show Removed Medicines</a>
-                </div>
+                
                 <div class="card card-body">
-                    <table class="table table-hover" id="table">
+                    <table class="table table-hover table-striped" id="table">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Brand Name</th>
-                                <th scope="col">Generic</th>
-                                <th scope="col">Dosage</th>
+                                <th scope="col">Citizen ID</th>
+                                <th scope="col">Doctor</th>
+                                <th scope="col">Disease</th>
+                                <th scope="col">Date</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($meds as $med)
-                            <tr id="{{ $med->id }}">
-                                <td>{{ $med->id }}</td>
-                                <td>{{ $med->brand_name }} <small>{{ $med->strength }}</small> </td>
-                                <td>{{ $med->generic_name }}</td>
-                                <td>{{ $med->dosage_form }}</td>
-                                <td class="text-center">
+                            @foreach ($prescs as $presc)
+                            <tr id="{{ $presc->id }}">
+                                <td>{{ $presc->id }}</td>
+                                <td>{{ $presc->citizen_id }}</td>
+                                <td>{{ $presc->first_name }}  {{ $presc->last_name }}</td>
+                                <td>{{ $presc->disease }}</td>
+                                <td>{{ $presc->created_at }}</td>
+                                <td>
                                     <div class="row">
-                                        <a class="btn btn-info mr-1" href="{{ route('medicine.show', $med->id)}}"> <i
+                                        <a class="btn btn-info mr-1" href="{{ route('prescription.show', $presc->id)}}"> <i
                                                 class="fas fa-info"></i> </a>
-                                        <a class="btn btn-primary mr-1" href="{{ route('medicine.edit', $med->id)}}"> <i
+                                        <a class="btn btn-primary mr-1" href="{{ route('prescription.edit', $presc->id)}}"> <i
                                                 class="fas fa-pen-alt"></i> </a>
-                                        <form action="{{ route('medicine.destroy', $med->id)}}" method="post">
+                                        <form action="{{ route('prescription.destroy', $presc->id)}}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger" type="submit"><i

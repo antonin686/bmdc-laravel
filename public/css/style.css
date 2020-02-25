@@ -1,8 +1,10 @@
-
-.icon-info {
-    color: #39CCCC;
+.card-header{
+    background-color: #27496d;
+    color:white;
 }
 
-.icon {
-    text-decoration: none;
+
+
+.bg-nav{
+    background-color: #142850;
 }
