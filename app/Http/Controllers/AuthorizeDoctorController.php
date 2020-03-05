@@ -36,6 +36,17 @@ class AuthorizeDoctorController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'nid' => 'required|unique:doctors',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone' => 'required|numeric|min:11|unique:doctors',
+            'email' => 'required|email',
+            'degree' => 'required',
+            'institute' => 'required',
+            'image' => 'required',
+        ]);
+        
         $file = $request->file('image');
         $name = "";
 
@@ -52,13 +63,16 @@ class AuthorizeDoctorController extends Controller
         $doc->first_name = $request->first_name;
         $doc->last_name = $request->last_name;
         $doc->email = $request->email;
+        $doc->phone = $request->phone;
         $doc->degree = $request->degree;
         $doc->speciality = $request->speciality;
         $doc->institute = $request->institute;
         $doc->img_path = $path;
         $doc->save();
 
-        return redirect('/');
+        $message = "Doctor Application Successfully Send !!!";
+
+        return redirect()->route('application.message')->with('message', $message);
     }
 
     /**

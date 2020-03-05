@@ -9,6 +9,18 @@
             <div class="card">
                 <div class="card-header">Edit Doctor Profile</div>
                 <div class="card-body">
+                    @if (count($errors) > 0)
+                    <p class="alert alert-danger mb-3">
+                        @foreach ($errors->all() as $error)
+                        {{$error}} <br>
+                        @endforeach
+                    </p>
+                    @endif
+                    @if(session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session()->get('message') }}
+                    </div>
+                    @endif
                     <form method="POST" action=" {{ route('doctor.update', $doc->id)}} ">
                         @csrf
                         @method('PATCH')
@@ -19,7 +31,8 @@
 
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <input type="text" class="form-control" name="username" value="{{ $doc->username}}" readonly>
+                            <input type="text" class="form-control" name="username" value="{{ $doc->username}}"
+                                readonly>
                         </div>
 
                         <div class="form-group">
@@ -38,8 +51,18 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="text" class="form-control" name="phone" value="{{ $doc->phone }}">
+                        </div>
+
+                        <div class="form-group">
                             <label for="degree">Degree</label>
                             <input type="text" class="form-control" name="degree" value="{{ $doc->degree }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="institute">Institute</label>
+                            <input type="text" class="form-control" name="institute" value="{{ $doc->institute }}">
                         </div>
 
                         <div class="form-group">

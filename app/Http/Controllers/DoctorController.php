@@ -38,6 +38,17 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone' => 'required|numeric|min:11',
+            'email' => 'required|email',
+            'degree' => 'required',
+            'institute' => 'required',
+            'username' => 'required|unique:users|min:3',
+            'password' => 'required|min:6',
+        ]);
+        
         $user = new User;
 
         $user->name = $request->first_name.' '.$request->last_name;
@@ -51,6 +62,7 @@ class DoctorController extends Controller
         $doc->first_name = $request->first_name;
         $doc->last_name = $request->last_name;
         $doc->email = $request->email;
+        $doc->phone = $request->phone;
         $doc->speciality = $request->speciality;
         $doc->degree = $request->degree;
         $doc->institute = $request->institute;
@@ -59,9 +71,12 @@ class DoctorController extends Controller
         $doc->save();  
 
         $authDoc = AuthorizeDoctor::where('nid', '=', $request->nid)->first();
-
-        $authDoc->status = 1;
-        $authDoc->save();
+        if($authDoc)
+        {
+            $authDoc->status = 1;
+            $authDoc->save();
+        }
+        
         
         return redirect()->route('doctor.index');
     }
@@ -100,15 +115,28 @@ class DoctorController extends Controller
      */
     public function update(Request $request, Doctor $doctor)
     {
+        $this->validate($request,[
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone' => 'required|numeric|min:11',
+            'email' => 'required|email',
+            'degree' => 'required',
+            'institute' => 'required',
+        ]);
+        
         $doc = Doctor::find($doctor->id);
         $doc->first_name = $request->first_name;
         $doc->last_name = $request->last_name;
         $doc->speciality = $request->speciality;
         $doc->degree = $request->degree;
         $doc->email = $request->email;
+        $doc->phone = $request->phone;
+        $doc->institute = $request->institute;
         $doc->save();
 
-        return redirect()->route('doctor.show', $doc->id);
+        $message = "Doctor has Been Successfully Updated!!!";
+
+        return redirect()->route('doctor.edit', $doc->id)->with('message', $message);
     }
 
     /**

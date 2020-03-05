@@ -45,22 +45,22 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card">
                             <img src="{{$doc->img_path}}" class="card-img-top" alt="img">
-                            
+
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                <a href="{{ route('doctor.edit', $doc->id )}}" class="btn btn-info m-3">Edit Profile</a>
-                <form class="m-3" action="{{ route('doctor.destroy', $doc->id )}}" method="post">
-                  @csrf
-                  @method('DELETE')
-                  <button class="btn btn-danger" type="submit">Delete</button>
-                </form>
+                    <a href="{{ route('doctor.edit', $doc->id )}}" class="btn btn-info m-3">Edit Profile</a>
+                    <form class="m-3" action="{{ route('doctor.destroy', $doc->id )}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
                 </div>
-                
+
             </div>
         </div>
     </div>

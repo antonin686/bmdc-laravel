@@ -32,6 +32,11 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="text" class="form-control" name="phone" value="{{ $app->phone }}">
+                        </div>
+
+                        <div class="form-group">
                             <label for="degree">Degree</label>
                             <input type="text" class="form-control" name="degree" value="{{ $app->degree }}">
                         </div>
@@ -64,11 +69,9 @@
 
                 </div>
                 <div class="col-md-4 mx-auto m-3">
-                    <div class="card" style="width: 18rem;">
+                    <div class="card">
                         <img src="{{ $app->img_path}}" class="card-img-top" alt="img">
-                        <div class="card-body">
-                            <h5 class="card-title">Image</h5>
-                        </div>
+
                     </div>
                 </div>
             </div>

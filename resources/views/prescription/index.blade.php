@@ -7,10 +7,10 @@
     <div class="col-md-12 mx-auto mt-3">
         <div class="card">
             <div class="card-header">
-             Medicine List
+                Prrescription List
             </div>
             <div class="card-body">
-                
+
                 <div class="card card-body">
                     <table class="table table-hover table-striped" id="table">
                         <thead class="thead-dark">
@@ -28,21 +28,22 @@
                             <tr id="{{ $presc->id }}">
                                 <td>{{ $presc->id }}</td>
                                 <td>{{ $presc->citizen_id }}</td>
-                                <td>{{ $presc->first_name }}  {{ $presc->last_name }}</td>
+                                <td>{{ $presc->first_name }} {{ $presc->last_name }}</td>
                                 <td>{{ $presc->disease }}</td>
                                 <td>{{ $presc->created_at }}</td>
                                 <td>
                                     <div class="row">
-                                        <a class="btn btn-info mr-1" href="{{ route('prescription.show', $presc->id)}}"> <i
-                                                class="fas fa-info"></i> </a>
-                                        <a class="btn btn-primary mr-1" href="{{ route('prescription.edit', $presc->id)}}"> <i
+                                        <a class="btn btn-info mr-1" href="{{ route('prescription.show', $presc->id)}}">
+                                            <i class="fas fa-info"></i> </a>
+                                        <!-- <a class="btn btn-primary mr-1"
+                                            href="{{ route('prescription.edit', $presc->id)}}"> <i
                                                 class="fas fa-pen-alt"></i> </a>
                                         <form action="{{ route('prescription.destroy', $presc->id)}}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger" type="submit"><i
                                                     class="fas fa-trash"></i></button>
-                                        </form>
+                                        </form> -->
                                     </div>
                                 </td>
                             </tr>

@@ -17,9 +17,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/test', function () {
+    return view('application.message');
+})->name('test');
+
+Route::get('/test/re', function () {
+    $message = "Applicaition Successfully send !!!";
+    return redirect()->route('test')->with('message', $message);
+});
+
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/apply/doctor', 'AuthorizeDoctorController@create')->name('authorizeDoctor.create');
-Route::post('/apply/doctor', 'AuthorizeDoctorController@store');
+//Route::get('/test', 'TestController@test')->name('test');
+Route::get('/application/doctor', 'AuthorizeDoctorController@create')->name('authorizeDoctor.create');
+Route::get('/application/message', 'ApplicationController@message')->name('application.message');
+Route::post('/application/doctor', 'AuthorizeDoctorController@store');
 
 Route::group(['prefix' => 'admin'], function() {
     Route::get('/authorize/doctor', 'AuthorizeDoctorController@index')->name('authorizeDoctor.index');

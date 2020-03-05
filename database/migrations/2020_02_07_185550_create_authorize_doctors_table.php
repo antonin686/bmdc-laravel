@@ -18,7 +18,8 @@ class CreateAuthorizeDoctorsTable extends Migration
             $table->bigInteger('nid');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('email');
+            $table->string('email')->unique();
+            $table->string('phone')->unique();
             $table->string('degree');
             $table->string('institute');
             $table->string('speciality');

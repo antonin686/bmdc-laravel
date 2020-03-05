@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use DB;
+use DateTime;
 use App\Prescription;
+use App\Citizen;
+use App\Doctor;
+
 use Illuminate\Http\Request;
 
 class PrescriptionController extends Controller
@@ -51,7 +55,18 @@ class PrescriptionController extends Controller
      */
     public function show(Prescription $prescription)
     {
-        return view('prescription.show')->with('presc', $prescription);
+        $citizen = Citizen::where('nid', '=', $prescription->citizen_id)
+                            ->orWhere('birthCer_id', '=', $prescription->citizen_id)
+                            ->first();
+
+        $from = new DateTime($citizen->dob);
+        $to   = new DateTime('today');
+        $citizen->age = $from->diff($to)->y;
+        $prescription->date = $prescription->created_at->format('d/m/y'); 
+        
+        $doctor = Doctor::find($prescription->doctor_id);
+
+        return view('prescription.show', compact('citizen', 'doctor', 'prescription'));
     }
 
     /**
