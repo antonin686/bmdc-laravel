@@ -20,7 +20,8 @@ class CreateMedicinesTable extends Migration
             $table->bigInteger('generic_id');
             $table->string('strength');
             $table->string('company');
-            $table->float('price');   
+            $table->float('price');
+            $table->integer('status')->default(0);  
             $table->timestamps();
         });
     }

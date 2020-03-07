@@ -40,6 +40,7 @@ class DoctorController extends Controller
     {
         $this->validate($request,[
             'first_name' => 'required',
+            'nid' => 'required|unique:doctors',
             'last_name' => 'required',
             'phone' => 'required|numeric|min:11',
             'email' => 'required|email',
@@ -78,7 +79,7 @@ class DoctorController extends Controller
         }
         
         
-        return redirect()->route('doctor.index');
+        return redirect()->route('doctor.index')->with('message',$message);
     }
 
     /**

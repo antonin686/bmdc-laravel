@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Medicine;
-use App\RemovedMedicine;
+use App\AuthorizeMedicine;
 use App\Generic;
 use DB;
 use Illuminate\Http\Request;
@@ -20,8 +20,19 @@ class MedicineController extends Controller
         $meds = DB::table('medicines')
                 ->join('generics', 'medicines.generic_id', '=', 'generics.id')
                 ->select('medicines.*', 'generics.generic_name')
+                ->where('medicines.status', '=', '0')
                 ->get();
         return view('medicine.index')->with('meds', $meds);
+    }
+
+    public function removedMeds()
+    {
+        $meds = DB::table('medicines')
+                ->join('generics', 'medicines.generic_id', '=', 'generics.id')
+                ->select('medicines.*', 'generics.generic_name')
+                ->where('medicines.status', '=', '1')
+                ->get();
+        return view('medicine.removed')->with('meds', $meds);
     }
 
     /**
@@ -43,16 +54,34 @@ class MedicineController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'brand_name' => 'required',
+            'dosage_form' => 'required',
+            'generic' => 'required|numeric',
+            'strength' => 'required',
+            'company' => 'required',
+            'price' => 'required',
+        ]);
+
         $med = new Medicine;
         $med->brand_name = $request->brand_name;
         $med->dosage_form = $request->dosage_form;
         $med->generic_id = $request->generic;
         $med->strength = $request->strength;
         $med->company = $request->company;
-        $med->price = $request->price;
+        $med->price = $request->price; 
         $med->save();
+        
+        $authMed = AuthorizeMedicine::where('id', '=', $request->id)->first();
+        if($authMed)
+        {
+            $authMed->status = 1;
+            $authMed->save();
+        }
 
-        return redirect()->route('medicine.index');
+        $message = "Medicine Created Successfully";
+        
+        return redirect()->route('medicine.index')->with('message',$message);
     }
 
     /**
@@ -123,45 +152,18 @@ class MedicineController extends Controller
      */
     public function destroy(Medicine $medicine)
     {
-        $trash = new RemovedMedicine;
-        $trash->brand_name = $medicine->brand_name;
-        $trash->dosage_form = $medicine->dosage_form;
-        $trash->generic_id = $medicine->generic_id;
-        $trash->strength = $medicine->strength;
-        $trash->company = $medicine->company;
-        $trash->price = $medicine->price;
-        $trash->status = "deleted";
-        
+        $trash = Medicine::find($medicine->id);
+        $trash->status = 1;  
         $trash->save();
-
-        Medicine::find($medicine->id)->delete();
 
         return redirect()->route('medicine.index');
     }
 
-    public function removeIndex()
-    {
-        $meds = DB::table('removed_medicines')
-                ->join('generics', 'removed_medicines.generic_id', '=', 'generics.id')
-                ->select('removed_medicines.*', 'generics.generic_name')
-                ->get();
-        return view('medicine.removed.index')->with('meds', $meds);
-    }
-
     public function removeUndo($id)
     {
-        $request = RemovedMedicine::find($id);
-
-        $med = new Medicine;
-        $med->brand_name = $request->brand_name;
-        $med->dosage_form = $request->dosage_form;
-        $med->generic_id = $request->generic_id;
-        $med->strength = $request->strength;
-        $med->company = $request->company;
-        $med->price = $request->price;
+        $med = medicine::find($id);
+        $med->status = 0;
         $med->save();
-
-        $request->delete();
         
         return redirect()->route('medicine.index');   
     }

@@ -8,7 +8,18 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6 mx-auto">
-
+                    @if (count($errors) > 0)
+                    <p class="alert alert-danger mb-3">
+                        @foreach ($errors->all() as $error)
+                        {{$error}} <br>
+                        @endforeach
+                    </p>
+                    @endif
+                    @if(session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session()->get('message') }}
+                    </div>
+                    @endif
                     <form method="POST">
                         @csrf
                         <div class="form-group">

@@ -17,5 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/medicine/list', 'ApiController@MedicineList');
-Route::get('/medicine/{id}', 'ApiController@MedicineInfo');
+Route::get('/medicine/list', 'ApiController@medicineList');
+Route::get('/medicine/{id}', 'ApiController@medicineInfo');
+Route::post('/prescription/store', 'ApiController@prescriptionStore');

@@ -8,3 +8,45 @@
 .bg-nav{
     background-color: #142850;
 }
+
+.bg-primary-light{
+    background-color: #6A91F0;
+}
+
+.bg-info-light{
+  background-color: #5DC2D3;
+}
+
+.bg-danger-light{
+  background-color: #E9769E;
+}
+
+.bg-success-light{
+  background-color: #59D29E;
+}
+
+
+.bg-warning-light{
+  background-color: #ecd447;
+}
+
+.bg-purple-light{
+  background-color: #dbadfc;
+}
+
+.bg-purple{
+  background-color: #9c26f0;
+}
+
+.text-grey{
+    color: lightgray;
+}
+
+.card-hover {
+  position: relative;
+  top: 0;
+  transition: top ease 0.5s;
+}
+.card-hover:hover {
+  top: 10px;
+}

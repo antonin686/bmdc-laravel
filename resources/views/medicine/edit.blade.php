@@ -7,8 +7,20 @@
     <div class="row">
         <div class="col-md-8 mx-auto mt-3">
             <div class="card">
-                <div class="card-header">Edit Doctor Profile</div>
+                <div class="card-header">Edit Medicine Profile</div>
                 <div class="card-body">
+                    @if (count($errors) > 0)
+                    <p class="alert alert-danger mb-3">
+                        @foreach ($errors->all() as $error)
+                        {{$error}} <br>
+                        @endforeach
+                    </p>
+                    @endif
+                    @if(session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session()->get('message') }}
+                    </div>
+                    @endif
                     <form method="POST" action=" {{ route('medicine.update', $medicine->id)}} ">
                         @csrf
                         @method('PATCH')
@@ -31,7 +43,7 @@
                                 @if($medicine->generic_id == $generic->id)
                                 <option value="{{$generic->id}}" selected="selected">{{$generic->generic_name}}</option>
                                 @else
-                                <option value="{{$generic->id}}" selected="selected">{{$generic->generic_name}}</option>
+                                <option value="{{$generic->id}}">{{$generic->generic_name}}</option>
                                 @endif
                                 @endforeach
                             </select>

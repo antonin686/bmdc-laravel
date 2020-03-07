@@ -75,6 +75,7 @@
                     @endauth
 
                     <a href="{{ route('authorizeDoctor.create') }}">Doctor Application</a>
+                    <a href="{{ route('application.medicine.create') }}">Medicine Application</a>
                 </div>
             @endif
 

@@ -53,7 +53,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('authorizeDoctor.index') }}">Authorize Doctor</a>
-                        <a class="dropdown-item" href="#">Authorize Medicine</a>
+                        <a class="dropdown-item" href="{{ route('application.medicine.index') }}">Authorize Medicine</a>
                     </div>
                 </li>
             </ul>

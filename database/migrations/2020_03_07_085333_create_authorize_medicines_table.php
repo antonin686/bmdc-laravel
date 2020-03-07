@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRemovedMedicinesTable extends Migration
+class CreateAuthorizeMedicinesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateRemovedMedicinesTable extends Migration
      */
     public function up()
     {
-        Schema::create('removed_medicines', function (Blueprint $table) {
+        Schema::create('authorize_medicines', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('brand_name');
             $table->string('dosage_form');
@@ -21,7 +21,10 @@ class CreateRemovedMedicinesTable extends Migration
             $table->string('strength');
             $table->string('company');
             $table->float('price');
-            $table->string('status')->default('Deleted');
+            $table->string('applicant_name');
+            $table->string('applicant_email');
+            $table->string('applicant_phone');
+            $table->integer('status')->default(0);  
             $table->timestamps();
         });
     }
@@ -33,6 +36,6 @@ class CreateRemovedMedicinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('removed_medicines');
+        Schema::dropIfExists('authorize_medicines');
     }
 }

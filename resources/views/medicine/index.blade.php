@@ -10,7 +10,7 @@
             <div class="card-body">
                 <div class="row mx-auto">
                     <a class="btn btn-primary m-3" href="{{ route('medicine.create')}}">Add New Medicine</a>
-                    <a class="btn btn-danger m-3" href="{{ route('removedMedicine.index')}}">Show Removed Medicines</a>
+                    <a class="btn btn-danger m-3" href="{{ route('medicine.removed')}}">Show Removed Medicines</a>
                 </div>
                 <div class="card card-body">
                     <table class="table table-hover" id="table">

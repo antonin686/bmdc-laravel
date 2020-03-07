@@ -1,13 +1,15 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('title', 'Home')
 
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 mx-auto mt-3">
+        <div class="col-md-8 mx-auto">
             <div class="card">
-                <div class="card-header">Add New Medicine</div>
+                <div class="card-header">
+                    Medicine Application Form
+                </div>
                 <div class="card-body">
                     @if (count($errors) > 0)
                     <p class="alert alert-danger mb-3">
@@ -21,8 +23,9 @@
                         {{ session()->get('message') }}
                     </div>
                     @endif
-                    <form method="POST" action="{{ route('medicine.store')}}">
+                    <form method="POST" action="{{ route('application.medicine.store')}}">
                         @csrf
+
                         <div class="form-group">
                             <label for="brand_name">Brand name</label>
                             <input type="text" class="form-control" name="brand_name">
@@ -57,7 +60,22 @@
                             <input type="text" class="form-control" name="price">
                         </div>
 
-                        <button type="submit" class="btn btn-success">Add Medicine</button>
+                        <div class="form-group">
+                            <label for="applicant_name">Applicant Name</label>
+                            <input type="text" class="form-control" name="applicant_name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="applicant_email">Applicant Email</label>
+                            <input type="email" class="form-control" name="applicant_email">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="applicant_phone">Applicant Phone</label>
+                            <input type="text" class="form-control" name="applicant_phone">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Apply</button>
                     </form>
                 </div>
             </div>
