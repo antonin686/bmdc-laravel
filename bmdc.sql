@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6deb5
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Mar 05, 2020 at 12:09 PM
--- Server version: 5.7.28-0ubuntu0.18.04.4
--- PHP Version: 7.2.24-0ubuntu0.18.04.2
+-- Host: 127.0.0.1
+-- Generation Time: Mar 07, 2020 at 05:25 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -37,7 +39,7 @@ CREATE TABLE `authorize_doctors` (
   `institute` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `speciality` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `img_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -51,6 +53,36 @@ INSERT INTO `authorize_doctors` (`id`, `nid`, `first_name`, `last_name`, `email`
 (2, 54164132, 'Boble', 'bob', 'bob@gmail.com', '01687759643', 'MBBS', 'Dhaka Medical College', 'Dentist', '/uploads/1582736526654644766.jpg', 0, '2020-02-26 11:02:06', '2020-02-26 11:02:06'),
 (4, 54164131, 'Boble', 'bob', 'bodb@gmail.com', '01687759642', 'MBBS', 'Dhaka Medical College', 'Dentist', '/uploads/1582736601612650445.jpg', 0, '2020-02-26 11:03:21', '2020-02-26 11:03:21'),
 (5, 54164158, 'Md.Antonin', 'Islam', 'md.antonin686@gmail.com', '01687759686', 'MBBS', 'Dhaka Medical College', 'Dentist', '/uploads/1582736696519992322.jpg', 0, '2020-02-26 11:04:56', '2020-02-26 11:04:56');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `authorize_medicines`
+--
+
+CREATE TABLE `authorize_medicines` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `brand_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dosage_form` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `generic_id` bigint(20) NOT NULL,
+  `strength` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `company` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` double(8,2) NOT NULL,
+  `applicant_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `applicant_email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `applicant_phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `authorize_medicines`
+--
+
+INSERT INTO `authorize_medicines` (`id`, `brand_name`, `dosage_form`, `generic_id`, `strength`, `company`, `price`, `applicant_name`, `applicant_email`, `applicant_phone`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Ace', 'Syrup', 1, '120 mg/5 ml', 'Square Pharmaceuticals Ltd.', 20.70, 'Md.Antonin Islam', 'md.antonin686@gmail.com', '01687759686', 1, '2020-03-07 03:26:41', '2020-03-07 05:22:20'),
+(2, 'Paracetamol', 'Tablet', 1, '500 mg', 'Bengal drugs Ltd.', 0.60, 'Md.Antonin Islam', 'md.antonin686@gmail.com', '01687759686', 1, '2020-03-07 05:25:27', '2020-03-07 05:27:47');
 
 -- --------------------------------------------------------
 
@@ -123,7 +155,7 @@ CREATE TABLE `failed_jobs` (
   `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -138,14 +170,14 @@ CREATE TABLE `generics` (
   `indications` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `therapeutic_class` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `pharmacology` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dosage_administration` text COLLATE utf8mb4_unicode_ci,
-  `interaction` text COLLATE utf8mb4_unicode_ci,
-  `contraindications` text COLLATE utf8mb4_unicode_ci,
-  `side_effects` text COLLATE utf8mb4_unicode_ci,
-  `pregnancy` text COLLATE utf8mb4_unicode_ci,
-  `precautions` text COLLATE utf8mb4_unicode_ci,
-  `overdose_effects` text COLLATE utf8mb4_unicode_ci,
-  `storage_conditions` text COLLATE utf8mb4_unicode_ci,
+  `dosage_administration` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `interaction` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contraindications` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `side_effects` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pregnancy` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `precautions` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `overdose_effects` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `storage_conditions` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -173,6 +205,7 @@ CREATE TABLE `medicines` (
   `strength` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `company` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` double(8,2) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -181,9 +214,9 @@ CREATE TABLE `medicines` (
 -- Dumping data for table `medicines`
 --
 
-INSERT INTO `medicines` (`id`, `brand_name`, `dosage_form`, `generic_id`, `strength`, `company`, `price`, `created_at`, `updated_at`) VALUES
-(1, 'Paracetamol', 'Tablet', 1, '500 mg', 'Bengal drugs Ltd.', 0.70, '2020-02-11 01:25:46', '2020-02-11 04:55:39'),
-(7, 'Anca', 'Tablet', 2, '250 mg', 'Square Pharmaceuticals Ltd.', 29.98, '2020-02-12 09:02:54', '2020-02-12 09:02:54');
+INSERT INTO `medicines` (`id`, `brand_name`, `dosage_form`, `generic_id`, `strength`, `company`, `price`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Ace', 'Syrup', 1, '120 mg/5 ml', 'Square Pharmaceuticals Ltd.', 20.70, 0, '2020-03-07 05:22:20', '2020-03-07 05:22:20'),
+(2, 'Paracetamol', 'Tablet', 1, '500 mg', 'Bengal drugs Ltd.', 0.60, 0, '2020-03-07 05:27:47', '2020-03-07 05:27:47');
 
 -- --------------------------------------------------------
 
@@ -204,14 +237,14 @@ CREATE TABLE `migrations` (
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (2, '2014_10_12_100000_create_password_resets_table', 1),
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
-(12, '2020_02_10_190827_create_medicines_table', 4),
 (15, '2020_02_10_202224_create_generics_table', 5),
-(18, '2020_02_11_115506_create_removed_medicines_table', 7),
 (26, '2014_10_12_000000_create_users_table', 9),
 (31, '2020_02_19_091854_create_prescriptions_table', 12),
 (33, '2020_02_23_093851_create_citizens_table', 13),
 (36, '2020_02_07_105504_create_doctors_table', 14),
-(37, '2020_02_07_185550_create_authorize_doctors_table', 14);
+(37, '2020_02_07_185550_create_authorize_doctors_table', 14),
+(39, '2020_03_07_085333_create_authorize_medicines_table', 16),
+(40, '2020_02_10_190827_create_medicines_table', 17);
 
 -- --------------------------------------------------------
 
@@ -251,26 +284,8 @@ CREATE TABLE `prescriptions` (
 --
 
 INSERT INTO `prescriptions` (`id`, `doctor_id`, `citizen_id`, `hospital_name`, `mainbody`, `advice`, `disease`, `cc`, `oe`, `lx`, `created_at`, `updated_at`) VALUES
-(1, 1, 54143545421, 'Dhaka Medical', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen b', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has', 'fever', NULL, NULL, NULL, '2020-02-23 12:21:41', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `removed_medicines`
---
-
-CREATE TABLE `removed_medicines` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `brand_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dosage_form` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `generic_id` bigint(20) NOT NULL,
-  `strength` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `company` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` double(8,2) NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Deleted',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+(1, 1, 54143545421, 'Dhaka Medical', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen b', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has', 'fever', NULL, NULL, NULL, '2020-02-23 12:21:41', NULL),
+(2, 1, 54143545421, 'Square Hospital', 'some', 'some', 'fever', NULL, NULL, NULL, '2020-03-07 05:59:40', '2020-03-07 05:59:40');
 
 -- --------------------------------------------------------
 
@@ -309,6 +324,12 @@ ALTER TABLE `authorize_doctors`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `authorize_doctors_email_unique` (`email`),
   ADD UNIQUE KEY `authorize_doctors_phone_unique` (`phone`);
+
+--
+-- Indexes for table `authorize_medicines`
+--
+ALTER TABLE `authorize_medicines`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `citizens`
@@ -364,12 +385,6 @@ ALTER TABLE `prescriptions`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `removed_medicines`
---
-ALTER TABLE `removed_medicines`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -385,51 +400,62 @@ ALTER TABLE `users`
 --
 ALTER TABLE `authorize_doctors`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `authorize_medicines`
+--
+ALTER TABLE `authorize_medicines`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `citizens`
 --
 ALTER TABLE `citizens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `generics`
 --
 ALTER TABLE `generics`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `medicines`
 --
 ALTER TABLE `medicines`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
 --
 -- AUTO_INCREMENT for table `prescriptions`
 --
 ALTER TABLE `prescriptions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `removed_medicines`
---
-ALTER TABLE `removed_medicines`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
