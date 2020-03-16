@@ -31,8 +31,8 @@
                                 <td>{{ $med->generic_name }}</td>
                                 <td>{{ $med->dosage_form }}</td>
                                 <td>{{ $med->status }}</td>
-                                <td >
-                                    <a class="btn btn-info mr-1" href="{{ route('removedMedicine.undo', $med->id)}}">
+                                <td>
+                                    <a class="btn btn-info mr-1" href="{{ route('medicine.removed.undo', $med->id)}}">
                                         <i class="fas fa-undo"></i> </a>
                                 </td>
                             </tr>

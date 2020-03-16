@@ -34,7 +34,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('/authorize/medicine/{id}', 'MedicineController@store')->name('application.medicine.medstore'); 
 
     Route::get('/medicine/remove', 'MedicineController@removedMeds')->name('medicine.removed');
-    Route::get('/medicine/remove/undo/{id}', 'MedicineController@removeUndo')->name('removedMedicine.undo');
+    Route::get('/medicine/remove/undo/{id}', 'MedicineController@removeUndo')->name('medicine.removed.undo');
     Route::get('/medicine/list/generic/{id}', 'MedicineController@genericBased')->name('medicine.genericBased');
     Route::get('/ajax/adminHomeCounts', 'AjaxController@adminHomeCounts')->name('ajax.adminHomeCounts');
     Route::resources([
