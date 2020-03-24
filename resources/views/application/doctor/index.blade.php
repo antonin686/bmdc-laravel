@@ -6,6 +6,7 @@
 <div class="row">
     <div class="col-md-12 mx-auto mt-3">
         <div class="card">
+        <div class="card-header">Doctor Application List</div>
             <div class="card-body">
                 <table class="table table-striped table-hover" id="table">
                     <thead class="thead-dark">
@@ -13,16 +14,16 @@
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
                             <th scope="col">Speciality</th>
-                            <th scope="col">Degree</th>
+                            <th scope="col">Date</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($apps as $app)
                         <tr id="{{ $app->id }}">
                             <td>{{ $app->id }}</td>
-                            <td>{{ $app->first_name }} {{ $app->last_name }}</td>
+                            <td>{{ $app->full_name }}</td>
                             <td>{{ $app->speciality }}</td>
-                            <td>{{ $app->degree }}</td>
+                            <td>{{ $app->created_at }}</td>
                         </tr>
                         @endforeach
                     </tbody>

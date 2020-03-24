@@ -17,7 +17,7 @@
             <div class="card mb-3 mt-3">
                 <div class="card-body bg-dark text-white">{{$key}}</div>
                 <div class="card-body">
-                    {{$value}}
+                {!! nl2br($value) !!}
                 </div>
             </div>
         </div>

@@ -19,11 +19,12 @@ class CreatePrescriptionsTable extends Migration
             $table->bigInteger('citizen_id');
             $table->string('hospital_name');
             $table->string('mainbody');
-            $table->string('advice');
+            $table->string('med_list');
             $table->string('disease');
             $table->string('cc')->nullable();
-            $table->string('oe')->nullable();;
-            $table->string('lx')->nullable();;
+            $table->string('oe')->nullable();
+            $table->string('lx')->nullable();
+            $table->date('date');
             $table->timestamps();
         });
     }

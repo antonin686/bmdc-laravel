@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.public')
 
-@section('title', 'Home')
+@section('title', 'Create Medicine Application')
 
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-light">
                     Medicine Application Form
                 </div>
                 <div class="card-body">

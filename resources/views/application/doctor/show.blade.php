@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Home')
+@section('title', 'Doctor Application Authorization')
 
 @section('content')
 <div class="container mt-3">
@@ -27,14 +27,18 @@
                             <input type="text" class="form-control" name="nid" value="{{ $app->nid }}">
                         </div>
 
-                        <div class="form-group">
-                            <label for="first_name">First Name</label>
-                            <input type="text" class="form-control" name="first_name" value="{{ $app->first_name }}">
+                        <label for="registration_id">Registration Number</label><br>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="registration_id" id="registration_id">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button"
+                                    id="generate_id">Generate</button>
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="last_name">Last Name</label>
-                            <input type="text" class="form-control" name="last_name" value="{{ $app->last_name }}">
+                            <label for="full_name">Full Name</label>
+                            <input type="text" class="form-control" name="full_name" value="{{ $app->full_name }}">
                         </div>
 
                         <div class="form-group">
@@ -48,18 +52,25 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="degree">Degree</label>
-                            <input type="text" class="form-control" name="degree" value="{{ $app->degree }}">
+                            <label for="basic_degree">Basic Degree</label>
+                            <input type="text" class="form-control" name="basic_degree"
+                                value="{{ $app->basic_degree }}">
                         </div>
 
                         <div class="form-group">
-                            <label for="institute">institute</label>
-                            <input type="text" class="form-control" name="institute" value="{{ $app->institute }}">
+                            <label for="advance_degree">Advance Degree</label>
+                            <input type="text" class="form-control" name="advance_degree"
+                                value="{{ $app->advance_degree }}">
                         </div>
 
                         <div class="form-group">
                             <label for="speciality">Speciality</label>
                             <input type="text" class="form-control" name="speciality" value="{{ $app->speciality }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="work_place">Work Place</label>
+                            <input type="text" class="form-control" name="work_place" value="{{ $app->work_place }}">
                         </div>
 
                         <div class="form-group">
@@ -89,4 +100,26 @@
         </div>
     </div>
 </div>
+
+<script>
+$(document).ready(function() {
+
+    $("#generate_id").click(function() {
+        generateDoctorID();
+    });
+
+    function generateDoctorID(id) {
+
+        $.ajax({
+            url: '/ajax/generateDoctorID',
+            method: "GET",
+            dataType: "json",
+            success: function(result) {
+                //console.log(result);
+                $("#registration_id").val(result);
+            }
+        });
+    }
+});
+</script>
 @endsection

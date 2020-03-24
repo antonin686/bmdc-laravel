@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use DB;
 use App\Medicine;
 use App\Prescription;
+use DateTime;
+use Exception;
+
 class ApiController extends Controller
 {
     public function medicineList()
@@ -30,17 +33,30 @@ class ApiController extends Controller
 
     public function prescriptionStore(Request $request)
     {
+        //dd($request->data_packet);
+
+        $dataset = json_decode($request->data_packet);
+
         $presc = new Prescription;
 
-        $presc->doctor_id = $request->doctor_id;
-        $presc->citizen_id = $request->citizen_id;
-        $presc->hospital_name = $request->hospital_name;
-        $presc->mainbody = $request->mainbody;
-        $presc->advice = $request->advice;
-        $presc->disease = $request->disease;
-        $presc->cc = $request->cc;
-        $presc->oe = $request->oe;
-        $presc->lx = $request->lx;
-        $presc->save();
+        $presc->doctor_id = $dataset->doctor_id;
+        $presc->citizen_id = $dataset->citizen_id;
+        $presc->hospital_name = $dataset->hospital_name;
+        $presc->mainbody = trim($dataset->mainbody);
+        $presc->med_list = $dataset->med_list;
+        $presc->disease = $dataset->disease;
+        $presc->cc = $dataset->cc;
+        $presc->oe = $dataset->oe;
+        $presc->lx = $dataset->lx;
+        $presc->date = new DateTime($dataset->date);
+
+        try {
+            $presc->save();
+        } catch (Exception $e) {
+
+            return "fill all the nessesary values";
+        }
+        
+        return "success";      
     }
 }

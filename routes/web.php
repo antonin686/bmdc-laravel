@@ -15,28 +15,52 @@ Auth::routes();
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('front');
+
+Route::get('/message', function () {
+    $message = "Doctor Successfully Added !!!";
+    $id = 1;
+
+    return redirect()->route('doctor.message')->with('message', $message)
+                                                ->with('id', $id);
+
+})->name('welcome');
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/application/doctor/create', 'AuthorizeDoctorController@create')->name('authorizeDoctor.create');
-Route::post('/application/doctor', 'AuthorizeDoctorController@store');
-Route::get('/application/medicine/create', 'ApplicationController@medicineCreate')->name('application.medicine.create');
-Route::post('/application/medicine/store', 'ApplicationController@medicineStore')->name('application.medicine.store');
+Route::get('/application/doctor/create', 'ApplicationController@doctorApplicationCreate')->name('application.doctorApplicationCreate');
+Route::post('/application/doctor/create', 'ApplicationController@doctorApplicationStore');
+Route::get('/application/medicine/create', 'ApplicationController@medicineApplicationCreate')->name('application.medicine.create');
+Route::post('/application/medicine/store', 'ApplicationController@medicineApplicationStore')->name('application.medicine.store');
 Route::get('/application/message', 'ApplicationController@message')->name('application.message');
+Route::get('/findRegisteredDoctor', 'PublicController@findRegisteredDoctor')->name('public.findRegisteredDoctor');
+Route::resource('publicMedicine', 'PublicMedicineController')->only([
+    'index', 'show'
+]);
+Route::get('/publicMedicine/generic/list/{id}', 'PublicMedicineController@genericBased')->name('publicMedicine.genericBased');
+Route::get('/publicMedicine/generic/show/{id}', 'PublicMedicineController@genericShow')->name('publicMedicine.genericShow');
 
-Route::group(['prefix' => 'admin'], function() {
-    Route::get('/authorize/doctor/index', 'AuthorizeDoctorController@index')->name('authorizeDoctor.index');
-    Route::get('/authorize/doctor/{id}', 'AuthorizeDoctorController@show')->name('authorizeDoctor.show');     
+Route::get('/ajax/getDoctorDetails/{id}', 'AjaxController@getDoctorDetails')->name('ajax.getDoctorDetails');
+Route::get('/ajax/generateDoctorID', 'AjaxController@generateDoctorID')->name('ajax.generateDoctorID');
+
+Route::group(['prefix' => 'admin', 'middleware' => 'checkIfAdmin'], function() {
+
+    Route::get('/authorize/doctor/index', 'ApplicationController@doctorApplicationIndex')->name('application.doctorApplicationIndex');
+    Route::get('/authorize/doctor/{id}', 'ApplicationController@doctorApplicationShow')->name('application.doctorApplicationShow');     
     Route::post('/authorize/doctor/{id}', 'DoctorController@store');
     
-    Route::get('/authorize/medicine/index', 'ApplicationController@medicineIndex')->name('application.medicine.index');
-    Route::get('/authorize/medicine/{id}', 'ApplicationController@medicineShow')->name('application.medicine.show'); 
+    Route::get('/authorize/medicine/index', 'ApplicationController@medicineApplicationIndex')->name('application.medicineApplicationIndex');
+    Route::get('/authorize/medicine/{id}', 'ApplicationController@medicineApplicationShow')->name('application.medicineApplicationShow'); 
     Route::post('/authorize/medicine/{id}', 'MedicineController@store')->name('application.medicine.medstore'); 
 
+    Route::get('/medicine/list/generic/{id}', 'MedicineController@genericBased')->name('medicine.genericBased');
     Route::get('/medicine/remove', 'MedicineController@removedMeds')->name('medicine.removed');
     Route::get('/medicine/remove/undo/{id}', 'MedicineController@removeUndo')->name('medicine.removed.undo');
-    Route::get('/medicine/list/generic/{id}', 'MedicineController@genericBased')->name('medicine.genericBased');
+
     Route::get('/ajax/adminHomeCounts', 'AjaxController@adminHomeCounts')->name('ajax.adminHomeCounts');
+
+    Route::get('/doctor/message', 'DoctorController@message')->name('doctor.message');
+    Route::get('/medicine/message', 'MedicineController@message')->name('medicine.message');
+
     Route::resources([
         'doctor' => 'DoctorController',
         'medicine' => 'MedicineController',

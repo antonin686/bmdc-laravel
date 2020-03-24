@@ -7,17 +7,19 @@
     <div class="col-md-4 mt-4">
         <div class="card card-hover shadow">
             <div class="card-body bg-primary-light">
-                <div class="h1">
-                    <i class="fas fa-user-md text-light"></i>
-                </div>
-                <div class="row">
-                    <div class="mr-auto ml-2 display-5 text-white-50">
-                        DOCTORS
+                <a href=" {{ route('doctor.index') }} ">
+                    <div class="h1">
+                        <i class="fas fa-user-md text-light"></i>
                     </div>
-                    <div class="ml-auto text-light mr-2 h5">
-                        <strong> <span id="card-doctor" class="badge badge-primary badge-pill">0</span></strong>
+                    <div class="row">
+                        <div class="mr-auto ml-2 display-5 text-light">
+                            DOCTORS
+                        </div>
+                        <div class="ml-auto text-light mr-2 h5">
+                            <strong> <span id="card-doctor" class="badge badge-primary badge-pill">0</span></strong>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
@@ -25,17 +27,19 @@
     <div class="col-md-4 mt-4">
         <div class="card card-hover shadow">
             <div class="card-body bg-danger-light">
-                <div class="h1">
-                    <i class="fas fa-pills text-light"></i>
-                </div>
-                <div class="row">
-                    <div class="mr-auto ml-2 display-5 text-white-50">
-                        Medicines
+                <a href=" {{ route('medicine.index') }}">
+                    <div class="h1">
+                        <i class="fas fa-pills text-light"></i>
                     </div>
-                    <div class="ml-auto text-light mr-2 h5">
-                        <strong> <span id="card-medicine" class="badge badge-danger badge-pill">0</span></strong>
+                    <div class="row">
+                        <div class="mr-auto ml-2 display-5 text-light">
+                            Medicines
+                        </div>
+                        <div class="ml-auto text-light mr-2 h5">
+                            <strong> <span id="card-medicine" class="badge badge-danger badge-pill">0</span></strong>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
@@ -43,17 +47,19 @@
     <div class="col-md-4 mt-4">
         <div class="card card-hover shadow">
             <div class="card-body bg-success-light">
-                <div class="h1">
-                    <i class="fas fa-flask text-light"></i>
-                </div>
-                <div class="row">
-                    <div class="mr-auto ml-2 display-5 text-white-50">
-                        Generics
+                <a href=" {{ route('generic.index') }} ">
+                    <div class="h1">
+                        <i class="fas fa-flask text-light"></i>
                     </div>
-                    <div class="ml-auto text-light mr-2 h5">
-                        <strong> <span id="card-generic" class="badge badge-success badge-pill">0</span></strong>
+                    <div class="row">
+                        <div class="mr-auto ml-2 display-5 text-light">
+                            Generics
+                        </div>
+                        <div class="ml-auto text-light mr-2 h5">
+                            <strong> <span id="card-generic" class="badge badge-success badge-pill">0</span></strong>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
@@ -61,17 +67,20 @@
     <div class="col-md-4 mt-4">
         <div class="card card-hover shadow">
             <div class="card-body bg-info-light">
-                <div class="h1">
-                    <i class="fas fa-file-prescription text-light"></i>
-                </div>
-                <div class="row">
-                    <div class="mr-auto ml-2 display-5 text-white-50">
-                        Prescriptions <br> <div class="text-light">Today</div>
+                <a href="{{ route('prescription.index') }}">
+                    <div class="h1">
+                        <i class="fas fa-file-prescription text-light"></i>
                     </div>
-                    <div class="ml-auto text-light mt-2 mr-2 h5">
-                        <strong> <span id="card-presc" class="badge badge-info badge-pill">0</span></strong>
+                    <div class="row">
+                        <div class="mr-auto ml-2 display-5 text-light">
+                            Prescriptions <br>
+                            <div class="text-white-50">Today</div>
+                        </div>
+                        <div class="ml-auto text-light mt-2 mr-2 h5">
+                            <strong> <span id="card-presc" class="badge badge-info badge-pill">0</span></strong>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
@@ -79,17 +88,21 @@
     <div class="col-md-4 mt-4">
         <div class="card card-hover shadow">
             <div class="card-body bg-warning-light">
-                <div class="h1">
-                    <i class="fas fa-portrait text-light"></i>
-                </div>
-                <div class="row">
-                    <div class="mr-auto ml-2 display-5 text-white-50">
-                        Doctor <br> Applications
+                <a href="{{ route('application.doctorApplicationIndex') }}">
+                    <div class="h1">
+                        <i class="fas fa-portrait text-light"></i>
                     </div>
-                    <div class="ml-auto text-light mt-2 mr-2 h5">
-                        <strong> <span id="card-doctor-application" class="badge badge-warning text-light badge-pill">0</span></strong>
+                    <div class="row">
+                        <div class="mr-auto ml-2 display-5 text-light">
+                            Doctor <br> Applications
+                        </div>
+                        <div class="ml-auto text-light mt-2 mr-2 h5">
+                            <strong> <span id="card-doctor-application"
+                                    class="badge badge-warning text-light badge-pill">0</span>
+                            </strong>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
@@ -97,17 +110,21 @@
     <div class="col-md-4 mt-4">
         <div class="card card-hover shadow">
             <div class="card-body bg-purple-light">
-                <div class="h1">
-                    <i class="fas fa-file-medical text-light"></i>
-                </div>
-                <div class="row">
-                    <div class="mr-auto ml-2 display-5 text-white-50">
-                        Medicine <br> Applications
+                <a href="{{ route('application.medicineApplicationIndex') }}">
+                    <div class="h1">
+                        <i class="fas fa-file-medical text-light"></i>
                     </div>
-                    <div class="ml-auto text-light mt-2 mr-2 h5">
-                        <strong> <span id="card-medicine-application" class="badge bg-purple text-light badge-pill">0</span></strong>
+                    <div class="row">
+                        <div class="mr-auto ml-2 display-5 text-light">
+                            Medicine <br> Applications
+                        </div>
+                        <div class="ml-auto text-light mt-2 mr-2 h5">
+                            <strong> <span id="card-medicine-application"
+                                    class="badge bg-purple text-light badge-pill">0</span>
+                            </strong>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>

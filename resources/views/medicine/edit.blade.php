@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 
-@section('title', 'Home')
+@section('title', 'Edit Medicine')
 
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-8 mx-auto mt-3">
             <div class="card">
-                <div class="card-header">Edit Medicine Profile</div>
+                <div class="card-header card-header-bg">Edit Medicine Profile</div>
                 <div class="card-body">
                     @if (count($errors) > 0)
                     <p class="alert alert-danger mb-3">
@@ -38,7 +38,6 @@
                         <div class="form-group">
                             <label for="generic">Generic</label>
                             <select class="form-control" id="generic" name="generic">
-
                                 @foreach($generics as $generic)
                                 @if($medicine->generic_id == $generic->id)
                                 <option value="{{$generic->id}}" selected="selected">{{$generic->generic_name}}</option>

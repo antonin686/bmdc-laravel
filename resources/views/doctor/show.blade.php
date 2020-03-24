@@ -1,45 +1,53 @@
 @extends('layouts.admin')
 
-@section('title', 'All Doctor')
+@section('title', 'Doctor Info')
 
 @section('content')
 <div class="row">
     <div class="col-md-12 mx-auto mt-3">
         <div class="card">
-            <div class="card-header">Doctor Info</div>
+            <div class="card-header card-header-bg">Doctor Info</div>
             <div class="card-body">
 
                 <div class="row">
                     <div class="col-md-8">
                         <div class="card card-body">
                             <table class="table" id="table">
-
                                 <tbody>
-
                                     <tr class="bg-dark text-light">
                                         <th>#</th>
-                                        <td>{{ $doc->id }}</td>
-
+                                        <td>{{ $doc->registration_id }}</td>
                                     </tr>
+
                                     <tr>
                                         <th>Name</th>
-                                        <td>{{ $doc->first_name }} {{ $doc->last_name }}</td>
+                                        <td>{{ $doc->full_name }}</td>
                                     </tr>
+
                                     <tr>
                                         <th>Speciality</th>
                                         <td>{{ $doc->speciality }}</td>
                                     </tr>
 
                                     <tr>
-                                        <th>Degree</th>
-                                        <td> {{ $doc->degree }} </td>
+                                        <th>Place Of Work</th>
+                                        <td> {{ $doc->work_place }}</td>
                                     </tr>
 
                                     <tr>
-                                        <th>Institute</th>
-                                        <td> {{ $doc->institute }} </td>
+                                        <th>Degree</th>
+                                        <td> {{ $doc->basic_degree }},  {{ $doc->advance_degree }}</td>
                                     </tr>
 
+                                    <tr>
+                                        <th>Phone</th>
+                                        <td> {{ $doc->phone }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Email</th>
+                                        <td> {{ $doc->email }}</td>
+                                    </tr>                       
                                 </tbody>
                             </table>
                         </div>
@@ -47,7 +55,6 @@
                     <div class="col-md-4">
                         <div class="card">
                             <img src="{{$doc->img_path}}" class="card-img-top" alt="img">
-
                         </div>
                     </div>
                 </div>

@@ -1,52 +1,71 @@
-.card-header{
+.card-header-bg {
     background-color: #27496d;
-    color:white;
+    color: white;
 }
 
-
-
-.bg-nav{
+.bg-nav {
     background-color: #142850;
 }
 
-.bg-primary-light{
-    background-color: #6A91F0;
+.bg-primary-light {
+    background-color: #6a91f0;
 }
 
-.bg-info-light{
-  background-color: #5DC2D3;
+.bg-info-light {
+    background-color: #5dc2d3;
 }
 
-.bg-danger-light{
-  background-color: #E9769E;
+.bg-danger-light {
+    background-color: #e9769e;
 }
 
-.bg-success-light{
-  background-color: #59D29E;
+.bg-success-light {
+    background-color: #59d29e;
 }
 
-
-.bg-warning-light{
-  background-color: #ecd447;
+.bg-warning-light {
+    background-color: #ecd447;
 }
 
-.bg-purple-light{
-  background-color: #dbadfc;
+.bg-purple-light {
+    background-color: #dbadfc;
 }
 
-.bg-purple{
-  background-color: #9c26f0;
+.bg-purple {
+    background-color: #9c26f0;
 }
 
-.text-grey{
+.text-grey {
     color: lightgray;
 }
 
 .card-hover {
-  position: relative;
-  top: 0;
-  transition: top ease 0.5s;
+    position: relative;
+    top: 0;
+    transition: top ease 0.5s;
+}
+
+.nav-link {
+    text-decoration: none !important;
+    padding: 0 25px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+}
+
+a {
+    text-decoration: none !important;
 }
 .card-hover:hover {
-  top: 10px;
+    top: 10px;
 }
+
+.center-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 80vh;
+  }

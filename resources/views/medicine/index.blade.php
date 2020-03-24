@@ -6,14 +6,19 @@
 <div class="row">
     <div class="col-md-12 mx-auto mt-3">
         <div class="card">
-
+            <div class="card-header card-header-bg">Medicine List</div>
             <div class="card-body">
                 <div class="row mx-auto">
                     <a class="btn btn-primary m-3" href="{{ route('medicine.create')}}">Add New Medicine</a>
                     <a class="btn btn-danger m-3" href="{{ route('medicine.removed')}}">Show Removed Medicines</a>
                 </div>
                 <div class="card card-body">
-                    <table class="table table-hover" id="table">
+                    @if(session()->has('message'))
+                    <div class="alert alert-danger">
+                        {{ session()->get('message') }}
+                    </div>
+                    @endif
+                    <table class="table table-hover table-striped table-responsive-sm" id="table">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -32,14 +37,17 @@
                                 <td>{{ $med->dosage_form }}</td>
                                 <td class="text-center">
                                     <div class="row">
-                                        <a class="btn btn-info mr-1" href="{{ route('medicine.show', $med->id)}}"> <i
-                                                class="fas fa-info"></i> </a>
-                                        <a class="btn btn-primary mr-1" href="{{ route('medicine.edit', $med->id)}}"> <i
-                                                class="fas fa-pen-alt"></i> </a>
-                                        <form action="{{ route('medicine.destroy', $med->id)}}" method="post">
+                                        <a title="Details" class="btn btn-info mr-1 mt-1"
+                                            href="{{ route('medicine.show', $med->id)}}"> <i class="fas fa-info"></i>
+                                        </a>
+                                        <a title="Edit" class="btn btn-primary mr-1 mt-1"
+                                            href="{{ route('medicine.edit', $med->id)}}"> <i class="fas fa-pen-alt"></i>
+                                        </a>
+                                        <form title="Delete" action="{{ route('medicine.destroy', $med->id)}}"
+                                            method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-danger" type="submit"><i
+                                            <button class="btn btn-danger mt-1" type="submit"><i
                                                     class="fas fa-trash"></i></button>
                                         </form>
                                     </div>

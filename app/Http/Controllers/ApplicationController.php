@@ -16,7 +16,7 @@ class ApplicationController extends Controller
         return view('application.message');
     }
 
-    public function medicineIndex()
+    public function medicineApplicationIndex()
     {
         $apps = DB::table('authorize_medicines')
                 ->join('generics', 'authorize_medicines.generic_id', '=', 'generics.id')
@@ -27,13 +27,13 @@ class ApplicationController extends Controller
         return view('application.medicine.index')->with('apps', $apps);
     }
 
-    public function medicineCreate()
+    public function medicineApplicationCreate()
     {
         $generics = Generic::all();
         return view('application.medicine.create')->with('generics', $generics);
     }
 
-    public function medicineStore(Request $request)
+    public function medicineApplicationStore(Request $request)
     {
 
         $this->validate($request,[
@@ -65,10 +65,74 @@ class ApplicationController extends Controller
         return redirect()->route('application.message')->with('message', $message);
     }
 
-    public function medicineShow($id)
+    public function medicineApplicationShow($id)
     {
         $medicine = AuthorizeMedicine::find($id);
         $generics = Generic::all();
         return view('application.medicine.show', compact('medicine', 'generics'));
     }
+
+    //Doctor
+
+    public function doctorApplicationIndex()
+    {
+        $apps = AuthorizeDoctor::where('status', '=', '0')->get();
+        return view('application.doctor.index')->with('apps', $apps);
+    }
+
+    public function doctorApplicationCreate()
+    {
+        return view('application.doctor.create');
+    }
+
+    public function doctorApplicationStore(Request $request)
+    {
+        $this->validate($request,[
+            'nid' => 'required|unique:doctors',
+            'full_name' => 'required',
+            'phone' => 'required|numeric|min:11|unique:doctors',
+            'email' => 'required|email',
+            'basic_degree' => 'required',
+            'advance_degree' => 'required',
+            'speciality' => 'required',
+            'work_place' => 'required',
+            'image' => 'required',
+        ]);
+        
+        $file = $request->file('image');
+        $name = "";
+
+        if($file)
+        {
+            $name = time() . rand() . '.' . $file->getClientOriginalExtension();
+            $file->move('uploads', $name);
+        }
+
+        $path = "/uploads/".$name;
+
+        $doc = new AuthorizeDoctor();
+        $doc->nid = $request->nid;
+        $doc->full_name = $request->full_name;
+        $doc->email = $request->email;
+        $doc->phone = $request->phone;
+        $doc->basic_degree = $request->basic_degree;
+        $doc->advance_degree = $request->advance_degree;
+        $doc->speciality = $request->speciality;
+        $doc->work_place = $request->work_place;
+        $doc->img_path = $path;
+        $doc->save();
+
+        $message = "Doctor Application Successfully Send !!!";
+
+        return redirect()->route('application.message')->with('message', $message);
+    }
+
+    public function doctorApplicationShow($id)
+    {
+        $app = AuthorizeDoctor::find($id);
+
+        return view('application.doctor.show')->with('app', $app);
+    }
+
+
 }

@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-md-12 mt-3">
         <div class="card">
-            <div class="card-header">Prescription</div>
+            <div class="card-header card-header-bg">Prescription</div>
             <div class="card-body">
                 <div class="col">
                     <div class="col-md-12">
@@ -24,14 +24,13 @@
                                     <i class="fas fa-user-md"></i>
                                 </span>
                                 [ <a href="{{ route('doctor.show', $doctor->id)}}">
-                                    {{ $doctor->first_name }}
-                                    {{ $doctor->last_name }}
+                                    {{ $doctor->full_name }}
                                 </a> ]
                             </div>
                             <div title="Speciality" class="col-md-6">
                                 <span class="mr-2 text-info">
                                     <i class="fas fa-certificate"></i>
-                                </span> [{{ $doctor->speciality}}]
+                                </span> [ {{ $doctor->speciality}} ]
                             </div>
                         </div>
 
@@ -40,7 +39,7 @@
                                 <span class="text-info mr-1">
                                     <i class="fas fa-graduation-cap"></i>
                                 </span>
-                                [{{ $doctor->degree }} from {{ $doctor->institute }}]
+                                [ {{ $doctor->basic_degree }}, {{ $doctor->advance_degree }} ]
                             </div>
                         </div>
 
@@ -48,13 +47,13 @@
                             <div title="email" class="col-md-6">
                                 <span class="mr-2 text-info">
                                     <i class="fas fa-at"></i>
-                                </span> [{{ $doctor->email }}]
+                                </span> [ {{ $doctor->email }} ]
                             </div>
 
                             <div title="phone" class="col-md-6">
                                 <span class="mr-2 text-info">
                                     <i class="fas fa-phone-alt"></i>
-                                </span> [{{ $doctor->phone }}]
+                                </span> [ {{ $doctor->phone }} ]
                             </div>
                         </div>
 
@@ -103,9 +102,12 @@
                         </div>
 
                         <hr>
+                            <div class="h5">Prescription</div>
+                        <hr>
 
                         <p>
-                            {{ $prescription->mainbody }}
+                            {!! nl2br($prescription->mainbody) !!}
+
                         </p>
 
                     </div>

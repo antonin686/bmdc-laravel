@@ -1,8 +1,79 @@
 @extends('layouts.admin')
 
-@section('title', 'All medicine')
+@section('title', 'Medicine Info')
 
 @section('content')
+<div class="row">
+    <div class="col-md-12 mx-auto mt-3">
+        <div class="card">
+            <div class="card-header card-header-bg">Medicine Info</div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card card-body">
+                            <table class="table" id="table">
+                                <tbody>
+                                    <tr class="bg-dark text-light">
+                                        <th>#</th>
+                                        <td>{{ $medicine->id }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Brand Name</th>
+                                        <td>{{ $medicine->brand_name }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Dosage Form</th>
+                                        <td>{{ $medicine->dosage_form }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Generic Name</th>
+                                        <td> <a href="{{ route('generic.show',$generic->id)}}"> {{ $generic->generic_name}}</a> </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Company</th>
+                                        <td> {{ $medicine->company }} </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Price</th>
+                                        <td> ৳ {{ $medicine->price }}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="{{$medicine->img_path}}" class="card-img-top" alt="img">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <a href="{{ route('medicine.edit', $medicine->id )}}" class="btn btn-info m-3">Edit Medicine</a>
+                    <form class="m-3" action="{{ route('medicine.destroy', $medicine->id )}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger" type="submit">Remove Medicine</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@endsection
+
+
+<!-- 
 <div class="row">
     <div class="col-md-12 mt-3">
 
@@ -38,6 +109,4 @@
 
     </div>
 </div>
-
-
-@endsection
+ -->

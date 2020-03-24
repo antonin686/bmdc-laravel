@@ -15,16 +15,18 @@ class CreateDoctorsTable extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('registration_id')->unique();
             $table->bigInteger('nid');
-            $table->string('first_name');
-            $table->string('last_name');
+            $table->string('full_name');
             $table->string('email')->unique();
             $table->string('phone')->unique();
+            $table->string('work_place');
             $table->string('speciality');
-            $table->string('degree');
-            $table->string('institute');
+            $table->string('basic_degree');
+            $table->string('advance_degree');
             $table->string('img_path');
             $table->bigInteger('user_id');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\AuthorizeDoctor;
 use App\Doctor;
 use App\User;
-use App\AuthorizeDoctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+
 class DoctorController extends Controller
 {
     /**
@@ -14,9 +15,15 @@ class DoctorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function message()
+    {
+        return view('doctor.message');
+    }
+
     public function index()
     {
-        $docs = Doctor::all();
+        $docs = Doctor::where('status', '=', '0')->get();
         return view('doctor.index')->with('docs', $docs);
     }
 
@@ -27,7 +34,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        return view ('doctor.create');
+        return view('doctor.create');
     }
 
     /**
@@ -38,21 +45,36 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'first_name' => 'required',
+        //dd($request);
+        $this->validate($request, [
+            'full_name' => 'required',
             'nid' => 'required|unique:doctors',
-            'last_name' => 'required',
+            'registration_id' => 'required|unique:doctors',
             'phone' => 'required|numeric|min:11',
             'email' => 'required|email',
-            'degree' => 'required',
-            'institute' => 'required',
+            'basic_degree' => 'required',
+            'advance_degree' => 'required',
+            'speciality' => 'required',
+            'work_place' => 'required',
             'username' => 'required|unique:users|min:3',
             'password' => 'required|min:6',
         ]);
-        
+
+        if (!$request->img_path) {
+            $file = $request->file('image');
+            $name = "";
+
+            if ($file) {
+                $name = time() . rand() . '.' . $file->getClientOriginalExtension();
+                $file->move('uploads', $name);
+            }
+
+            $path = "/uploads/" . $name;
+        }
+
         $user = new User;
 
-        $user->name = $request->first_name.' '.$request->last_name;
+        $user->name = $request->first_name . ' ' . $request->last_name;
         $user->username = $request->username;
         $user->password = Hash::make($request->password);
         $user->role = 2;
@@ -60,26 +82,28 @@ class DoctorController extends Controller
 
         $doc = new Doctor;
         $doc->nid = $request->nid;
-        $doc->first_name = $request->first_name;
-        $doc->last_name = $request->last_name;
+        $doc->full_name = $request->full_name;
+        $doc->registration_id = $request->registration_id;
         $doc->email = $request->email;
         $doc->phone = $request->phone;
+        $doc->basic_degree = $request->basic_degree;
+        $doc->advance_degree = $request->advance_degree;
         $doc->speciality = $request->speciality;
-        $doc->degree = $request->degree;
-        $doc->institute = $request->institute;
-        $doc->img_path = $request->img_path;
+        $doc->work_place = $request->work_place;
+        $doc->img_path = $request->img_path ? $request->img_path : $path;
         $doc->user_id = $user->id;
-        $doc->save();  
+        $doc->save();
 
         $authDoc = AuthorizeDoctor::where('nid', '=', $request->nid)->first();
-        if($authDoc)
-        {
+        if ($authDoc) {
             $authDoc->status = 1;
             $authDoc->save();
         }
-        
-        
-        return redirect()->route('doctor.index')->with('message',$message);
+
+        $message = "Doctor Successfully Added !!!";
+
+        return redirect()->route('doctor.message')->with('message', $message)->with('id', $doc->id);
+
     }
 
     /**
@@ -92,7 +116,7 @@ class DoctorController extends Controller
     {
         $doc = Doctor::find($id);
 
-        return view ('doctor.show')->with('doc', $doc);
+        return view('doctor.show')->with('doc', $doc);
     }
 
     /**
@@ -116,28 +140,29 @@ class DoctorController extends Controller
      */
     public function update(Request $request, Doctor $doctor)
     {
-        $this->validate($request,[
-            'first_name' => 'required',
-            'last_name' => 'required',
+        $this->validate($request, [
+            'full_name' => 'required',
             'phone' => 'required|numeric|min:11',
             'email' => 'required|email',
-            'degree' => 'required',
-            'institute' => 'required',
+            'basic_degree' => 'required',
+            'advance_degree' => 'required',
+            'speciality' => 'required',
+            'work_place' => 'required',
         ]);
-        
+
         $doc = Doctor::find($doctor->id);
-        $doc->first_name = $request->first_name;
-        $doc->last_name = $request->last_name;
-        $doc->speciality = $request->speciality;
-        $doc->degree = $request->degree;
+        $doc->full_name = $request->full_name;
         $doc->email = $request->email;
         $doc->phone = $request->phone;
-        $doc->institute = $request->institute;
+        $doc->basic_degree = $request->basic_degree;
+        $doc->advance_degree = $request->advance_degree;
+        $doc->speciality = $request->speciality;
+        $doc->work_place = $request->work_place;
         $doc->save();
 
         $message = "Doctor has Been Successfully Updated!!!";
 
-        return redirect()->route('doctor.edit', $doc->id)->with('message', $message);
+        return redirect()->route('doctor.message')->with('message', $message)->with('id', $doc->id);
     }
 
     /**
@@ -148,6 +173,12 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
-        //
+        $doctor = Doctor::find($doctor->id);
+
+        $doctor->status = 1;
+        $doctor->save();
+
+        $message = "Doctor ".$doctor->full_name." Successfully Deleted!!!";
+        return redirect()->route('doctor.index')->with('message', $message);
     }
 }

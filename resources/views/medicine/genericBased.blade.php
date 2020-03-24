@@ -38,4 +38,17 @@
     </div>
 </div>
 
+<script>
+
+$(document).ready(function() {
+    $('#table').DataTable();
+    $('#table').on('click', 'tr', (event) => {
+        var id = $(event.currentTarget).attr("id");
+        if (id != null) {
+            window.location.href = `/publicMedicine/${id}`;
+        }
+    });
+});
+
+</script>
 @endsection

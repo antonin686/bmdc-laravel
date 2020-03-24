@@ -1,18 +1,23 @@
 @extends('layouts.admin')
 
-@section('title', 'All Medicine')
+@section('title', 'Removed Medicine List')
 
 @section('content')
 <div class="row">
     <div class="col-md-12 mx-auto mt-3">
         <div class="card">
-
+            <div class="card-header card-header-bg">Removed Medicine List</div>
             <div class="card-body">
                 <div class="row mx-auto">
                     <a class="btn btn-primary m-3" href="{{ route('medicine.index')}}">Go back to Medicine List</a>
                 </div>
                 <div class="card card-body">
-                    <table class="table table-striped table-hover" id="table">
+                    @if(session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session()->get('message') }}
+                    </div>
+                    @endif
+                    <table class="table table-striped table-responsive-sm table-hover" id="table">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -32,7 +37,8 @@
                                 <td>{{ $med->dosage_form }}</td>
                                 <td>{{ $med->status }}</td>
                                 <td>
-                                    <a class="btn btn-info mr-1" href="{{ route('medicine.removed.undo', $med->id)}}">
+                                    <a title="Undo" class="btn btn-info mr-1"
+                                        href="{{ route('medicine.removed.undo', $med->id)}}">
                                         <i class="fas fa-undo"></i> </a>
                                 </td>
                             </tr>

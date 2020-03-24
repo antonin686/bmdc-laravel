@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.public')
 
-@section('title', 'Home')
+@section('title', 'Doctor Application Form')
 
 @section('content')
 <div class="container">
@@ -11,6 +11,7 @@
                     Doctor Application Form
                 </div>
                 <div class="card-body">
+
                     @if (count($errors) > 0)
                     <p class="alert alert-danger mb-3">
                         @foreach ($errors->all() as $error)
@@ -23,21 +24,21 @@
                         {{ session()->get('message') }}
                     </div>
                     @endif
+
                     <form method="POST" enctype="multipart/form-data">
                         @csrf
+
+                        <div class="row">
+
+                        </div>
                         <div class="form-group">
                             <label for="nid">NID</label>
                             <input type="text" class="form-control" name="nid" value="{{ old('nid') }}">
                         </div>
 
                         <div class="form-group">
-                            <label for="first_name">First Name</label>
-                            <input type="text" class="form-control" name="first_name" value="{{ old('first_name') }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="last_name">Last Name</label>
-                            <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}">
+                            <label for="full_name">Full Name</label>
+                            <input type="text" class="form-control" name="full_name" value="{{ old('full_name') }}">
                         </div>
 
                         <div class="form-group">
@@ -51,18 +52,25 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="email">Degree</label>
-                            <input type="text" class="form-control" name="degree" value="{{ old('degree') }}">
+                            <label for="basic_degree">Basic Degree</label>
+                            <input type="text" class="form-control" name="basic_degree"
+                                value="{{ old('basic_degree') }}">
                         </div>
 
                         <div class="form-group">
-                            <label for="institute">Institute</label>
-                            <input type="text" class="form-control" name="institute" value="{{ old('institute') }}">
+                            <label for="advance_degree">Advance Degree</label>
+                            <input type="text" class="form-control" name="advance_degree"
+                                value="{{ old('advance_degree') }}">
                         </div>
 
                         <div class="form-group">
-                            <label for="speciality">Speciality <small>(optional)</small> </label>
+                            <label for="speciality">Speciality</label>
                             <input type="text" class="form-control" name="speciality" value="{{ old('speciality') }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="work_place">Work Place</label>
+                            <input type="text" class="form-control" name="work_place" value="{{ old('work_place') }}">
                         </div>
 
                         <div class="form-group">

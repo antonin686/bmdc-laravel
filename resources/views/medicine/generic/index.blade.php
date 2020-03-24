@@ -1,18 +1,18 @@
 @extends('layouts.admin')
 
-@section('title', 'All Medicine')
+@section('title', 'All Generic')
 
 @section('content')
 <div class="row">
     <div class="col-md-12 mx-auto mt-3">
         <div class="card">
-
+            <div class="card-header card-header-bg">Generic List</div>
             <div class="card-body">
                 <div class="row mx-auto">
                 <a class="btn btn-primary m-3" href="{{ route('generic.create')}}">Add New Generic</a>
                 </div>
                 <div class="card card-body">
-                    <table class="table table-striped table-hover" id="table">
+                    <table class="table table-striped table-responsive-sm table-hover" id="table">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -27,9 +27,9 @@
                                 <td>{{ $generic->generic_name }}</td>
                                 <td>
                                     <div class="row">
-                                    <a class="btn btn-info mr-1" href="{{ route('generic.show', $generic->id)}}"> <i
+                                    <a title="Details" class="btn btn-info mr-1" href="{{ route('generic.show', $generic->id)}}"> <i
                                             class="fas fa-info"></i> </a>
-                                    <a class="btn btn-primary mr-1" href="{{ route('generic.edit', $generic->id)}}"> <i
+                                    <a title="Edit" class="btn btn-primary mr-1" href="{{ route('generic.edit', $generic->id)}}"> <i
                                             class="fas fa-pen-alt"></i> </a>
                                     <!-- <form action="{{ route('generic.destroy', $generic->id)}}" method="post">
                                         @csrf

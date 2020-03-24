@@ -14,10 +14,11 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css')}}">
+    
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
-
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
     <title>Admin - @yield('title')</title>
 </head>
 
@@ -52,8 +53,8 @@
                         Authorize Application
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('authorizeDoctor.index') }}">Authorize Doctor</a>
-                        <a class="dropdown-item" href="{{ route('application.medicine.index') }}">Authorize Medicine</a>
+                        <a class="dropdown-item" href="{{ route('application.doctorApplicationIndex') }}">Doctor Applications</a>
+                        <a class="dropdown-item" href="{{ route('application.medicineApplicationIndex') }}">Medicine Applications</a>
                     </div>
                 </li>
             </ul>
@@ -67,7 +68,7 @@
             </ul>
         </div>
     </nav>
-    <div class="container">
+    <div class="container mt-3 pt-3">
         @yield('content')
     </div>
     <!-- Optional JavaScript -->

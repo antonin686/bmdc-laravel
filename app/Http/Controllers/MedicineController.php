@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Medicine;
 use App\AuthorizeMedicine;
 use App\Generic;
+use App\Medicine;
 use DB;
 use Illuminate\Http\Request;
 
@@ -15,23 +15,30 @@ class MedicineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function message()
+    {
+        return view('medicine.message');
+    }
+
     public function index()
     {
         $meds = DB::table('medicines')
-                ->join('generics', 'medicines.generic_id', '=', 'generics.id')
-                ->select('medicines.*', 'generics.generic_name')
-                ->where('medicines.status', '=', '0')
-                ->get();
+            ->join('generics', 'medicines.generic_id', '=', 'generics.id')
+            ->select('medicines.*', 'generics.generic_name')
+            ->where('medicines.status', '=', '0')
+            ->get();
         return view('medicine.index')->with('meds', $meds);
     }
 
     public function removedMeds()
     {
         $meds = DB::table('medicines')
-                ->join('generics', 'medicines.generic_id', '=', 'generics.id')
-                ->select('medicines.*', 'generics.generic_name')
-                ->where('medicines.status', '=', '1')
-                ->get();
+            ->join('generics', 'medicines.generic_id', '=', 'generics.id')
+            ->select('medicines.*', 'generics.generic_name')
+            ->where('medicines.status', '=', '1')
+            ->get();
+
         return view('medicine.removed')->with('meds', $meds);
     }
 
@@ -54,7 +61,7 @@ class MedicineController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'brand_name' => 'required',
             'dosage_form' => 'required',
             'generic' => 'required|numeric',
@@ -63,25 +70,39 @@ class MedicineController extends Controller
             'price' => 'required',
         ]);
 
+        $path = false;
+
+        if ($request->file('image')) {
+            $file = $request->file('image');
+            $name = "";
+
+            if ($file) {
+                $name = time() . rand() . '.' . $file->getClientOriginalExtension();
+                $file->move('uploads', $name);
+            }
+
+            $path = "/uploads/" . $name;
+        }
+
         $med = new Medicine;
         $med->brand_name = $request->brand_name;
         $med->dosage_form = $request->dosage_form;
         $med->generic_id = $request->generic;
         $med->strength = $request->strength;
         $med->company = $request->company;
-        $med->price = $request->price; 
+        $med->price = $request->price;
+        $med->img_path = $path ? $path : null;
         $med->save();
-        
+
         $authMed = AuthorizeMedicine::where('id', '=', $request->id)->first();
-        if($authMed)
-        {
+        if ($authMed) {
             $authMed->status = 1;
             $authMed->save();
         }
 
         $message = "Medicine Created Successfully";
-        
-        return redirect()->route('medicine.index')->with('message',$message);
+
+        return redirect()->route('medicine.message')->with('message', $message)->with('id', $med->id);
     }
 
     /**
@@ -141,7 +162,9 @@ class MedicineController extends Controller
         $med->price = $request->price;
         $med->save();
 
-        return redirect()->route('medicine.show', $medicine->id);
+        $message = "Medicine ".$med->brand_name." has been successfully updated!!!";
+
+        return redirect()->route('medicine.message')->with('message', $message)->with('id', $med->id);
     }
 
     /**
@@ -153,10 +176,11 @@ class MedicineController extends Controller
     public function destroy(Medicine $medicine)
     {
         $trash = Medicine::find($medicine->id);
-        $trash->status = 1;  
+        $trash->status = 1;
         $trash->save();
 
-        return redirect()->route('medicine.index');
+        $message = "Medicine " . $medicine->brand_name . " ". $medicine->strength . " Successfully Deleted!!!";
+        return redirect()->route('medicine.index')->with('message', $message);
     }
 
     public function removeUndo($id)
@@ -164,20 +188,21 @@ class MedicineController extends Controller
         $med = medicine::find($id);
         $med->status = 0;
         $med->save();
-        
-        return redirect()->route('medicine.index');   
+
+        $message = "Medicine " . $med->brand_name . " ". $med->strength . " Successfully Restored!!!";
+        return redirect()->route('medicine.removed')->with('message', $message);
     }
 
     public function genericBased($id)
     {
         $list = DB::table('medicines')
-                ->join('generics', 'medicines.generic_id', '=', 'generics.id')
-                ->select('medicines.*', 'generics.generic_name')
-                ->where('medicines.generic_id', '=', $id)
-                ->get();
+            ->join('generics', 'medicines.generic_id', '=', 'generics.id')
+            ->select('medicines.*', 'generics.generic_name')
+            ->where('medicines.generic_id', '=', $id)
+            ->get();
 
         $gen = Generic::find($id);
-        
+
         $meds = (object) [
             'list' => $list,
             'generic_name' => $gen->generic_name,
