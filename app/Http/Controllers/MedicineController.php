@@ -72,7 +72,7 @@ class MedicineController extends Controller
 
         $path = false;
 
-        if ($request->file('image')) {
+        if (!$request->img_path) {
             $file = $request->file('image');
             $name = "";
 
@@ -84,6 +84,7 @@ class MedicineController extends Controller
             $path = "/uploads/" . $name;
         }
 
+
         $med = new Medicine;
         $med->brand_name = $request->brand_name;
         $med->dosage_form = $request->dosage_form;
@@ -91,7 +92,7 @@ class MedicineController extends Controller
         $med->strength = $request->strength;
         $med->company = $request->company;
         $med->price = $request->price;
-        $med->img_path = $path ? $path : null;
+        $med->img_path = $request->img_path ? $request->img_path : $path;
         $med->save();
 
         $authMed = AuthorizeMedicine::where('id', '=', $request->id)->first();

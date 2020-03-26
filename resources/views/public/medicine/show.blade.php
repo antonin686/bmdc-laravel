@@ -1,8 +1,8 @@
-@extends('layouts.public')
+@extends('layouts.medicine')
 
 @section('title', 'All medicine')
 
-@section('content')
+@section('subcontent')
 <div class="row">
     <div class="col-md-12 mt-3">
 

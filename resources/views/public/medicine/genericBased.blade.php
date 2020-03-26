@@ -1,8 +1,8 @@
-@extends('layouts.public')
+@extends('layouts.medicine')
 
 @section('title', 'Generic Based Brand List')
 
-@section('content')
+@section('subcontent')
 <div class="row">
     <div class="col-md-12 mx-auto mt-3">
         <div class="card">

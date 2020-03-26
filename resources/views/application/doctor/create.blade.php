@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header card-header-teal">
                     Doctor Application Form
                 </div>
                 <div class="card-body">
@@ -41,41 +41,49 @@
                             <input type="text" class="form-control" name="full_name" value="{{ old('full_name') }}">
                         </div>
 
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="phone">Phone</label>
+                                <input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="phone">Phone</label>
-                            <input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="basic_degree">Basic Degree</label>
+                                <input type="text" class="form-control" name="basic_degree"
+                                    value="{{ old('basic_degree') }}">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="advance_degree">Advance Degree</label>
+                                <input type="text" class="form-control" name="advance_degree"
+                                    value="{{ old('advance_degree') }}">
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="basic_degree">Basic Degree</label>
-                            <input type="text" class="form-control" name="basic_degree"
-                                value="{{ old('basic_degree') }}">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="speciality">Speciality</label>
+                                <input type="text" class="form-control" name="speciality"
+                                    value="{{ old('speciality') }}">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="work_place">Work Place</label>
+                                <input type="text" class="form-control" name="work_place"
+                                    value="{{ old('work_place') }}">
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="advance_degree">Advance Degree</label>
-                            <input type="text" class="form-control" name="advance_degree"
-                                value="{{ old('advance_degree') }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="speciality">Speciality</label>
-                            <input type="text" class="form-control" name="speciality" value="{{ old('speciality') }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="work_place">Work Place</label>
-                            <input type="text" class="form-control" name="work_place" value="{{ old('work_place') }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="image">Image</label>
-                            <input type="file" class="form-control-file" name="image">
+                        <div class="custom-file my-3">
+                            <input type="file" class="custom-file-input" id="customFile" name="image">
+                            <label class="custom-file-label" for="customFile">Choose file</label>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Apply</button>
@@ -85,4 +93,13 @@
         </div>
     </div>
 </div>
+
+<script>
+$(document).ready(function() {
+
+    bsCustomFileInput.init();
+    
+});
+</script>
+
 @endsection

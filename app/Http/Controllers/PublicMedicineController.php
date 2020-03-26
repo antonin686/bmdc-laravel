@@ -16,6 +16,7 @@ class PublicMedicineController extends Controller
                 ->join('generics', 'medicines.generic_id', '=', 'generics.id')
                 ->select('medicines.*', 'generics.generic_name')
                 ->where('medicines.status', '=', '0')
+                ->orderby('brand_name')
                 ->get();
         return view('public.medicine.index')->with('meds', $meds);
     }

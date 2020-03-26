@@ -1,34 +1,34 @@
-@extends('layouts.public')
+@extends('layouts.medicine')
 
 @section('title', 'All Medicine')
 
-@section('content')
-<div class="row">
-    <div class="col-md-12 mx-auto mt-3">
+@section('subcontent')
+<div class="row my-2">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-
-                <table class="table table-hover" id="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Brand Name</th>
-                            <th scope="col">Generic</th>
-                            <th scope="col">Dosage</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($meds as $med)
-                        <tr id="{{ $med->id }}">
-                            <td>{{ $med->id }}</td>
-                            <td>{{ $med->brand_name }} <small>{{ $med->strength }}</small> </td>
-                            <td>{{ $med->generic_name }}</td>
-                            <td>{{ $med->dosage_form }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
+                <div class="h2 text-secondary">
+                    Medicine List (A-Z)
+                </div>
+                <div class="row">
+                    @foreach ($meds as $med)
+                    <div class="col-md-4 mt-4">
+                        <div class="card-med">
+                            <div class="card-body">
+                                <a href="{{ route('publicMedicine.show', $med->id) }}">
+                                    <div class="h3 med-info">
+                                        <div class="text-dark">{{ $med->brand_name }} <small> {{ $med->strength}} </small></div>
+                                    </div>
+                                    <div class="h6 med-info">
+                                        {{ $med->dosage_form}} <br> {{ $med->generic_name}}
+                                        <div class="med-info text-primary">{{ $med->company}}</div>                                 
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>

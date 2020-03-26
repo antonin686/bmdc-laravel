@@ -10,7 +10,7 @@
                 <div class="col">
                     <div class="col-md-8 mx-auto mt-3 pt-3">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" id="text-search" placeholder="Doctor's ID">
+                            <input type="text" class="form-control" id="text-search" placeholder="Doctor's Registration Number">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button"
                                     id="button-search">Search</button>
@@ -20,7 +20,7 @@
 
                     <div class="col-md-12 ">
                         <div class="card">
-                            <div class="card-header bg-light text-dark">Doctor's Information</div>
+                            <div class="card-header card-header-teal">Doctor's Information</div>
                             <div class="card-body">
                                 <div style="display:none" id="card-data">
                                     <div class="row">
@@ -50,8 +50,8 @@
                                                     </tr>
 
                                                     <tr>
-                                                        <th>Institute</th>
-                                                        <td id="institute"></td>
+                                                        <th>Place Of Work</th>
+                                                        <td id="work_place"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -89,14 +89,14 @@ $(document).ready(function() {
             success: function(result) {
                 result = result[0];
 
-                //console.log(result.id);
+                console.log(result);
                 $("#card-data").show();
-                $("#id").html(result.id);
+                $("#id").html(result.registration_id);
                 $("#name").html(result.full_name);
                 $("#email").html(result.email);
-                $("#degree").html(result.degree);
+                $("#degree").html(result.basic_degree + ', ' + result.advance_degree);
                 $("#speciality").html(result.speciality);
-                $("#institute").html(result.institute);       
+                $("#work_place").html(result.work_place);       
                 $("#image").attr("src", result.img_path);      
             }
         });

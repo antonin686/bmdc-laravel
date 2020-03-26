@@ -3,6 +3,20 @@
     color: white;
 }
 
+.card-header-teal {
+    background-color: teal;
+    color: white;
+}
+
+
+
+body{
+    background-color: whitesmoke;
+}
+.bg-teal{
+    background-color: darkslategray;
+}
+
 .bg-nav {
     background-color: #142850;
 }
@@ -69,3 +83,56 @@ a {
     text-align: center;
     min-height: 80vh;
   }
+
+  .search-ul{
+    background-color: #eee;
+    padding-left: 0;
+    cursor: pointer;
+    list-style: none;
+  }
+  .search-li {
+      padding: 12px;
+      background-color: white;
+  }
+  .search-li > a{
+    color: teal;
+    display:block;
+}
+
+  .search-li:hover {
+    background-color: teal;
+    
+}
+
+.search-li:hover > a{
+    color: white;
+    
+}
+
+.parent-overlay{
+    position: relative;
+}
+
+#medList{
+    position: absolute;
+    z-index: 9;
+}
+.card-med:hover{
+    background-color: teal;
+}
+
+.card-med > .card-body > a {
+    color: grey !important;
+}
+
+.card-med:hover > .card-body > a > .h3,
+.card-med:hover > .card-body > a > .h5 {
+    color: white !important;
+}
+
+.card-med:hover > .card-body > a >.med-info,
+.card-med:hover > .card-body > a >.med-info > .text-primary, 
+.card-med:hover > .card-body > a >.med-info > .text-dark,
+.card-med:hover > .card-body > a >.med-info > .text-info{
+    color: white !important;
+}

@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 use App\Http\Resources\MedicineResource;
+use App\Http\Resources\PrescriptionResource;
 use Illuminate\Http\Request;
 use DB;
 use App\Medicine;
 use App\Prescription;
+use App\Citizen;
+use App\Doctor;
+use App\Generic;
 use DateTime;
 use Exception;
 
@@ -31,32 +35,87 @@ class ApiController extends Controller
         return new MedicineResource($meds);
     }
 
+    public function prescriptionInfo($id)
+    {
+        $prescription = Prescription::find($id);
+
+        $citizen = Citizen::where('nid', '=', $prescription->citizen_id)
+                            ->orWhere('birthCer_id', '=', $prescription->citizen_id)
+                            ->select('first_name', 'last_name', 'dob')
+                            ->first();
+
+        $from = new DateTime($citizen->dob);
+        $to   = new DateTime('today');
+        $citizen->age = $from->diff($to)->y;
+        $prescription->date = $prescription->created_at->format('d/m/y'); 
+        
+        $doctor = Doctor::select('full_name', 'email', 'phone', 'work_place', 'speciality', 'basic_degree', 'advance_degree', 'registration_id')
+        ->where('id', '=', $prescription->doctor_id)->first();
+        
+        $datas = [
+            'citizen' => $citizen,
+            'doctor' => $doctor,
+            'prescription' => $prescription,
+        ];
+
+        return new PrescriptionResource($datas);
+    }
+
+    public function prescriptionListByCitizen($id)
+    {
+        $prescription = Prescription::where('citizen_id', '=', $id)->get();
+
+    
+        if(count($prescription) == 0)
+        {
+            return "no data";
+        }
+
+        $citizen = Citizen::where('nid', '=', $prescription[0]->citizen_id)
+                            ->orWhere('birthCer_id', '=', $prescription[0]->citizen_id)
+                            ->select('first_name', 'last_name', 'dob')
+                            ->first();
+
+        $from = new DateTime($citizen->dob);
+        $to   = new DateTime('today');
+        $citizen->age = $from->diff($to)->y;
+        
+        
+        $datas =  [
+            'citizen' => $citizen,
+            'prescription' => $prescription,
+        ];
+
+        return new PrescriptionResource($datas);
+    }
+
     public function prescriptionStore(Request $request)
     {
-        //dd($request->data_packet);
+        if($request->doctor_id && $request->citizen_id && $request->hospital_name && $request->med_list && $request->disease && $request->date)
+        {
+            $presc = new Prescription;
 
-        $dataset = json_decode($request->data_packet);
-
-        $presc = new Prescription;
-
-        $presc->doctor_id = $dataset->doctor_id;
-        $presc->citizen_id = $dataset->citizen_id;
-        $presc->hospital_name = $dataset->hospital_name;
-        $presc->mainbody = trim($dataset->mainbody);
-        $presc->med_list = $dataset->med_list;
-        $presc->disease = $dataset->disease;
-        $presc->cc = $dataset->cc;
-        $presc->oe = $dataset->oe;
-        $presc->lx = $dataset->lx;
-        $presc->date = new DateTime($dataset->date);
-
-        try {
-            $presc->save();
-        } catch (Exception $e) {
-
-            return "fill all the nessesary values";
+            $presc->doctor_id = $request->doctor_id;
+            $presc->citizen_id = $request->citizen_id;
+            $presc->hospital_name = $request->hospital_name;
+            $presc->mainbody = trim($request->mainbody);
+            $presc->med_list = $request->med_list;
+            $presc->disease = $request->disease;
+            $presc->cc = $request->cc;
+            $presc->oe = $request->oe;
+            $presc->lx = $request->lx;
+            $presc->date = new DateTime($request->date);
+            try {
+                $presc->save();
+            } catch (Exception $e) {
+    
+                return "fill all the nessesary values";
+            }
+            
+            return "success";
         }
         
-        return "success";      
+        return "fill all the nessesary values";
+              
     }
 }

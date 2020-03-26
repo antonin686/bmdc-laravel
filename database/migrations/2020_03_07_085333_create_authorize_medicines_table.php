@@ -14,7 +14,7 @@ class CreateAuthorizeMedicinesTable extends Migration
     public function up()
     {
         Schema::create('authorize_medicines', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id', 1000);
             $table->string('brand_name');
             $table->string('dosage_form');
             $table->bigInteger('generic_id');
@@ -24,6 +24,7 @@ class CreateAuthorizeMedicinesTable extends Migration
             $table->string('applicant_name');
             $table->string('applicant_email');
             $table->string('applicant_phone');
+            $table->string('img_path')->nullable();
             $table->integer('status')->default(0);  
             $table->timestamps();
         });

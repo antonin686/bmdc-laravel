@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-md-12 mx-auto mt-3">
         <div class="card">
-        <div class="card-header">Doctor Application List</div>
+        <div class="card-header card-header-bg">Doctor Application List</div>
             <div class="card-body">
                 <table class="table table-striped table-hover" id="table">
                     <thead class="thead-dark">

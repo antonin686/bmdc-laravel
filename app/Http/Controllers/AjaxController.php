@@ -11,6 +11,7 @@ use App\Generic;
 use App\Prescription;
 use App\AuthorizeDoctor;
 use App\AuthorizeMedicine;
+use DB;
 use Input;
 
 class AjaxController extends Controller
@@ -43,9 +44,31 @@ class AjaxController extends Controller
     {    
         if($request->ajax())
         {
-            $doctor = Doctor::select('id', 'full_name', 'last_name', 'speciality', 'basic_degree', 'institute', 'img_path','email')->where('id', $id)->get();
+            $doctor = Doctor::select('registration_id', 'full_name', 'email', 'phone', 'speciality', 'work_place', 'img_path','basic_degree', 'advance_degree')->where('registration_id', $id)->get();
 
             return $doctor;
+        }
+    }
+
+    public function getMedList(Request $request, $query)
+    {    
+        if($request->ajax())
+        {         
+            $meds = DB::table('medicines')
+            ->join('generics', 'medicines.generic_id', '=', 'generics.id')
+            ->select('medicines.*', 'generics.generic_name')
+            ->where('medicines.brand_name', 'LIKE', "{$query}%")
+            ->get();
+            return $meds;
+        }
+    }
+
+    public function getGenericList(Request $request, $query)
+    {    
+        if($request->ajax())
+        {
+            $genrics = Generic::query()->where('generic_name', 'LIKE', "{$query}%")->get();
+            return $genrics;
         }
     }
 

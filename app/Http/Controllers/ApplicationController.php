@@ -46,7 +46,19 @@ class ApplicationController extends Controller
             'applicant_name' => 'required',
             'applicant_email' => 'required|email',
             'applicant_phone' => 'required',
+            'image' => 'required',
         ]);
+
+        $file = $request->file('image');
+        $name = "";
+
+        if($file)
+        {
+            $name = time() . rand() . '.' . $file->getClientOriginalExtension();
+            $file->move('uploads', $name);
+        }
+
+        $path = "/uploads/".$name;
 
         $med = new AuthorizeMedicine;
         $med->brand_name = $request->brand_name;
@@ -55,6 +67,7 @@ class ApplicationController extends Controller
         $med->strength = $request->strength;
         $med->company = $request->company;
         $med->price = $request->price;
+        $med->img_path = $path;
         $med->applicant_name = $request->applicant_name;
         $med->applicant_email = $request->applicant_email;
         $med->applicant_phone = $request->applicant_phone;

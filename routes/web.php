@@ -24,7 +24,7 @@ Route::get('/message', function () {
     return redirect()->route('doctor.message')->with('message', $message)
                                                 ->with('id', $id);
 
-})->name('welcome');
+})->name('message');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/application/doctor/create', 'ApplicationController@doctorApplicationCreate')->name('application.doctorApplicationCreate');
@@ -41,6 +41,8 @@ Route::get('/publicMedicine/generic/show/{id}', 'PublicMedicineController@generi
 
 Route::get('/ajax/getDoctorDetails/{id}', 'AjaxController@getDoctorDetails')->name('ajax.getDoctorDetails');
 Route::get('/ajax/generateDoctorID', 'AjaxController@generateDoctorID')->name('ajax.generateDoctorID');
+Route::get('/ajax/getMedList/{query}', 'AjaxController@getMedList');
+Route::get('/ajax/getGenericList/{query}', 'AjaxController@getGenericList');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'checkIfAdmin'], function() {
 
