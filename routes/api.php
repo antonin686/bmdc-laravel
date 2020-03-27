@@ -23,3 +23,4 @@ Route::get('/prescription/{id}', 'ApiController@prescriptionInfo');
 Route::get('/prescription/list/citizen/{id}', 'ApiController@prescriptionListByCitizen');
 
 Route::post('/prescription/store', 'ApiController@prescriptionStore');
+Route::post('/complain/store', 'ApiController@complainStore');

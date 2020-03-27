@@ -116,6 +116,14 @@ class ApiController extends Controller
         }
         
         return "fill all the nessesary values";
-              
+        
     }
+
+
+    public function complainStore(Request $request)
+    {
+         
+        return $request;
+    }
+
 }
