@@ -7,10 +7,12 @@
     <div class="col-md-12 mt-3 pt-3">
         <div class="card">
             <div class="card-body">
+                <div class="h3">Find Registered Doctor</div>
                 <div class="col">
                     <div class="col-md-8 mx-auto mt-3 pt-3">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" id="text-search" placeholder="Doctor's Registration Number">
+                            <input type="text" class="form-control" id="text-search"
+                                placeholder="Doctor's Registration Number">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button"
                                     id="button-search">Search</button>
@@ -81,7 +83,7 @@ $(document).ready(function() {
     });
 
     function getDoctorDetails(id) {
-    
+
         $.ajax({
             url: `/ajax/getDoctorDetails/${id}`,
             method: "GET",
@@ -96,8 +98,8 @@ $(document).ready(function() {
                 $("#email").html(result.email);
                 $("#degree").html(result.basic_degree + ', ' + result.advance_degree);
                 $("#speciality").html(result.speciality);
-                $("#work_place").html(result.work_place);       
-                $("#image").attr("src", result.img_path);      
+                $("#work_place").html(result.work_place);
+                $("#image").attr("src", result.img_path);
             }
         });
     }

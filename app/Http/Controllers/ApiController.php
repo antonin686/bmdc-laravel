@@ -10,6 +10,7 @@ use App\Prescription;
 use App\Citizen;
 use App\Doctor;
 use App\Generic;
+use App\Complain;
 use DateTime;
 use Exception;
 
@@ -121,9 +122,16 @@ class ApiController extends Controller
 
 
     public function complainStore(Request $request)
-    {
-         
-        return $request;
+    {  
+        
+        $com = new Complain;
+        $com->complain_type = $request->complain_type;
+        $com->complain_body = $request->complain_body;
+        $com->citizen_id = $request->citizen_id;
+
+        $com->save();
+
+        return "success";
     }
 
 }
