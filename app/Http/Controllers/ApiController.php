@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Resources\MedicineResource;
 use App\Http\Resources\PrescriptionResource;
+use App\Http\Resources\CitizenResource;
 use Illuminate\Http\Request;
 use DB;
 use App\Medicine;
@@ -11,6 +12,8 @@ use App\Citizen;
 use App\Doctor;
 use App\Generic;
 use App\Complain;
+use App\User;
+use Hash;
 use DateTime;
 use Exception;
 
@@ -81,7 +84,6 @@ class ApiController extends Controller
         $to   = new DateTime('today');
         $citizen->age = $from->diff($to)->y;
         
-        
         $datas =  [
             'citizen' => $citizen,
             'prescription' => $prescription,
@@ -105,6 +107,7 @@ class ApiController extends Controller
             $presc->cc = $request->cc;
             $presc->oe = $request->oe;
             $presc->lx = $request->lx;
+            $presc->revisit = $request->revisit;
             $presc->date = new DateTime($request->date);
             try {
                 $presc->save();
@@ -116,10 +119,31 @@ class ApiController extends Controller
             return "success";
         }
         
-        return "fill all the nessesary values";
-        
+        return "fill all the nessesary values";    
     }
 
+    public function getCitzenInfo($id)
+    {  
+        $citizen = Citizen::where('nid', '=', $id)
+                    ->orWhere('birthCer_id', '=', $id)
+                    ->first();
+        
+        return new CitizenResource($citizen);
+    }
+
+    public function validateDoctor(Request $request)
+    {  
+        return $request->password;
+        if($request->username && $request->password)
+        {
+            $doc = User::where([
+                ['username', '=', $request->username],
+                ['password', '=', Hash::make($request->password)]
+            ])->first();
+
+            return $doc;
+        }
+    }
 
     public function complainStore(Request $request)
     {  

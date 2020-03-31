@@ -17,11 +17,12 @@
                             <div class="card-body">
                                 <a href="{{ route('publicMedicine.show', $med->id) }}">
                                     <div class="h3 med-info">
-                                        <div class="text-dark">{{ $med->brand_name }} <small> {{ $med->strength}} </small></div>
+                                        <div class="text-dark">{{ $med->brand_name }} <small> {{ $med->strength}}
+                                            </small></div>
                                     </div>
                                     <div class="h6 med-info">
                                         {{ $med->dosage_form}} <br> {{ $med->generic_name}}
-                                        <div class="med-info text-primary">{{ $med->company}}</div>                                 
+                                        <div class="med-info text-primary">{{ $med->company}}</div>
                                     </div>
                                 </a>
                             </div>

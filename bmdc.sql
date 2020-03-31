@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2020 at 05:34 PM
+-- Generation Time: Mar 31, 2020 at 02:24 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -97,6 +97,8 @@ CREATE TABLE `citizens` (
   `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `dob` date NOT NULL,
+  `gender` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contact` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `father_nid` bigint(20) NOT NULL,
   `mother_nid` bigint(20) NOT NULL,
   `current_address` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -109,8 +111,9 @@ CREATE TABLE `citizens` (
 -- Dumping data for table `citizens`
 --
 
-INSERT INTO `citizens` (`id`, `nid`, `birthCer_id`, `deathCer_id`, `first_name`, `last_name`, `dob`, `father_nid`, `mother_nid`, `current_address`, `premanent_address`, `created_at`, `updated_at`) VALUES
-(1, NULL, 54143545421, NULL, 'Antonin', 'Islam', '1998-04-11', 5414354540, 5414354541, '38 & 39 Topkhana Road,Dhaka', 'adsssssssdada', '2020-02-23 12:27:23', NULL);
+INSERT INTO `citizens` (`id`, `nid`, `birthCer_id`, `deathCer_id`, `first_name`, `last_name`, `dob`, `gender`, `contact`, `father_nid`, `mother_nid`, `current_address`, `premanent_address`, `created_at`, `updated_at`) VALUES
+(1, NULL, 54143545421, NULL, 'Antonin', 'Islam', '1998-04-11', 'male', '01687759686', 5414354540, 5414354541, '38 & 39 Topkhana Road,Dhaka', '38 & 39 Topkhana Road,Dhaka', '2020-02-23 12:27:23', NULL),
+(2, 9517530258, 19976834521745781, NULL, 'NH', 'Azam', '1997-08-27', 'Male', '01787759686', 9517530255, 9517530256, 'Shitakund,Chittagong,Bangladesh', 'Shitakund,Chittagong,Bangladesh', '2020-03-30 15:45:36', NULL);
 
 -- --------------------------------------------------------
 
@@ -133,7 +136,8 @@ CREATE TABLE `complains` (
 
 INSERT INTO `complains` (`id`, `complain_type`, `complain_body`, `citizen_id`, `created_at`, `updated_at`) VALUES
 (1, 'dsad', 'dsad', 'dsad', '2020-03-27 10:32:50', '2020-03-27 10:32:50'),
-(2, 'dasdadasd', 'dasdada', '1', '2020-03-27 10:33:55', '2020-03-27 10:33:55');
+(2, 'dasdadasd', 'dasdada', '1', '2020-03-27 10:33:55', '2020-03-27 10:33:55'),
+(3, 'dasdadasd', 'dasdada', '1', '2020-03-30 09:31:17', '2020-03-30 09:31:17');
 
 -- --------------------------------------------------------
 
@@ -244,7 +248,7 @@ CREATE TABLE `medicines` (
 INSERT INTO `medicines` (`id`, `brand_name`, `dosage_form`, `generic_id`, `strength`, `company`, `price`, `img_path`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'Ace', 'Syrup', 1, '500 mg', 'Square Pharmaceuticals Ltd.', '0.80', '/uploads/15850715232010141462.jpg', 0, '2020-03-24 11:38:43', '2020-03-24 12:18:58'),
 (2, 'Paracetamol', 'Tablet', 1, '500 mg', 'Bengal drugs Ltd.', '0.6', '/uploads/15851325521004694626.jpg', 0, '2020-03-25 04:48:16', '2020-03-25 04:48:16'),
-(3, 'Cefozil', 'Capsule', 1, '500 mg', 'Popular Pharmaceuticals Ltd', '30', '/uploads/1585243362741532292.jpg', 0, '2020-03-26 11:22:56', '2020-03-26 11:22:56');
+(3, 'Cefozil', 'Capsule', 2, '500 mg', 'Popular Pharmaceuticals Ltd', '30', '/uploads/1585243362741532292.jpg', 0, '2020-03-26 11:22:56', '2020-03-30 02:57:19');
 
 -- --------------------------------------------------------
 
@@ -267,7 +271,6 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
 (15, '2020_02_10_202224_create_generics_table', 5),
 (26, '2014_10_12_000000_create_users_table', 9),
-(33, '2020_02_23_093851_create_citizens_table', 13),
 (41, '2016_06_01_000001_create_oauth_auth_codes_table', 18),
 (42, '2016_06_01_000002_create_oauth_access_tokens_table', 18),
 (43, '2016_06_01_000003_create_oauth_refresh_tokens_table', 18),
@@ -275,10 +278,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (45, '2016_06_01_000005_create_oauth_personal_access_clients_table', 18),
 (52, '2020_02_07_185550_create_authorize_doctors_table', 19),
 (53, '2020_02_07_105504_create_doctors_table', 20),
-(57, '2020_02_19_091854_create_prescriptions_table', 21),
 (61, '2020_02_10_190827_create_medicines_table', 22),
 (63, '2020_03_07_085333_create_authorize_medicines_table', 23),
-(66, '2020_03_27_163025_create_complains_table', 24);
+(66, '2020_03_27_163025_create_complains_table', 24),
+(67, '2020_02_19_091854_create_prescriptions_table', 25),
+(69, '2020_02_23_093851_create_citizens_table', 26);
 
 -- --------------------------------------------------------
 
@@ -387,6 +391,7 @@ CREATE TABLE `prescriptions` (
   `cc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `oe` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `lx` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `revisit` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -396,11 +401,8 @@ CREATE TABLE `prescriptions` (
 -- Dumping data for table `prescriptions`
 --
 
-INSERT INTO `prescriptions` (`id`, `doctor_id`, `citizen_id`, `hospital_name`, `mainbody`, `med_list`, `disease`, `cc`, `oe`, `lx`, `date`, `created_at`, `updated_at`) VALUES
-(1, 1, 54143545421, 'Dhaka Medical College', 'Flamyd 250 ? 250 mg [Tablet] ....1-0-0....2 days...Before Eating...\n\nNapa ? 500 mg [Tablet] ....1-0-0....2 days...After Eating...\n\nMaxpro ? 20 mg [Tablet] ....1-0-0....2 days...Empty Stomach...', '[\"1009\",\"1001\",\"1008\",\"1008\",\"1002\",\"1006\"]', 'fever', '', '', '', '2020-03-22', '2020-03-22 11:19:44', '2020-03-22 11:19:44'),
-(2, 1, 54143545421, 'Dhaka Medical College', 'Flamyd 250 ? 250 mg [Tablet] ....1-0-0....2 days...Before Eating...\n\nNapa ? 500 mg [Tablet] ....1-0-0....2 days...After Eating...\n\nMaxpro ? 20 mg [Tablet] ....1-0-0....2 days...Empty Stomach...', '[\"1009\",\"1001\",\"1008\",\"1008\",\"1002\",\"1006\"]', 'fever', NULL, NULL, NULL, '2020-03-22', '2020-03-26 03:53:21', '2020-03-26 03:53:21'),
-(3, 1, 54143545421, 'Square Hospital', 'Flamyd 250 ? 250 mg [Tablet] ....1-0-0....2 days...Before Eating...\n\nNapa ? 500 mg [Tablet] ....1-0-0....2 days...After Eating...\n\nMaxpro ? 20 mg [Tablet] ....1-0-0....2 days...Empty Stomach...', '[\"1009\",\"1001\",\"1008\",\"1008\",\"1002\",\"1006\"]', 'fever', NULL, NULL, NULL, '2020-03-22', '2020-03-26 03:54:04', '2020-03-26 03:54:04'),
-(4, 1, 54143545421, 'Square Hospital Nigga', 'Flamyd 250 ? 250 mg [Tablet] ....1-0-0....2 days...Before Eating...\n\nNapa ? 500 mg [Tablet] ....1-0-0....2 days...After Eating...\n\nMaxpro ? 20 mg [Tablet] ....1-0-0....2 days...Empty Stomach...', '[\"1009\",\"1001\",\"1008\",\"1008\",\"1002\",\"1006\"]', 'fever', NULL, NULL, NULL, '2020-03-22', '2020-03-26 03:54:52', '2020-03-26 03:54:52');
+INSERT INTO `prescriptions` (`id`, `doctor_id`, `citizen_id`, `hospital_name`, `mainbody`, `med_list`, `disease`, `cc`, `oe`, `lx`, `revisit`, `date`, `created_at`, `updated_at`) VALUES
+(1, 1, 54143545421, 'Dgadada', 'dadadad', '432141241', 'fever', 'adada', 'dada', 'dada', NULL, '2020-03-30', '2020-03-30 15:31:46', NULL);
 
 -- --------------------------------------------------------
 
@@ -428,10 +430,10 @@ INSERT INTO `users` (`id`, `name`, `username`, `password`, `role`, `remember_tok
 (3, 'Magu Ghosh', 'Magu', '$2y$10$CxQZ12X2pJlLFviG.ln1Z.bgGqZwzMqBndgOX7KwKUb.3yd/0tQaK', '2', NULL, '2020-02-12 11:27:33', '2020-02-12 11:27:33'),
 (4, 'Johnson Carlos', 'john', '$2y$10$UInGY34tg2Is79ltuvFN2eEf0k92QDWQJQllrqPfTMEAXFNoK3Hq.', '2', NULL, '2020-02-26 11:09:13', '2020-02-26 11:09:13'),
 (5, 'Rambo Red', 'Rambo', '$2y$10$g.5DroLOcrDYEhZSg8IxI.gXrU5fMtiML1Unn0BzY/faSz4jA/8Py', '2', NULL, '2020-03-19 03:11:17', '2020-03-19 03:11:17'),
-(6, ' ', 'magu686', '$2y$10$8.Lq5HOu16bZcuUWYuqt9eEXiL8xepRaduQ0RD7HYVVC.Tk4F96im', '2', NULL, '2020-03-24 04:13:47', '2020-03-24 04:13:47'),
-(7, ' ', 'anirr', '$2y$10$CaHoSGRrQJGKMw.n/zhCT.yNLOYKZTzrxzx.1uOao63YPRA.5PNUm', '2', NULL, '2020-03-24 05:49:17', '2020-03-24 05:49:17'),
-(8, ' ', 'robert', '$2y$10$Na8YYZIWnnNVWqXRXvVyRucv.7KVjIJ3k619Dsywc3ls7HkpyQzdS', '2', NULL, '2020-03-24 06:32:52', '2020-03-24 06:32:52'),
-(9, ' ', 'akash', '$2y$10$t0ixIhp2DNTbcQj9DSamLuR1wrjnqnYE7pJdIGzzRxDByJozbcP5C', '2', NULL, '2020-03-25 04:49:10', '2020-03-25 04:49:10');
+(6, ' ndada', 'magu686', '$2y$10$8.Lq5HOu16bZcuUWYuqt9eEXiL8xepRaduQ0RD7HYVVC.Tk4F96im', '2', NULL, '2020-03-24 04:13:47', '2020-03-24 04:13:47'),
+(7, ' dadad', 'anirr', '$2y$10$CaHoSGRrQJGKMw.n/zhCT.yNLOYKZTzrxzx.1uOao63YPRA.5PNUm', '2', NULL, '2020-03-24 05:49:17', '2020-03-24 05:49:17'),
+(8, 'dada', 'robert', '$2y$10$Na8YYZIWnnNVWqXRXvVyRucv.7KVjIJ3k619Dsywc3ls7HkpyQzdS', '2', NULL, '2020-03-24 06:32:52', '2020-03-24 06:32:52'),
+(9, 'dadafa', 'akash', '$2y$10$t0ixIhp2DNTbcQj9DSamLuR1wrjnqnYE7pJdIGzzRxDByJozbcP5C', '2', NULL, '2020-03-25 04:49:10', '2020-03-25 04:49:10');
 
 --
 -- Indexes for dumped tables
@@ -457,6 +459,7 @@ ALTER TABLE `authorize_medicines`
 ALTER TABLE `citizens`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `citizens_birthcer_id_unique` (`birthCer_id`),
+  ADD UNIQUE KEY `citizens_contact_unique` (`contact`),
   ADD UNIQUE KEY `citizens_nid_unique` (`nid`),
   ADD UNIQUE KEY `citizens_deathcer_id_unique` (`deathCer_id`);
 
@@ -571,19 +574,19 @@ ALTER TABLE `authorize_medicines`
 -- AUTO_INCREMENT for table `citizens`
 --
 ALTER TABLE `citizens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `complains`
 --
 ALTER TABLE `complains`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -607,7 +610,7 @@ ALTER TABLE `medicines`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `oauth_clients`
@@ -625,7 +628,7 @@ ALTER TABLE `oauth_personal_access_clients`
 -- AUTO_INCREMENT for table `prescriptions`
 --
 ALTER TABLE `prescriptions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`

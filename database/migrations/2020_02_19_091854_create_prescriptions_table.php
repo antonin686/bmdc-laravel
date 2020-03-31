@@ -24,6 +24,7 @@ class CreatePrescriptionsTable extends Migration
             $table->string('cc')->nullable();
             $table->string('oe')->nullable();
             $table->string('lx')->nullable();
+            $table->string('revisit')->nullable();
             $table->date('date');
             $table->timestamps();
         });

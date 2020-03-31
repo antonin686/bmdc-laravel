@@ -102,13 +102,41 @@
                         </div>
 
                         <hr>
-                            <div class="h5">Prescription</div>
+                        <div class="h5">Prescription</div>
                         <hr>
 
-                        <p>
-                            {!! nl2br($prescription->mainbody) !!}
+                        <div class="col ml-0 pl-0">
+                            <div class="col-md-6 ml-0 pl-0">
+                                <strong>Disease</strong>: {{$prescription->disease}}
+                            </div>
 
-                        </p>
+                            <div class="col-md-6 ml-0 pl-0">
+                                <strong>OE</strong>: {{$prescription->oe}}
+                            </div>
+
+                            <div class="col-md-6 ml-0 pl-0">
+                                <strong>LX</strong>: {{$prescription->lx}}
+                            </div>
+
+                            <div class="col-md-6 ml-0 pl-0">
+                                <strong>CC</strong>: {{$prescription->cc}}
+                            </div>
+                        </div>
+
+                        <div class="col-md-8 ml-0 pl-0">
+
+                            <hr>
+                            <strong>Body:</strong>
+                            <hr>
+                            <p>
+                                {!! nl2br($prescription->mainbody) !!}
+                            </p>
+                            @if($prescription->revisit)
+                            <div class="text-center text-danger">Revisit in {{$prescription->revisit}} Days</div>
+                            @else
+                            <div class="text-center text-success">Best Wishes, Get Well Soon</div>    
+                            @endif
+                        </div>
 
                     </div>
                 </div>

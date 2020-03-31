@@ -21,6 +21,8 @@ class CreateCitizensTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->date('dob');
+            $table->string('gender');
+            $table->string('contact')->unique();
             $table->bigInteger('father_nid');
             $table->bigInteger('mother_nid');
             $table->text('current_address');

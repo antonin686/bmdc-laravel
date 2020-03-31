@@ -74,7 +74,7 @@ class DoctorController extends Controller
 
         $user = new User;
 
-        $user->name = $request->first_name . ' ' . $request->last_name;
+        $user->name = $request->full_name;
         $user->username = $request->username;
         $user->password = Hash::make($request->password);
         $user->role = 2;

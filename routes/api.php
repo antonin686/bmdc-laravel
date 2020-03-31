@@ -21,6 +21,8 @@ Route::get('/medicine/list', 'ApiController@medicineList');
 Route::get('/medicine/{id}', 'ApiController@medicineInfo');
 Route::get('/prescription/{id}', 'ApiController@prescriptionInfo');
 Route::get('/prescription/list/citizen/{id}', 'ApiController@prescriptionListByCitizen');
+Route::get('/citizen/show/{id}', 'ApiController@getCitzenInfo');
 
 Route::post('/prescription/store', 'ApiController@prescriptionStore');
 Route::post('/complain/store', 'ApiController@complainStore');
+Route::post('/doctor/validate', 'ApiController@validateDoctor');

@@ -67,6 +67,12 @@ class PublicMedicineController extends Controller
     {
         $generic = Generic::find($id);
 
+        $meds = DB::table('medicines')
+                ->join('generics', 'medicines.generic_id', '=', 'generics.id')
+                ->select('medicines.*', 'generics.generic_name')
+                ->where('medicines.generic_id', '=', $id)
+                ->get();
+
         $generic_info = (object) [
             'Indication' => $generic->indications,
             'Therapeutic Class' => $generic->therapeutic_class,
@@ -81,7 +87,7 @@ class PublicMedicineController extends Controller
             'Storage Conditions' => $generic->storage_conditions,
         ];
 
-        return view('public.medicine.generic.show', compact('generic', 'generic_info'));
+        return view('public.medicine.generic.show', compact('generic', 'generic_info', 'meds'));
     }
 
 
