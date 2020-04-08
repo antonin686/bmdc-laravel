@@ -16,7 +16,7 @@ class PrescriptionController extends Controller
     public function index()
     {
         $prescs = DB::table('prescriptions')
-                ->join('doctors', 'doctors.id', '=', 'prescriptions.doctor_id')
+                ->join('doctors', 'doctors.registration_id', '=', 'prescriptions.doctor_id')
                 ->select('prescriptions.*', 'doctors.id as doc_id', 'doctors.full_name')
                 ->get();
 
@@ -34,7 +34,7 @@ class PrescriptionController extends Controller
         $citizen->age = $from->diff($to)->y;
         $prescription->date = $prescription->created_at->format('d/m/y'); 
         
-        $doctor = Doctor::find($prescription->doctor_id);
+        $doctor = Doctor::where('registration_id', '=', $prescription->doctor_id)->first();
 
         return view('prescription.show', compact('citizen', 'doctor', 'prescription'));
     }

@@ -8,28 +8,32 @@
         <div class="card">
             <div class="card-header card-header-bg">Medicine Application List</div>
             <div class="card-body">
-            <table class="table table-hover table-striped" id="table">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Brand Name</th>
-                                <th scope="col">Generic</th>
-                                <th scope="col">Dosage</th>
-                                <th scope="col">Appicant</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($apps as $app)
-                            <tr id="{{ $app->id }}">
-                                <td>{{ $app->id }}</td>
-                                <td>{{ $app->brand_name }} <small>{{ $app->strength }}</small> </td>
-                                <td>{{ $app->generic_name }}</td>
-                                <td>{{ $app->dosage_form }}</td>
-                                <td>{{ $app->applicant_name }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-hover table-striped" id="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Brand Name</th>
+                                    <th scope="col">Generic</th>
+                                    <th scope="col">Dosage</th>
+                                    <th scope="col">Appicant</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($apps as $app)
+                                <tr id="{{ $app->id }}">
+                                    <td>{{ $app->id }}</td>
+                                    <td>{{ $app->brand_name }} <small>{{ $app->strength }}</small> </td>
+                                    <td>{{ $app->generic_name }}</td>
+                                    <td>{{ $app->dosage_form }}</td>
+                                    <td>{{ $app->applicant_name }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

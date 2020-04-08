@@ -20,18 +20,21 @@ class ApiAuth
     {
         $method = $request->method();
         $canAccess = false;
-        $apiToken = $request->header('api_token');
-
+        $apiToken = $request->header('api-token');
+    
         if ($apiToken) {
             foreach (User::all() as $user) {
                 if (Hash::check($apiToken, $user->api_token)) {
                     $canAccess = true;
                 }
             }
+        }else{
+            return response('No Api Token Given', 200);
         }
 
         if (!$canAccess) {
-            abort(403, 'Access denied');
+            //abort(403, 'Access denied');
+            return response('Invalid Token', 200);
         }
 
         return $next($request);

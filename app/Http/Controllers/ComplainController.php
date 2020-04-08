@@ -3,84 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Complain;
+use App\Citizen;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use DB;
 
 class ComplainController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        $complains = DB::table('complains')->leftjoin('citizens', function($join){
+            $join->on('complains.citizen_id','=','citizens.nid'); // i want to join the users table with either of these columns
+            $join->orOn('complains.citizen_id','=','citizens.birthCer_id');
+        })->get();
+            // ->join('citizens', 'complains.citizen_id', '=', 'citizens.nid')
+            // ->join('citizens', 'complains.citizen_id', '=', 'citizens.birthCer_id')
+            // ->select('complains.*', 'citizens.first_name', 'citizens.last_name', 'citizens.dob')
+            // ->get();
+
+        return view('complain.index')->with('complains', $complains);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Complain  $complain
-     * @return \Illuminate\Http\Response
-     */
     public function show(Complain $complain)
     {
-        //
+
+        $citizen = Citizen::where('nid', '=', $complain->citizen_id)
+            ->orWhere('birthCer_id', '=', $complain->citizen_id)
+            ->first();
+
+        return view('complain.show', compact('complain', 'citizen'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Complain  $complain
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Complain $complain)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Complain  $complain
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Complain $complain)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Complain  $complain
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Complain $complain)
-    {
-        //
-    }
 }

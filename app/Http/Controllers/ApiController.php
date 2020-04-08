@@ -2,23 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Citizen;
-use App\Complain;
-use App\Doctor;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Http\Resources\CitizenResource;
 use App\Http\Resources\DoctorResource;
 use App\Http\Resources\MedicineResource;
 use App\Http\Resources\PrescriptionResource;
+
+use App\Citizen;
+use App\Complain;
+use App\Doctor;
 use App\Prescription;
 use App\User;
+use App\DoctorUpdate;
+use App\Login;
+
+
 use Auth;
 use DateTime;
 use DB;
 use Exception;
 use Hash;
 use URL;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class ApiController extends Controller
 {
@@ -56,8 +61,8 @@ class ApiController extends Controller
         $citizen->age = $from->diff($to)->y;
         $prescription->date = $prescription->created_at->format('d/m/y');
 
-        $doctor = Doctor::select('full_name', 'email', 'phone', 'work_place', 'speciality', 'basic_degree', 'advance_degree', 'registration_id')
-            ->where('id', '=', $prescription->doctor_id)->first();
+        $doctor = Doctor::select('id' ,'full_name', 'email', 'phone', 'work_place', 'speciality', 'basic_degree', 'advance_degree', 'registration_id')
+            ->where('registration_id', '=', $prescription->doctor_id)->first();
 
         $datas = [
             'citizen' => $citizen,
@@ -70,18 +75,26 @@ class ApiController extends Controller
 
     public function prescriptionListByCitizen($id)
     {
-        $prescription = Prescription::where('citizen_id', '=', $id)
+        $citizen = Citizen::where('nid', '=', $id)
             ->orWhere('birthCer_id', '=', $id)
-            ->get();
-
-        if (count($prescription) == 0) {
-            return "no data";
-        }
-
-        $citizen = Citizen::where('nid', '=', $prescription[0]->citizen_id)
-            ->orWhere('birthCer_id', '=', $prescription[0]->citizen_id)
             ->select('first_name', 'last_name', 'dob')
             ->first();
+
+        if (!$citizen) {
+            return "null";
+        }
+
+        $citizenf = Citizen::where('nid', '=', $id)
+            ->orWhere('birthCer_id', '=', $id)
+            ->first();
+
+        $prescription = Prescription::where('citizen_id', '=', $citizenf->nid)
+            ->orWhere('citizen_id', '=', $citizenf->birthCer_id)
+            ->get();
+
+        if (!$prescription) {
+            return "null";
+        }
 
         $from = new DateTime($citizen->dob);
         $to = new DateTime('today');
@@ -97,6 +110,21 @@ class ApiController extends Controller
 
     public function prescriptionStore(Request $request)
     {
+        $doctor = Doctor::where('registration_id', '=', $request->doctor_id)->first();
+        $citizen = Citizen::where('nid', '=', $request->citizen_id)
+            ->orWhere('birthCer_id', '=', $request->citizen_id)
+            ->first();
+
+        if(!$doctor)
+        {
+            return "Doctor Does Not Exists";
+        }
+
+        if(!$citizen)
+        {
+            return "Citizen Does Not Exists";
+        }
+
         if ($request->doctor_id && $request->citizen_id && $request->hospital_name && $request->med_list && $request->disease && $request->date) {
             $presc = new Prescription;
 
@@ -111,6 +139,7 @@ class ApiController extends Controller
             $presc->lx = $request->lx;
             $presc->revisit = $request->revisit;
             $presc->date = new DateTime($request->date);
+
             try {
                 $presc->save();
             } catch (Exception $e) {
@@ -129,6 +158,10 @@ class ApiController extends Controller
         $citizen = Citizen::where('nid', '=', $id)
             ->orWhere('birthCer_id', '=', $id)
             ->first();
+
+        if (!$citizen) {
+            return "null";
+        }
 
         return new CitizenResource($citizen);
     }
@@ -151,7 +184,7 @@ class ApiController extends Controller
 
                 if ($doctor) {
 
-                    $obj = [                    
+                    $obj = [
                         'full_name' => $doctor->full_name,
                         'registration_id' => $doctor->registration_id,
                         'email' => $doctor->email,
@@ -160,9 +193,10 @@ class ApiController extends Controller
                         'speciality' => $doctor->speciality,
                         'basic_degree' => $doctor->basic_degree,
                         'advance_degree' => $doctor->advance_degree,
-                        'img_path' => $doctor->img_path,
+                        'img_path' => URL::to('/') . $doctor->img_path,
                         'full_name' => $doctor->full_name,
                         'full_name' => $doctor->full_name,
+                        'updated_at' => $doctor->updated_at,
                         'api_token' => $token,
                     ];
 
@@ -179,6 +213,26 @@ class ApiController extends Controller
         }
     }
 
+    public function doctorShow($id)
+    {
+        $doctor = Doctor::select('registration_id', 'full_name', 'email', 'phone', 'work_place', 'speciality', 'basic_degree', 'advance_degree', 'img_path')
+            ->where('registration_id', '=', $id)
+            ->first();
+
+        $doctor->img_path = URL::to('/') . $doctor->img_path;
+
+        return new DoctorResource($doctor);
+    }
+
+    public function doctorIndex()
+    {
+        $doctor = Doctor::all();
+
+        //$doctor->img_path = URL::to('/') . $doctor->img_path;
+
+        return new DoctorResource($doctor);
+    }
+     
     public function complainStore(Request $request)
     {
         $com = new Complain;
@@ -191,15 +245,23 @@ class ApiController extends Controller
         return "success";
     }
 
-    public function doctorShow($id)
+    public function insert(Request $request)
     {
-        $doctor = Doctor::select('registration_id', 'full_name', 'email', 'phone', 'work_place', 'speciality', 'basic_degree', 'advance_degree', 'img_path')
-            ->where('registration_id', '=', $id)
-            ->first();
+       $insert =  Login::create([
+            'username'=>$request->name,
+            'serialnumber'=>$request->number,
+            'gender'=>$request->gender,
+            'email'=>$request->email,
+            'fingerprint_id'=>$request->fingerid,
+            'fingerprint_select'=>0
+        ]);
 
-            $doctor->img_path = URL::to('/').$doctor->img_path;
-
-        return new DoctorResource($doctor);
+        if($insert){
+            return "success";
+        }
     }
+
+
+    
 
 }

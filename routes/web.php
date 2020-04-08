@@ -13,6 +13,7 @@
 
 Auth::routes();
 
+
 Route::get('/', function () {
     return view('welcome');
 })->name('front');
@@ -27,6 +28,7 @@ Route::get('/message', function () {
 })->name('message');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/application/doctor/create', 'ApplicationController@doctorApplicationCreate')->name('application.doctorApplicationCreate');
 Route::post('/application/doctor/create', 'ApplicationController@doctorApplicationStore');
 Route::get('/application/medicine/create', 'ApplicationController@medicineApplicationCreate')->name('application.medicine.create');
@@ -68,5 +70,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkIfAdmin'], function() {
         'medicine' => 'MedicineController',
         'generic' => 'GenericController',
         'prescription' => 'PrescriptionController',
+        'complain' => 'ComplainController',
     ]);
 });
+
+
+//Shihab
+
+Route::get('/citizen/signup','PublicController@signup');

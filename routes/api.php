@@ -12,20 +12,25 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
-
 Route::group(['middleware' => 'ApiAuth'], function () {
     Route::get('/doctor/show/{id}', 'ApiController@doctorShow');
+    Route::get('/doctor/index', 'ApiController@doctorIndex');
+    Route::get('/prescription/{id}', 'ApiController@prescriptionInfo');
+    Route::get('/prescription/list/citizen/{id}', 'ApiController@prescriptionListByCitizen');
+    Route::get('/citizen/show/{id}', 'ApiController@getCitzenInfo');
+    Route::post('/prescription/store', 'ApiController@prescriptionStore');
+    Route::post('/doctor/modify/store', 'Api\DoctorModifyController@store');
 });
 
-Route::get('/prescription/{id}', 'ApiController@prescriptionInfo');
-Route::get('/prescription/list/citizen/{id}', 'ApiController@prescriptionListByCitizen');
-Route::get('/citizen/show/{id}', 'ApiController@getCitzenInfo');
-Route::get('/doctor/show/{id}', 'ApiController@doctorShow');
-Route::post('/complain/store', 'ApiController@complainStore');
-Route::post('/prescription/store', 'ApiController@prescriptionStore');
+//Doctor Modify
 
+Route::post('/complain/store', 'ApiController@complainStore');
 //Can access without token
 Route::get('/medicine/list', 'ApiController@medicineList');
 Route::get('/medicine/{id}', 'ApiController@medicineInfo');
 
 Route::post('/doctor/validate', 'ApiController@validateDoctor');
+
+//shihab
+
+Route::post("/signup", "ApiController@insert");

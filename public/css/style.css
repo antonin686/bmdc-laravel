@@ -133,6 +133,7 @@ a {
 .card-med:hover > .card-body > a >.med-info,
 .card-med:hover > .card-body > a >.med-info > .text-primary, 
 .card-med:hover > .card-body > a >.med-info > .text-dark,
-.card-med:hover > .card-body > a >.med-info > .text-info{
+.card-med:hover > .card-body > a >.med-info > .text-info,
+.card-med:hover > .card-body > a >.med-info > .text-success{
     color: white !important;
 }
