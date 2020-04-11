@@ -21,11 +21,12 @@ class ApiAuth
         $method = $request->method();
         $canAccess = false;
         $apiToken = $request->header('api-token');
-    
+        $user_id;
         if ($apiToken) {
             foreach (User::all() as $user) {
                 if (Hash::check($apiToken, $user->api_token)) {
                     $canAccess = true;
+                    $user_id = $user->id;
                 }
             }
         }else{

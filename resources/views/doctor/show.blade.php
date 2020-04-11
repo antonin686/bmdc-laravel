@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('title', 'Doctor Info')
+@section('title', 'Doctor Profile Modifications')
 
 @section('content')
 <div class="row">
     <div class="col-md-12 mx-auto mt-3">
         <div class="card">
-            <div class="card-header card-header-bg">Doctor Info</div>
+            <div class="card-header card-header-bg">Doctor Profile Modifications</div>
             <div class="card-body">
 
                 <div class="row">
@@ -36,7 +36,7 @@
 
                                     <tr>
                                         <th>Degree</th>
-                                        <td> {{ $doc->basic_degree }},  {{ $doc->advance_degree }}</td>
+                                        <td> {{ $doc->basic_degree }}, {{ $doc->advance_degree }}</td>
                                     </tr>
 
                                     <tr>
@@ -47,7 +47,7 @@
                                     <tr>
                                         <th>Email</th>
                                         <td> {{ $doc->email }}</td>
-                                    </tr>                       
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

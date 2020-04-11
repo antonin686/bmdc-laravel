@@ -19,7 +19,8 @@ Route::group(['middleware' => 'ApiAuth'], function () {
     Route::get('/prescription/list/citizen/{id}', 'ApiController@prescriptionListByCitizen');
     Route::get('/citizen/show/{id}', 'ApiController@getCitzenInfo');
     Route::post('/prescription/store', 'ApiController@prescriptionStore');
-    Route::post('/doctor/modify/store', 'Api\DoctorModifyController@store');
+    Route::post('/doctor/modify/store', 'DoctorModifyController@store');
+    Route::post('/doctor/password/change', 'DoctorController@passwordChange');
 });
 
 //Doctor Modify

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\AuthorizeDoctor;
 use App\Doctor;
+use App\DoctorModify;
 use App\User;
+use Hash;
+use Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class DoctorController extends Controller
 {
@@ -139,30 +141,39 @@ class DoctorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Doctor $doctor)
-    {
-        $this->validate($request, [
-            'full_name' => 'required',
-            'phone' => 'required|numeric|min:11',
-            'email' => 'required|email',
-            'basic_degree' => 'required',
-            'advance_degree' => 'required',
-            'speciality' => 'required',
-            'work_place' => 'required',
-        ]);
+    { 
+        if(!$request->except('_token', '_method', 'modify')){
 
-        $doc = Doctor::find($doctor->id);
-        $doc->full_name = $request->full_name;
-        $doc->email = $request->email;
-        $doc->phone = $request->phone;
-        $doc->basic_degree = $request->basic_degree;
-        $doc->advance_degree = $request->advance_degree;
-        $doc->speciality = $request->speciality;
-        $doc->work_place = $request->work_place;
-        $doc->save();
+            $docMod = DoctorModify::find($request->modify);
+            $docMod->status = 1;
+            $docMod->save();
 
-        $message = "Doctor has Been Successfully Updated!!!";
+            $err = "Doctor ID: $doctor->registration_id's Profile Update Request Rejected";
+            return redirect()->route('doctor.message')->with('err', $err);
+        }
+       
+        if(!$request->modify)
+        {
+            $this->validate($request, [
+                'full_name' => 'required',
+                'phone' => 'required|numeric|min:11',
+                'email' => 'required|email',
+                'basic_degree' => 'required',
+                'advance_degree' => 'required',
+                'speciality' => 'required',
+                'work_place' => 'required',
+            ]);          
+        }else{
+            $docMod = DoctorModify::find($request->modify);
+            $docMod->status = 1;
+            $docMod->save();
+        }
 
-        return redirect()->route('doctor.message')->with('message', $message)->with('id', $doc->id);
+        $message = "Doctor Profile has Been Successfully Updated!!!";
+
+        $doc = Doctor::find($doctor->id)->update($request->all());
+        
+        return redirect()->route('doctor.message')->with('message', $message)->with('id', $doctor->id);
     }
 
     /**
@@ -180,5 +191,24 @@ class DoctorController extends Controller
 
         $message = "Doctor ".$doctor->full_name." Successfully Deleted!!!";
         return redirect()->route('doctor.index')->with('message', $message);
+    }
+
+    public function passwordChange(Request $request)
+    {
+        if ($request->missing(['username', 'oldPassword', 'newPassword'])) 
+        {
+           return "Give Necessary Values";
+        }
+
+        if(Auth::attempt(array('username' => $request->username, 'password' => $request->oldPassword)))
+        {
+            $user = User::find(Auth::user()->id);
+            $user->password = Hash::make($request->newPassword);
+            $user->save();
+
+            return "success";
+        }else{
+            return "Wrong Credentials";
+        }
     }
 }

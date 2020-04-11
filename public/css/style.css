@@ -8,12 +8,10 @@
     color: white;
 }
 
-
-
-body{
+body {
     background-color: whitesmoke;
 }
-.bg-teal{
+.bg-teal {
     background-color: darkslategray;
 }
 
@@ -82,42 +80,40 @@ a {
     align-items: center;
     text-align: center;
     min-height: 80vh;
-  }
+}
 
-  .search-ul{
+.search-ul {
     background-color: #eee;
     padding-left: 0;
     cursor: pointer;
     list-style: none;
-  }
-  .search-li {
-      padding: 12px;
-      background-color: white;
-  }
-  .search-li > a{
+}
+.search-li {
+    padding: 12px;
+    background-color: white;
+}
+.search-li > a {
     color: teal;
-    display:block;
+    display: block;
 }
 
-  .search-li:hover {
+.search-li:hover {
     background-color: teal;
-    
 }
 
-.search-li:hover > a{
+.search-li:hover > a {
     color: white;
-    
 }
 
-.parent-overlay{
+.parent-overlay {
     position: relative;
 }
 
-#medList{
+#medList {
     position: absolute;
     z-index: 9;
 }
-.card-med:hover{
+.card-med:hover {
     background-color: teal;
 }
 
@@ -130,10 +126,29 @@ a {
     color: white !important;
 }
 
-.card-med:hover > .card-body > a >.med-info,
-.card-med:hover > .card-body > a >.med-info > .text-primary, 
-.card-med:hover > .card-body > a >.med-info > .text-dark,
-.card-med:hover > .card-body > a >.med-info > .text-info,
-.card-med:hover > .card-body > a >.med-info > .text-success{
+.card-med:hover > .card-body > a > .med-info,
+.card-med:hover > .card-body > a > .med-info > .text-primary,
+.card-med:hover > .card-body > a > .med-info > .text-dark,
+.card-med:hover > .card-body > a > .med-info > .text-info,
+.card-med:hover > .card-body > a > .med-info > .text-success {
     color: white !important;
+}
+
+.switch-info > .custom-control-label:before {
+    background-color: red;
+    color: #007bff;
+}
+
+.switch-info > .custom-control-input:checked ~ .custom-control-label::before {
+    color: #fff;
+    background-color: green;
+}
+
+.switch-info > .custom-control-label::after {
+    background-color: #fff !important;
+}
+
+.dropdown-item:hover {
+    background-color: #27496d !important;
+    color:white;
 }

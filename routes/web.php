@@ -65,6 +65,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkIfAdmin'], function() {
     Route::get('/doctor/message', 'DoctorController@message')->name('doctor.message');
     Route::get('/medicine/message', 'MedicineController@message')->name('medicine.message');
 
+    //Route::get('/doctor/modify/index', 'DoctorModifyController@index');
+
+    Route::resource('doctorModify', 'DoctorModifyController')->only([
+        'index', 'show', 'update'
+    ]);
+
     Route::resources([
         'doctor' => 'DoctorController',
         'medicine' => 'MedicineController',

@@ -53,10 +53,12 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Authorize Application
+                        Authorization
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('application.doctorApplicationIndex') }}">Doctor Applications</a>
+                        <a class="dropdown-item" href="{{ route('doctorModify.index') }}">Doctor Profile Change Requests</a>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('application.medicineApplicationIndex') }}">Medicine Applications</a>
                     </div>
                 </li>
