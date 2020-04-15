@@ -70,7 +70,6 @@
                     <div class="col-md-12 mx-auto mx-0 mt-3">
                         <div class="card">
 
-
                             <div class="card-body">
                                 <form method="POST" action="{{ route('doctor.update', $doctor->id)}}">
                                     @csrf
@@ -169,6 +168,38 @@
                                                             name="work_place" value="{{ $doctorModify->work_place }}"
                                                             id="work_place">
                                                         <label class="custom-control-label" for="work_place"></label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endif
+
+                                            @if($doctorModify->phone)
+                                            <tr>
+                                                <th>Phone</th>
+                                                <td>{{ $doctor->phone }}</td>
+                                                <td>{{ $doctorModify->phone }}</td>
+                                                <td>
+                                                    <div class="custom-control custom-switch switch-info">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            name="phone" value="{{ $doctorModify->phone }}"
+                                                            id="phone">
+                                                        <label class="custom-control-label" for="phone"></label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endif
+
+                                            @if($doctorModify->email)
+                                            <tr>
+                                                <th>Email</th>
+                                                <td>{{ $doctor->email }}</td>
+                                                <td>{{ $doctorModify->email }}</td>
+                                                <td>
+                                                    <div class="custom-control custom-switch switch-info">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            name="email" value="{{ $doctorModify->email }}"
+                                                            id="email">
+                                                        <label class="custom-control-label" for="email"></label>
                                                     </div>
                                                 </td>
                                             </tr>

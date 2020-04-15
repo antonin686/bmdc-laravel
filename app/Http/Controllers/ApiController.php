@@ -4,19 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+
 use App\Http\Resources\CitizenResource;
 use App\Http\Resources\DoctorResource;
 use App\Http\Resources\MedicineResource;
 use App\Http\Resources\PrescriptionResource;
+use App\Http\Resources\GenericResource;
 
 use App\Citizen;
 use App\Complain;
 use App\Doctor;
+use App\Login;
 use App\Prescription;
 use App\User;
-use App\DoctorUpdate;
-use App\Login;
-
+use App\Medicine;
+use App\Generic;
 
 use Auth;
 use DateTime;
@@ -61,7 +63,7 @@ class ApiController extends Controller
         $citizen->age = $from->diff($to)->y;
         $prescription->date = $prescription->created_at->format('d/m/y');
 
-        $doctor = Doctor::select('id' ,'full_name', 'email', 'phone', 'work_place', 'speciality', 'basic_degree', 'advance_degree', 'registration_id')
+        $doctor = Doctor::select('id', 'full_name', 'email', 'phone', 'work_place', 'speciality', 'basic_degree', 'advance_degree', 'registration_id')
             ->where('registration_id', '=', $prescription->doctor_id)->first();
 
         $datas = [
@@ -115,13 +117,11 @@ class ApiController extends Controller
             ->orWhere('birthCer_id', '=', $request->citizen_id)
             ->first();
 
-        if(!$doctor)
-        {
+        if (!$doctor) {
             return "Doctor Does Not Exists";
         }
 
-        if(!$citizen)
-        {
+        if (!$citizen) {
             return "Citizen Does Not Exists";
         }
 
@@ -232,7 +232,7 @@ class ApiController extends Controller
 
         return new DoctorResource($doctor);
     }
-     
+
     public function complainStore(Request $request)
     {
         $com = new Complain;
@@ -247,21 +247,36 @@ class ApiController extends Controller
 
     public function insert(Request $request)
     {
-       $insert =  Login::create([
-            'username'=>$request->name,
-            'serialnumber'=>$request->number,
-            'gender'=>$request->gender,
-            'email'=>$request->email,
-            'fingerprint_id'=>$request->fingerid,
-            'fingerprint_select'=>0
+        $insert = Login::create([
+            'username' => $request->name,
+            'serialnumber' => $request->number,
+            'gender' => $request->gender,
+            'email' => $request->email,
+            'fingerprint_id' => $request->fingerid,
+            'fingerprint_select' => 0,
         ]);
 
-        if($insert){
+        if ($insert) {
             return "success";
         }
     }
 
+    public function medicineListByDate($date)
+    {
+        $medicines = Medicine::whereDate('created_at', '>', $date)
+            ->orWhereDate('updated_at', '>', $date)
+            ->get();
 
-    
+        return new MedicineResource($medicines);
+    }
+
+    public function genericListByDate($date)
+    {
+        $generics = Generic::whereDate('created_at', '>', $date)
+            ->orWhereDate('updated_at', '>', $date)
+            ->get();
+
+        return new GenericResource($generics);
+    }
 
 }

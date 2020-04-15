@@ -18,14 +18,15 @@ Route::group(['middleware' => 'ApiAuth'], function () {
     Route::get('/prescription/{id}', 'ApiController@prescriptionInfo');
     Route::get('/prescription/list/citizen/{id}', 'ApiController@prescriptionListByCitizen');
     Route::get('/citizen/show/{id}', 'ApiController@getCitzenInfo');
+    Route::get('/medicine/list/{date}', 'ApiController@medicineListByDate');
+    Route::get('/generic/list/{date}', 'ApiController@genericListByDate');
     Route::post('/prescription/store', 'ApiController@prescriptionStore');
     Route::post('/doctor/modify/store', 'DoctorModifyController@store');
     Route::post('/doctor/password/change', 'DoctorController@passwordChange');
 });
 
-//Doctor Modify
-
 Route::post('/complain/store', 'ApiController@complainStore');
+
 //Can access without token
 Route::get('/medicine/list', 'ApiController@medicineList');
 Route::get('/medicine/{id}', 'ApiController@medicineInfo');
@@ -33,5 +34,4 @@ Route::get('/medicine/{id}', 'ApiController@medicineInfo');
 Route::post('/doctor/validate', 'ApiController@validateDoctor');
 
 //shihab
-
 Route::post("/signup", "ApiController@insert");

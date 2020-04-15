@@ -4,6 +4,13 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use App\Medicine;
+use App\AuthorizeDoctor;
+use App\AuthorizeMedicine;
+use App\Observers\MedicineObserver;
+use App\Observers\AuthorizeDoctorObserver;
+use App\Observers\AuthorizeMedicineObserver;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Medicine::observe(MedicineObserver::class);
+        AuthorizeDoctor::observe(AuthorizeDoctorObserver::class);
+        AuthorizeMedicine::observe(AuthorizeMedicineObserver::class);
     }
 }
