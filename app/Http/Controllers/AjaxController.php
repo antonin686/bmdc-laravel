@@ -96,4 +96,27 @@ class AjaxController extends Controller
             return $id;
         }
     }
+
+    public function getInternationalNews(Request $request)
+    {    
+        if($request->ajax() or true)
+        {
+            $client = new \GuzzleHttp\Client();
+
+            $url = "http://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=4a65c4784df9452cadac8fade0dfe74a";
+            
+            $req = $client->get($url);
+            dd($req);
+            $json = json_decode($req);
+         
+            $status = $json['status'];
+            $articles = $json['articles'];
+            if($status == "ok")
+            {
+                return $articles;
+            }
+            
+            return "null";
+        }
+    }
 }

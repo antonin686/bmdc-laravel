@@ -45,6 +45,7 @@ Route::get('/ajax/getDoctorDetails/{id}', 'AjaxController@getDoctorDetails')->na
 Route::get('/ajax/generateDoctorID', 'AjaxController@generateDoctorID')->name('ajax.generateDoctorID');
 Route::get('/ajax/getMedList/{query}', 'AjaxController@getMedList');
 Route::get('/ajax/getGenericList/{query}', 'AjaxController@getGenericList');
+Route::get('/ajax/getInternationalNews', 'AjaxController@getInternationalNews')->name('ajax.getInternationalNews');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'checkIfAdmin'], function() {
 
