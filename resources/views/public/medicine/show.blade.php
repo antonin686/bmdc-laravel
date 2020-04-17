@@ -26,8 +26,8 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card"> 
-                    <img src="{{$medicine->img_path}}" height="200px" class="card-img-top" alt="medicine image">
+                <div class="card">
+                    <img src="{{$medicine->img_path}}" class="card-img-top" alt="medicine image">
                 </div>
             </div>
 

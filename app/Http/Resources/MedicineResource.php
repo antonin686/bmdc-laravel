@@ -14,6 +14,15 @@ class MedicineResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'data' => $this->medicines,
+        ];
+    }
+
+    public function with($request)
+    {
+        return [
+            'latest_date' => $this->latest_date,
+        ];
     }
 }

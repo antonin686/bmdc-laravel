@@ -31,12 +31,44 @@ class ApiController extends Controller
 {
     public function medicineList()
     {
-        $meds = DB::table('medicines')
+        $medicines = DB::table('medicines')
             ->join('generics', 'medicines.generic_id', '=', 'generics.id')
             ->select('medicines.*', 'generics.generic_name')
+            ->where('medicines.status', 0)
             ->get();
 
-        return new MedicineResource($meds);
+        $latestDates = [
+            Medicine::max('created_at'),
+            Medicine::max('updated_at'),
+        ];
+
+        $latest = max(array_map('strtotime', $latestDates));
+
+        $datas = (object) [
+            'medicines' => $medicines,
+            'latest_date' => date('Y-m-j H:i:s', $latest),
+        ];
+
+        return new MedicineResource($datas);
+    }
+
+    public function genericList()
+    {
+        $generics = Generic::all();
+
+        $latestDates = [
+            Generic::max('created_at'),
+            Generic::max('updated_at'),
+        ];
+
+        $latest = max(array_map('strtotime', $latestDates));
+
+        $datas = (object) [
+            'generics' => $generics,
+            'latest_date' => date('Y-m-j H:i:s', $latest),
+        ];
+
+        return new GenericResource($datas);
     }
 
     public function medicineInfo($id)
@@ -267,7 +299,19 @@ class ApiController extends Controller
             ->orWhereDate('updated_at', '>', $date)
             ->get();
 
-        return new MedicineResource($medicines);
+        $latestDates = [
+            Medicine::max('created_at'),
+            Medicine::max('updated_at'),
+        ];
+
+        $latest = max(array_map('strtotime', $latestDates));
+
+        $datas = (object) [
+            'medicines' => $medicines,
+            'latest_date' => date('Y-m-j H:i:s', $latest),
+        ];
+
+        return new MedicineResource($datas);
     }
 
     public function genericListByDate($date)
@@ -276,7 +320,19 @@ class ApiController extends Controller
             ->orWhereDate('updated_at', '>', $date)
             ->get();
 
-        return new GenericResource($generics);
+        $latestDates = [
+            Generic::max('created_at'),
+            Generic::max('updated_at'),
+        ];
+
+        $latest = max(array_map('strtotime', $latestDates));
+
+        $datas = (object) [
+            'generics' => $generics,
+            'latest_date' => date('Y-m-j H:i:s', $latest),
+        ];
+
+        return new GenericResource($datas);
     }
 
 }

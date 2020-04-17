@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+
 use Carbon\Carbon;
 
 use App\Doctor;
@@ -102,15 +104,17 @@ class AjaxController extends Controller
         if($request->ajax() or true)
         {
             $client = new \GuzzleHttp\Client();
+            ini_set("allow_url_fopen", 1);
 
             $url = "http://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=4a65c4784df9452cadac8fade0dfe74a";
             
-            $req = $client->get($url);
-            dd($req);
-            $json = json_decode($req);
-         
-            $status = $json['status'];
-            $articles = $json['articles'];
+            $res = $client->request('GET',$url);
+                        
+            $json = json_decode($res->getBody());
+
+            $status = $json->status;
+            $articles = $json->articles;
+            
             if($status == "ok")
             {
                 return $articles;
