@@ -15,7 +15,7 @@ class MedicineResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'data' => $this->medicines,
+            'data' => $this->data,
         ];
     }
 

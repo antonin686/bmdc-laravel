@@ -114,7 +114,7 @@ class AjaxController extends Controller
 
             $status = $json->status;
             $articles = $json->articles;
-            
+       
             if($status == "ok")
             {
                 return $articles;

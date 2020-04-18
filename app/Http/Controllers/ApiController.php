@@ -2,29 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-
-use App\Http\Resources\CitizenResource;
-use App\Http\Resources\DoctorResource;
-use App\Http\Resources\MedicineResource;
-use App\Http\Resources\PrescriptionResource;
-use App\Http\Resources\GenericResource;
-
 use App\Citizen;
 use App\Complain;
 use App\Doctor;
+use App\Generic;
+use App\Http\Resources\CitizenResource;
+use App\Http\Resources\DoctorResource;
+use App\Http\Resources\GenericResource;
+use App\Http\Resources\MedicineResource;
+use App\Http\Resources\PrescriptionResource;
 use App\Login;
+use App\MedAlert;
+use App\Medicine;
 use App\Prescription;
 use App\User;
-use App\Medicine;
-use App\Generic;
-
 use Auth;
 use DateTime;
 use DB;
 use Exception;
 use Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use URL;
 
 class ApiController extends Controller
@@ -45,7 +43,7 @@ class ApiController extends Controller
         $latest = max(array_map('strtotime', $latestDates));
 
         $datas = (object) [
-            'medicines' => $medicines,
+            'data' => $medicines,
             'latest_date' => date('Y-m-j H:i:s', $latest),
         ];
 
@@ -307,7 +305,7 @@ class ApiController extends Controller
         $latest = max(array_map('strtotime', $latestDates));
 
         $datas = (object) [
-            'medicines' => $medicines,
+            'data' => $medicines,
             'latest_date' => date('Y-m-j H:i:s', $latest),
         ];
 
@@ -333,6 +331,47 @@ class ApiController extends Controller
         ];
 
         return new GenericResource($datas);
+    }
+
+    public function medAlertList()
+    {
+        $medAlerts = MedAlert::all();
+
+        $latestDates = [
+            MedAlert::max('created_at'),
+            MedAlert::max('updated_at'),
+        ];
+
+        $latest = max(array_map('strtotime', $latestDates));
+
+        $datas = (object) [
+            'data' => $medAlerts,
+            'latest_date' => date('Y-m-j H:i:s', $latest),
+        ];
+
+        return new MedicineResource($datas);
+    }
+
+    public function medAlertListByDate($date)
+    {
+
+        $medAlerts = MedAlert::whereDate('created_at', '>', $date)
+            ->orWhereDate('updated_at', '>', $date)
+            ->get();
+
+        $latestDates = [
+            MedAlert::max('created_at'),
+            MedAlert::max('updated_at'),
+        ];
+
+        $latest = max(array_map('strtotime', $latestDates));
+
+        $datas = (object) [
+            'data' => $medAlerts,
+            'latest_date' => date('Y-m-j H:i:s', $latest),
+        ];
+
+        return new MedicineResource($datas);
     }
 
 }

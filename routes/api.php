@@ -22,10 +22,15 @@ Route::group(['middleware' => 'ApiAuth'], function () {
     Route::get('/medicine/list/{date}', 'ApiController@medicineListByDate');
     Route::get('/generic/list/{date}', 'ApiController@genericListByDate');
     
+    Route::get('/medicine/alert/list', 'ApiController@medAlertList');
+    Route::get('/medicine/alert/list/{date}', 'ApiController@medAlertListByDate');
+    
     Route::post('/prescription/store', 'ApiController@prescriptionStore');
     Route::post('/doctor/modify/store', 'DoctorModifyController@store');
     Route::post('/doctor/password/change', 'DoctorController@passwordChange');
 });
+
+
 
 Route::post('/complain/store', 'ApiController@complainStore');
 

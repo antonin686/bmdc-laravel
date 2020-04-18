@@ -17,8 +17,8 @@ class CreateMedAlertsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('med_id');
             $table->string('alert_gender')->nullable();
-            $table->float('age_range(low)')->nullable();
-            $table->float('age_range(high)')->nullable();
+            $table->float('age_range_low')->nullable();
+            $table->float('age_range_high')->nullable();
             $table->float('alert_range')->nullable();
             $table->string('med_unit')->nullable();
             $table->float('max_duration')->nullable();

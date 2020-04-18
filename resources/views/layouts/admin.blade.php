@@ -14,7 +14,7 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css')}}">
-    
+
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js">
     </script>
@@ -38,12 +38,19 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('doctor.index')}}">Doctor</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('medicine.index')}}">Medicine</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Medicine
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('medicine.index')}}">Medicine</a>
+                        <a class="dropdown-item" href="{{ route('medAlert.index')}}">Medicine Alert</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ route('generic.index')}}">Generic</a>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('generic.index')}}">Generic</a>
-                </li>
+                
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('prescription.index')}}">Prescription</a>
                 </li>
@@ -56,10 +63,13 @@
                         Authorization
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('application.doctorApplicationIndex') }}">Doctor Applications</a>
-                        <a class="dropdown-item" href="{{ route('doctorModify.index') }}">Doctor Profile Change Requests</a>
+                        <a class="dropdown-item" href="{{ route('application.doctorApplicationIndex') }}">Doctor
+                            Applications</a>
+                        <a class="dropdown-item" href="{{ route('doctorModify.index') }}">Doctor Profile Change
+                            Requests</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ route('application.medicineApplicationIndex') }}">Medicine Applications</a>
+                        <a class="dropdown-item" href="{{ route('application.medicineApplicationIndex') }}">Medicine
+                            Applications</a>
                     </div>
                 </li>
             </ul>

@@ -65,6 +65,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkIfAdmin'], function() {
 
     Route::get('/doctor/message', 'DoctorController@message')->name('doctor.message');
     Route::get('/medicine/message', 'MedicineController@message')->name('medicine.message');
+    Route::get('/medicine/alert/message', 'MedAlertController@message')->name('medAlert.message');
 
     //Route::get('/doctor/modify/index', 'DoctorModifyController@index');
 
@@ -78,6 +79,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkIfAdmin'], function() {
         'generic' => 'GenericController',
         'prescription' => 'PrescriptionController',
         'complain' => 'ComplainController',
+        'medAlert' => 'MedAlertController', 
     ]);
 });
 
