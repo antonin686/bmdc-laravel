@@ -3,6 +3,11 @@
 namespace App\Observers;
 
 use App\AuthorizeMedicine;
+use App\Notification;
+use App\Log;
+use Auth;
+use Request;
+
 
 class AuthorizeMedicineObserver
 {
@@ -14,7 +19,21 @@ class AuthorizeMedicineObserver
      */
     public function created(AuthorizeMedicine $authorizeMedicine)
     {
-        //
+        Log::create([
+            'user_id' => 'N/A',
+            'instance_id' => $authorizeMedicine->id,
+            'table' => 'authorize_medicines',
+            'action' => 'created',
+            'ip_address' => Request::ip(),
+        ]);
+
+        //$user = Auth::user()->username;
+        
+        Notification::createForAdmin([
+            'data' => "New Medicine Application Applied by $authorizeMedicine->applicant_name",
+            'route_name' => 'application.medicineApplicationShow',
+            'route_id' => $authorizeMedicine->id
+        ]);
     }
 
     /**

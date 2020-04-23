@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Medicine;
+use App\Notification;
 use App\Log;
 use Auth;
 use Request;
@@ -24,6 +25,14 @@ class MedicineObserver
             'action' => 'created',
             'ip_address' => Request::ip(),
         ]);
+
+        $user = Auth::user()->username;
+        
+        Notification::createForAdmin([
+            'data' => "Medicine $medicine->brand_name has been created by $user",
+            'route_name' => 'medicine.show',
+            'route_id' => $medicine->id
+        ]);
     }
 
     /**
@@ -40,6 +49,14 @@ class MedicineObserver
             'table' => 'medicines',
             'action' => 'updated',
             'ip_address' => Request::ip(),
+        ]);
+        
+        $user = Auth::user()->username;
+        
+        Notification::createForAdmin([
+            'data' => "Medicine $medicine->brand_name has been updated by $user",
+            'route_name' => 'medicine.show',
+            'route_id' => $medicine->id
         ]);
     }
 

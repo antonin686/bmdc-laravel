@@ -152,3 +152,59 @@ a {
     background-color: #27496d !important;
     color:white;
 }
+
+.calendar-text { 
+    margin-top: -.3em;
+    margin-left: .5em; 
+}
+
+.nofification-text{
+    color: #fff;
+}
+
+.nofification-body{
+    margin-left: -.3em;
+}
+
+.nofification-text:hover{
+    color: grey;
+}
+
+.card-overlay{
+    position: absolute;
+    z-index: 9;
+}
+
+.my-dropdown-toggle::after {
+    content: none;
+}
+
+.notification-ul {
+    /* background-color: #eee; */
+    padding-left: 0;
+    cursor: pointer;
+    list-style: none;
+}
+.notification-li {
+    padding: 12px;
+    /* background-color: white; */
+}
+.notification-li > a {
+    color: #27496d;
+    display: block;
+}
+
+.notification-li:hover {
+    background-color: #27496d;
+}
+
+.notification-li:hover > a {
+    color: white !important;
+}
+
+.scrollable{
+    overflow-y: auto;
+    max-height: 300px;
+  }
+
+  p { display: inline-block; }

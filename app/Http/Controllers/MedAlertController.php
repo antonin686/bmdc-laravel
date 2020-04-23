@@ -40,7 +40,8 @@ class MedAlertController extends Controller
      */
     public function create()
     {
-        return view('medicine.alert.create');
+        $medicines = Medicine::all();
+        return view('medicine.alert.create')->with('medicines', $medicines);
     }
 
     /**

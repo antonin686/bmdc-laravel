@@ -101,9 +101,9 @@ class ApplicationController extends Controller
     public function doctorApplicationStore(Request $request)
     {
         $this->validate($request,[
-            'nid' => 'required|unique:doctors',
+            'nid' => 'required|unique:doctors|unique:authorize_doctors',
             'full_name' => 'required',
-            'phone' => 'required|numeric|min:11|unique:doctors',
+            'phone' => 'required|numeric|min:11|unique:doctors|unique:authorize_doctors',
             'email' => 'required|email',
             'basic_degree' => 'required',
             'advance_degree' => 'required',

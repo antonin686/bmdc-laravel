@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 
 use App\Doctor;
+use App\User;
 use App\Medicine;
 use App\Generic;
 use App\Prescription;
@@ -74,10 +75,18 @@ class AjaxController extends Controller
         }
     }
 
+    public function getNotification(Request $request)
+    {    
+        if($request->ajax() or true)
+        {
+            return User::getNotification();
+        }
+    }
+
     public function generateDoctorID(Request $request)
     {    
 
-        if($request->ajax() or true)
+        if($request->ajax())
         {
             $maxID = Doctor::max('id');
 

@@ -14,6 +14,7 @@ use App\Http\Resources\PrescriptionResource;
 use App\Login;
 use App\MedAlert;
 use App\Medicine;
+use App\Notification;
 use App\Prescription;
 use App\User;
 use Auth;
@@ -27,47 +28,6 @@ use URL;
 
 class ApiController extends Controller
 {
-    public function medicineList()
-    {
-        $medicines = DB::table('medicines')
-            ->join('generics', 'medicines.generic_id', '=', 'generics.id')
-            ->select('medicines.*', 'generics.generic_name')
-            ->where('medicines.status', 0)
-            ->get();
-
-        $latestDates = [
-            Medicine::max('created_at'),
-            Medicine::max('updated_at'),
-        ];
-
-        $latest = max(array_map('strtotime', $latestDates));
-
-        $datas = (object) [
-            'data' => $medicines,
-            'latest_date' => date('Y-m-j H:i:s', $latest),
-        ];
-
-        return new MedicineResource($datas);
-    }
-
-    public function genericList()
-    {
-        $generics = Generic::all();
-
-        $latestDates = [
-            Generic::max('created_at'),
-            Generic::max('updated_at'),
-        ];
-
-        $latest = max(array_map('strtotime', $latestDates));
-
-        $datas = (object) [
-            'generics' => $generics,
-            'latest_date' => date('Y-m-j H:i:s', $latest),
-        ];
-
-        return new GenericResource($datas);
-    }
 
     public function medicineInfo($id)
     {
@@ -142,6 +102,7 @@ class ApiController extends Controller
 
     public function prescriptionStore(Request $request)
     {
+        //dd($request);
         $doctor = Doctor::where('registration_id', '=', $request->doctor_id)->first();
         $citizen = Citizen::where('nid', '=', $request->citizen_id)
             ->orWhere('birthCer_id', '=', $request->citizen_id)
@@ -156,8 +117,8 @@ class ApiController extends Controller
         }
 
         if ($request->doctor_id && $request->citizen_id && $request->hospital_name && $request->med_list && $request->disease && $request->date) {
-            $presc = new Prescription;
 
+            $presc = new Prescription;
             $presc->doctor_id = $request->doctor_id;
             $presc->citizen_id = $request->citizen_id;
             $presc->hospital_name = $request->hospital_name;
@@ -172,9 +133,31 @@ class ApiController extends Controller
 
             try {
                 $presc->save();
+
             } catch (Exception $e) {
 
                 return "fill all the nessesary values";
+            }
+
+            $bannedMeds = Medicine::where('status', 1)->get();
+
+            if ($bannedMeds) {
+                $notifyData = 'Banned Medicine(s): ';
+                $flag = false;
+                foreach ($bannedMeds as $med) {
+                    if (strpos(strtolower($request->mainbody), strtolower($med->brand_name)) !== false) {
+                        $flag = true;
+                        $notifyData .= $med->brand_name . " ";
+                    }
+                }
+
+                if ($flag) {
+                    Notification::createForAdmin([
+                        'data' => $notifyData . "added to prescription",
+                        'route_name' => 'prescription.show',
+                        'route_id' => $presc->id,
+                    ]);
+                }
             }
 
             return "success";
@@ -291,10 +274,12 @@ class ApiController extends Controller
         }
     }
 
-    public function medicineListByDate($date)
+    public function medicineList()
     {
-        $medicines = Medicine::whereDate('created_at', '>', $date)
-            ->orWhereDate('updated_at', '>', $date)
+        $medicines = DB::table('medicines')
+            ->join('generics', 'medicines.generic_id', '=', 'generics.id')
+            ->select('medicines.*', 'generics.generic_name')
+            ->where('medicines.status', 0)
             ->get();
 
         $latestDates = [
@@ -312,11 +297,9 @@ class ApiController extends Controller
         return new MedicineResource($datas);
     }
 
-    public function genericListByDate($date)
+    public function genericList()
     {
-        $generics = Generic::whereDate('created_at', '>', $date)
-            ->orWhereDate('updated_at', '>', $date)
-            ->get();
+        $generics = Generic::all();
 
         $latestDates = [
             Generic::max('created_at'),
@@ -352,11 +335,58 @@ class ApiController extends Controller
         return new MedicineResource($datas);
     }
 
+    public function medicineListByDate($date)
+    {
+        $date = date('Y-m-j H:i:s', strtotime($date));
+
+        $medicines = Medicine::where('updated_at', '>', $date)
+            ->orwhere('updated_at', '>', $date)
+            ->get();
+
+        $latestDates = [
+            Medicine::max('created_at'),
+            Medicine::max('updated_at'),
+        ];
+
+        $latest = max(array_map('strtotime', $latestDates));
+
+        $datas = (object) [
+            'data' => $medicines,
+            'latest_date' => date('Y-m-j H:i:s', $latest),
+        ];
+
+        return new MedicineResource($datas);
+    }
+
+    public function genericListByDate($date)
+    {
+        $date = date('Y-m-j H:i:s', strtotime($date));
+
+        $generics = Generic::where('created_at', '>', $date)
+            ->orWhere('updated_at', '>', $date)
+            ->get();
+
+        $latestDates = [
+            Generic::max('created_at'),
+            Generic::max('updated_at'),
+        ];
+
+        $latest = max(array_map('strtotime', $latestDates));
+
+        $datas = (object) [
+            'generics' => $generics,
+            'latest_date' => date('Y-m-j H:i:s', $latest),
+        ];
+
+        return new GenericResource($datas);
+    }
+
     public function medAlertListByDate($date)
     {
+        $date = date('Y-m-j H:i:s', strtotime($date));
 
-        $medAlerts = MedAlert::whereDate('created_at', '>', $date)
-            ->orWhereDate('updated_at', '>', $date)
+        $medAlerts = MedAlert::where('created_at', '>', $date)
+            ->orWhere('updated_at', '>', $date)
             ->get();
 
         $latestDates = [

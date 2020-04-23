@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Auth;
+use App\Notification;
 
 class User extends Authenticatable
 {
@@ -36,4 +38,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function getNotification()
+    {
+        $notifications = Notification::where('user_id', Auth::user()->id)
+                                        ->orderByDesc('created_at')
+                                        ->get();
+
+        return $notifications;
+    }
 }

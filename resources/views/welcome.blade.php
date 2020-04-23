@@ -32,7 +32,7 @@ $(document).ready(function() {
                         html += `<div class="col-md-4 mt-3">`
                         html += `<div class="card card-hover shadow h-100">`
                         html +=
-                            `<img class="card-img-top" src="${news.urlToImage}" alt="image">`
+                            `<img class="card-img-top" height="250px" src="${news.urlToImage}" alt="image">`
                         html += `<div class="card-body d-flex flex-column">`
 
                         html += `<div class="h5 card-title">${news.title}</div>`

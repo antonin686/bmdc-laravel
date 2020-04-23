@@ -5,6 +5,7 @@
 @section('content')
 <div class="container mt-3">
     <div class="card">
+    <div class="card-header card-header-bg">Doctor Authorization Application</div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6 mx-auto">

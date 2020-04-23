@@ -62,6 +62,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkIfAdmin'], function() {
     Route::get('/medicine/remove/undo/{id}', 'MedicineController@removeUndo')->name('medicine.removed.undo');
 
     Route::get('/ajax/adminHomeCounts', 'AjaxController@adminHomeCounts')->name('ajax.adminHomeCounts');
+    Route::get('/ajax/getNotification', 'AjaxController@getNotification')->name('ajax.getNotification');
+    Route::get('/notification/read/{id}/{route_name}/{route_id}', 'NotificationController@read')->name('notification.read');
 
     Route::get('/doctor/message', 'DoctorController@message')->name('doctor.message');
     Route::get('/medicine/message', 'MedicineController@message')->name('medicine.message');
