@@ -29,7 +29,7 @@
                             <div class="col">
 
                                 <input type="text" class="form-control" id="med_id" name="med_id"
-                                    value="{{ old('med_id') }}">
+                                    value="{{ old('med_id') }}" readonly>
                             </div>
 
                             <div class="col">
