@@ -7,6 +7,8 @@ use App\Generic;
 use App\Medicine;
 use DB;
 use Illuminate\Http\Request;
+use App\Mail\MedicineApproved;
+use Illuminate\Support\Facades\Mail;
 
 class MedicineController extends Controller
 {
@@ -99,6 +101,13 @@ class MedicineController extends Controller
         if ($authMed) {
             $authMed->status = 1;
             $authMed->save();
+
+            $data = (object) [
+                'name' => $authMed->applicant_name,
+                'url' => url('publicMedicine/'.$med->id)
+            ];
+
+            Mail::to($authMed->applicant_email)->send(new MedicineApproved($data));
         }
 
         $message = "Medicine Created Successfully";

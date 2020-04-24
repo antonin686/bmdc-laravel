@@ -11,6 +11,7 @@
 |
 */
 use App\Mail\WelcomeMail;
+use App\Mail\MedicineApproved;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 Auth::routes();
@@ -21,14 +22,15 @@ Route::get('/', function () {
 })->name('front');
 
 Route::get('/email', function () {
-    $data = [
+    $data = (object) [
         'username' => 'Saska',
         'password' => '990331',
         'name' => 'Antonin',
-        'url' => URL::to('/')."/download/doctor/software"
+        'url' => url('publicMedicine/'.'1')
     ];
     
-    Mail::to('email@email.com')->send(new WelcomeMail($data));
+    //return new MedicineApproved($data);
+    Mail::to('email@email.com')->send(new MedicineApproved($data));
 });
 
 Route::get('/admins', function () {

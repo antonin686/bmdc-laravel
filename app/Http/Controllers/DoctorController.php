@@ -108,10 +108,11 @@ class DoctorController extends Controller
         $message = "Doctor Successfully Added !!!";
 
         //Mail to Doctor
-        $mailData = [
+        $mailData = (object) [
             'username' => $user->username,
             'password' => $request->password,
             'name' => $doc->full_name,
+            'url' => url('/download/doctor/software')
         ];
         
         Mail::to($doc->email)->send(new WelcomeMail($mailData));
