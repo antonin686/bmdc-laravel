@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
 use App\Login;
 
 class PublicController extends Controller
@@ -19,4 +17,15 @@ class PublicController extends Controller
         $data = Login::all();
         return view('public.signup')->with("data", $data);
     }
+    public function downloadSoftware()
+    {
+        $file = public_path(). "/downloads/softwares/software.zip";
+
+        $headers = [
+            'Content-Type' => 'application/zip',
+        ];
+
+        return response()->download($file, 'filename.zip', $headers);
+    }
+
 }

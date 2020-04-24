@@ -29,6 +29,10 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
+
+        
+
+
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
@@ -37,12 +41,14 @@
                         Applications
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item text-secondary text-uppercase" href="{{ route('application.doctorApplicationCreate') }}">Doctor Application</a>
-                        <a class="dropdown-item text-secondary text-uppercase" href="{{ route('application.medicine.create') }}">Medicine Application</a>
+                        <a class="dropdown-item text-secondary text-uppercase"
+                            href="{{ route('application.doctorApplicationCreate') }}">Doctor Application</a>
+                        <a class="dropdown-item text-secondary text-uppercase"
+                            href="{{ route('application.medicine.create') }}">Medicine Application</a>
                     </div>
                 </li>
 
-            
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('publicMedicine.index')}}">Medicine</a>
                 </li>
@@ -51,11 +57,14 @@
                     <a class="nav-link" href="{{ route('public.findRegisteredDoctor')}}">Find Registered Doctor</a>
                 </li>
 
-                <li class="nav-item">
+                
+
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                </li>
+                </li> -->
 
             </ul>
+            <a class="btn  btn-primary" href="{{ route('download.doctorSoftware')}}"><i class="fas fa-download"></i> Doctor Software</a>
         </div>
     </nav>
     <div class="container mt-4">

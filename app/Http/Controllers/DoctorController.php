@@ -9,6 +9,9 @@ use App\User;
 use Hash;
 use Auth;
 use Illuminate\Http\Request;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class DoctorController extends Controller
 {
@@ -103,6 +106,15 @@ class DoctorController extends Controller
         }
 
         $message = "Doctor Successfully Added !!!";
+
+        //Mail to Doctor
+        $mailData = [
+            'username' => $user->username,
+            'password' => $request->password,
+            'name' => $doc->full_name,
+        ];
+        
+        Mail::to($doc->email)->send(new WelcomeMail($mailData));
 
         return redirect()->route('doctor.message')->with('message', $message)->with('id', $doc->id);
 

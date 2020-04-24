@@ -10,7 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 Auth::routes();
 
 
@@ -18,14 +20,22 @@ Route::get('/', function () {
     return view('welcome');
 })->name('front');
 
-Route::get('/message', function () {
-    $message = "Doctor Successfully Added !!!";
-    $id = 1;
+Route::get('/email', function () {
+    $data = [
+        'username' => 'Saska',
+        'password' => '990331',
+        'name' => 'Antonin',
+        'url' => URL::to('/')."/download/doctor/software"
+    ];
+    
+    Mail::to('email@email.com')->send(new WelcomeMail($data));
+});
 
-    return redirect()->route('doctor.message')->with('message', $message)
-                                                ->with('id', $id);
+Route::get('/admins', function () {
+    return redirect('/login');
+});
 
-})->name('message');
+Route::get('/download/doctor/software', 'PublicController@downloadSoftware')->name('download.doctorSoftware');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
