@@ -19,6 +19,8 @@ use App\Prescription;
 use App\User;
 use Auth;
 use DateTime;
+use App\AuthorizeDoctor;
+use App\AuthorizeMedicine;
 use DB;
 use Exception;
 use Hash;
@@ -235,6 +237,24 @@ class ApiController extends Controller
         $doctor->img_path = URL::to('/') . $doctor->img_path;
 
         return new DoctorResource($doctor);
+    }
+
+    public function doctorEmailVerify($id)
+    {
+        $message = "";
+
+        $app = AuthorizeDoctor::find($id);
+
+        if($app->status == 0)
+        {
+            $app->status = 1;
+            $app->save();
+            $message = "Your Email Has Been Verified";
+        }else if($app->status == 1){
+            $message = "Your Email Is Already Verified";
+        }
+        
+        return view('application.message')->with('mess', $message);
     }
 
     public function doctorIndex()

@@ -14,6 +14,12 @@
                 </div>
                 @endif
 
+                @if($mess ?? '' != null)
+                <div class="alert alert-success">
+                    {{ $mess ?? '' }}
+                </div>
+                @endif
+
                 <div>
                     <a href="/">Go to Home Page</a>
                 </div>

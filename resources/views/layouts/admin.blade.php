@@ -81,7 +81,7 @@
                             <button id="notification-btn" class="btn mx-auto text-light" type="button">
                                 <span class="nofification-text fa-stack fa-1x">
                                     <i class="fa fa-bell fa-stack-2x"></i>
-                                    <i class="text-danger calendar-text fa fa-circle fa-stack-1x"></i>
+                                    <i id="notification-circle" class="calendar-text fa fa-circle fa-stack-1x"></i>
                                 </span>Notifications
                             </button>
                         </li>
@@ -137,22 +137,37 @@
                 success: function(result) {
                     console.log(result);
 
-                    var html = "<div class='h3 ml-3 mt-3 card-title text-secondary'>Notifications</div>";
-                    html += "<ul class='scrollable notification-ul'>"
-                    
+                    var html =
+                        "<div class='h3 ml-3 mt-3 card-title text-secondary'>Notifications</div>";
+                    html += "<ul class='scrollable notification-ul'>";
+                    var flag = false;
                     result.forEach(notification => {
-                        
-                        html += `<li class='notification-li'> <a href="/admin/notification/read/${notification.id}/${notification.route_name}/${notification.route_id}">`              
-                        if(notification.read_at == null) html+= `<div class="text-success">${notification.data}</div>`
-                        else html += `<div class="text-secondary">${notification.data}</div>`
-                        html += `<small class="text-primary">${notification.created_at}</small>`
-                        html+= `</a> </li>`
-    
+
+                        html +=
+                            `<li class='notification-li'> <a href="/admin/notification/read/${notification.id}/${notification.route_name}/${notification.route_id}">`;
+                        if (notification.read_at == null) {
+                            html += `<div class="text-success">${notification.data}</div>`;
+                            flag = true;
+                        } else {
+                            html +=
+                                `<div class="text-secondary">${notification.data}</div>`;
+                        }
+                        html +=
+                            `<small class="text-primary">${notification.created_at}</small>`;
+                        html += `</a> </li>`;
+
                     });
 
                     html += "</ul>";
 
                     $('#notification-card').html(html);
+
+                    if(flag)
+                    {
+                        $('#notification-circle').show();
+                    }else{
+                        $('#notification-circle').hide();
+                    }
                 }
             });
         }

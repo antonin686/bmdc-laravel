@@ -30,7 +30,7 @@ Route::group(['middleware' => 'ApiAuth'], function () {
     Route::post('/doctor/password/change', 'DoctorController@passwordChange');
 });
 
-
+Route::get('/doctor/email/verify/{id}', 'ApiController@doctorEmailVerify');
 
 Route::post('/complain/store', 'ApiController@complainStore');
 

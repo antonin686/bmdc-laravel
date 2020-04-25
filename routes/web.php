@@ -12,6 +12,8 @@
 */
 use App\Mail\WelcomeMail;
 use App\Mail\MedicineApproved;
+use App\Mail\AuthorizationRejectedMail;
+use App\Mail\EmailVerificationMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 Auth::routes();
@@ -26,11 +28,12 @@ Route::get('/email', function () {
         'username' => 'Saska',
         'password' => '990331',
         'name' => 'Antonin',
-        'url' => url('publicMedicine/'.'1')
+        'url' => url('/api/doctor/email/verify/'.'10'),
+        'message' => 'Your Application For Doctor Authorization Has Been Rejected'
     ];
     
-    //return new MedicineApproved($data);
-    Mail::to('email@email.com')->send(new MedicineApproved($data));
+    return new EmailVerificationMail($data);
+    //Mail::to('email@email.com')->send(new EmailVerificationMail($data));
 });
 
 Route::get('/admins', function () {
@@ -42,8 +45,10 @@ Route::get('/download/doctor/software', 'PublicController@downloadSoftware')->na
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/application/doctor/create', 'ApplicationController@doctorApplicationCreate')->name('application.doctorApplicationCreate');
+Route::get('/application/doctor/destroy/{id}', 'ApplicationController@doctorApplicationDestroy')->name('application.doctorApplicationDestroy');
 Route::post('/application/doctor/create', 'ApplicationController@doctorApplicationStore');
 Route::get('/application/medicine/create', 'ApplicationController@medicineApplicationCreate')->name('application.medicine.create');
+Route::get('/application/medicine/destroy/{id}', 'ApplicationController@medicineApplicationDestroy')->name('application.medicine.destroy');
 Route::post('/application/medicine/store', 'ApplicationController@medicineApplicationStore')->name('application.medicine.store');
 Route::get('/application/message', 'ApplicationController@message')->name('application.message');
 Route::get('/findRegisteredDoctor', 'PublicController@findRegisteredDoctor')->name('public.findRegisteredDoctor');

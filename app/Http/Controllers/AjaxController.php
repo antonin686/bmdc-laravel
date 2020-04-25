@@ -27,7 +27,7 @@ class AjaxController extends Controller
             $medicine = Medicine::all();
             $generic = Generic::all();
             $prescription = Prescription::whereDate('created_at', Carbon::today())->get();
-            $doctorApp = AuthorizeDoctor::where('status', '=', '0')->get();
+            $doctorApp = AuthorizeDoctor::where('status', '=', '1')->get();
             $medicineApp = AuthorizeMedicine::where('status', '=', '0')->get();
 
             $result = [

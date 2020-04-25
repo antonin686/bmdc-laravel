@@ -87,7 +87,7 @@
                         <input type="hidden" name="img_path" value="{{$app->img_path}}">
 
                         <button type="submit" class="btn btn-primary">Approve</button>
-                        <button type="button" class="btn btn-danger">Reject</button>
+                        <a href="{{ route('application.doctorApplicationDestroy', $app->id) }}" class="btn btn-danger">Reject</a>
                     </form>
 
                 </div>

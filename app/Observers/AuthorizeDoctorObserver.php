@@ -29,11 +29,7 @@ class AuthorizeDoctorObserver
 
         //$user = Auth::user()->username;
         
-        Notification::createForAdmin([
-            'data' => "New Doctor Application Applied by Doctor $authorizeDoctor->full_name",
-            'route_name' => 'application.doctorApplicationShow',
-            'route_id' => $authorizeDoctor->id
-        ]);
+        
     }
 
     /**
@@ -44,21 +40,25 @@ class AuthorizeDoctorObserver
      */
     public function updated(AuthorizeDoctor $authorizeDoctor)
     {
-        Log::create([
-            'user_id' => Auth::user()->id,
-            'instance_id' => $authorizeDoctor->id,
-            'table' => 'authorize_doctors',
-            'action' => 'Approved',
-            'ip_address' => Request::ip(),
-        ]);
+        // Log::create([
+        //     'user_id' => Auth::user()->id,
+        //     'instance_id' => $authorizeDoctor->id,
+        //     'table' => 'authorize_doctors',
+        //     'action' => 'Approved',
+        //     'ip_address' => Request::ip(),
+        // ]);
 
         // $user = Auth::user()->username;
         
-        // Notification::createForAdmin([
-        //     'data' => "Doctor Application Apporved by $user",
-        //     'route_name' => 'application.doctorApplicationShow',
-        //     'route_id' => $authorizeDoctor->id
-        // ]);
+        if($authorizeDoctor->status == 1)
+        {
+            Notification::createForAdmin([
+                'data' => "New Doctor Application Applied by Doctor $authorizeDoctor->full_name",
+                'route_name' => 'application.doctorApplicationShow',
+                'route_id' => $authorizeDoctor->id
+            ]);
+        }
+
     }
 
     /**

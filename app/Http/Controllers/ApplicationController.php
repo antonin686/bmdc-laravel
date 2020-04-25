@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mail\AuthorizationRejectedMail;
+use App\Mail\EmailVerificationMail;
+use Illuminate\Support\Facades\Mail;
 
 use App\AuthorizeDoctor;
 use App\AuthorizeMedicine;
@@ -31,6 +34,22 @@ class ApplicationController extends Controller
     {
         $generics = Generic::all();
         return view('application.medicine.create')->with('generics', $generics);
+    }
+
+    public function medicineApplicationDestroy($id)
+    {
+        $med = AuthorizeMedicine::find($id);
+        $med->status = 2;
+        $med->save();
+
+        $data = (object) [
+            'name' => $med->applicant_name,
+            'message' => 'Your Application For Medicine Authorization Has Been Rejected'
+        ];
+        
+        Mail::to($med->applicant_email)->send(new AuthorizationRejectedMail($data));
+
+        return redirect()->route('application.medicineApplicationIndex');
     }
 
     public function medicineApplicationStore(Request $request)
@@ -89,13 +108,29 @@ class ApplicationController extends Controller
 
     public function doctorApplicationIndex()
     {
-        $apps = AuthorizeDoctor::where('status', '=', '0')->get();
+        $apps = AuthorizeDoctor::where('status', '=', '1')->get();
         return view('application.doctor.index')->with('apps', $apps);
     }
 
     public function doctorApplicationCreate()
     {
         return view('application.doctor.create');
+    }
+
+    public function doctorApplicationDestroy($id)
+    {
+        $app = AuthorizeDoctor::find($id);
+        $app->status = 3;
+        $app->save();
+
+        $data = (object) [
+            'name' => $app->full_name,
+            'message' => 'Your Application For Doctor Authorization Has Been Rejected'
+        ];
+        
+        Mail::to($app->email)->send(new AuthorizationRejectedMail($data));
+
+        return redirect()->route('application.doctorApplicationIndex');
     }
 
     public function doctorApplicationStore(Request $request)
@@ -135,7 +170,14 @@ class ApplicationController extends Controller
         $doc->img_path = $path;
         $doc->save();
 
-        $message = "Doctor Application Successfully Send !!!";
+        $message = "Please Verify Your Email Address !";
+
+        $data = (object) [        
+            'name' => $doc->full_name,
+            'url' => url('/api/doctor/email/verify/'.$doc->id),
+        ];
+        
+        Mail::to($doc->email)->send(new EmailVerificationMail($data));
 
         return redirect()->route('application.message')->with('message', $message);
     }

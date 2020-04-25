@@ -27,10 +27,7 @@
 
                     <form method="POST" enctype="multipart/form-data">
                         @csrf
-
-                        <div class="row">
-
-                        </div>
+                   
                         <div class="form-group">
                             <label for="nid">NID</label>
                             <input type="text" class="form-control" name="nid" value="{{ old('nid') }}">

@@ -28,11 +28,17 @@ $(document).ready(function() {
 
                 result.forEach(news => {
 
-                    if (news.urlToImage != null && news.description != null) {
+                    if (news.description != null) {
                         html += `<div class="col-md-4 mt-3">`
                         html += `<div class="card card-hover shadow h-100">`
-                        html +=
+                        if(news.urlToImage != null){
+                            html +=
                             `<img class="card-img-top" height="250px" src="${news.urlToImage}" alt="image">`
+                        }else{
+                            html +=
+                            `<img class="card-img-top" height="250px" src="{{ asset('news.jpg')}}" alt="image">`
+                        }
+                        
                         html += `<div class="card-body d-flex flex-column">`
 
                         html += `<div class="h5 card-title">${news.title}</div>`
