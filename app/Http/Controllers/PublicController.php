@@ -17,15 +17,10 @@ class PublicController extends Controller
         $data = Login::all();
         return view('public.signup')->with("data", $data);
     }
+
     public function downloadSoftware()
     {
-        $file = public_path(). "/downloads/softwares/software.zip";
-
-        $headers = [
-            'Content-Type' => 'application/zip',
-        ];
-
-        return response()->download($file, 'filename.zip', $headers);
+        return response()->download(storage_path("app/public/software.zip"));
     }
 
 }

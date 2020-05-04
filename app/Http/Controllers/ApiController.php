@@ -11,6 +11,7 @@ use App\Http\Resources\DoctorResource;
 use App\Http\Resources\GenericResource;
 use App\Http\Resources\MedicineResource;
 use App\Http\Resources\PrescriptionResource;
+use App\Http\Resources\InfoResource;
 use App\Login;
 use App\MedAlert;
 use App\Medicine;
@@ -35,10 +36,9 @@ class ApiController extends Controller
     {
         $meds = DB::table('medicines')
             ->join('generics', 'medicines.generic_id', '=', 'generics.id')
-            ->select('medicines.*', 'generics.generic_name')
             ->where('medicines.id', '=', $id)->get();
-
-        return new MedicineResource($meds);
+    
+        return new InfoResource($meds);
     }
 
     public function prescriptionInfo($id)

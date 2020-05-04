@@ -101,7 +101,7 @@ class DoctorController extends Controller
 
         $authDoc = AuthorizeDoctor::where('nid', '=', $request->nid)->first();
         if ($authDoc) {
-            $authDoc->status = 1;
+            $authDoc->status = 2;
             $authDoc->save();
         }
 
