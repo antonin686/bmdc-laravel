@@ -3,7 +3,10 @@
 @section('title', 'Home')
 
 @section('content')
+
 <div class="row mt-3 pt-3">
+
+    @if(auth()->user()->role == 1 or auth()->user()->role == 3)
     <div class="col-md-4 mt-4">
         <div class="card card-hover shadow">
             <div class="card-body bg-primary-light">
@@ -13,7 +16,8 @@
                     </div>
                     <div class="row">
                         <div class="mr-auto ml-2 display-5 text-light">
-                            DOCTORS
+                            <strong>Doctors</strong>
+                            <div class="text-white-50">Total</div>
                         </div>
                         <div class="ml-auto text-light mr-2 h5">
                             <strong> <span id="card-doctor" class="badge badge-primary badge-pill">0</span></strong>
@@ -27,16 +31,19 @@
     <div class="col-md-4 mt-4">
         <div class="card card-hover shadow">
             <div class="card-body bg-danger-light">
-                <a href=" {{ route('medicine.index') }}">
+                <a href="{{ route('application.doctorApplicationIndex') }}">
                     <div class="h1">
-                        <i class="fas fa-pills text-light"></i>
+                        <i class="fas fa-portrait text-light"></i>
                     </div>
                     <div class="row">
                         <div class="mr-auto ml-2 display-5 text-light">
-                            Medicines
+                            <strong>Doctor Applications</strong>
+                            <div class="text-white-50">New</div>
                         </div>
-                        <div class="ml-auto text-light mr-2 h5">
-                            <strong> <span id="card-medicine" class="badge badge-danger badge-pill">0</span></strong>
+                        <div class="ml-auto text-light mt-2 mr-2 h5">
+                            <strong> <span id="card-doctor-application"
+                                    class="badge badge-danger text-light badge-pill">0</span>
+                            </strong>
                         </div>
                     </div>
                 </a>
@@ -47,37 +54,42 @@
     <div class="col-md-4 mt-4">
         <div class="card card-hover shadow">
             <div class="card-body bg-success-light">
-                <a href=" {{ route('generic.index') }} ">
+                <a href="{{ route('doctorModify.index') }}">
                     <div class="h1">
-                        <i class="fas fa-flask text-light"></i>
+                        <i class="fas fa-portrait text-light"></i>
                     </div>
                     <div class="row">
                         <div class="mr-auto ml-2 display-5 text-light">
-                            Generics
+                            <strong>Doctor Profile Changes</strong>
+                            <div class="text-white-50">New</div>
                         </div>
-                        <div class="ml-auto text-light mr-2 h5">
-                            <strong> <span id="card-generic" class="badge badge-success badge-pill">0</span></strong>
+                        <div class="ml-auto text-light mt-2 mr-2 h5">
+                            <strong> <span id="card-doctor-modification"
+                                    class="badge badge-success text-light badge-pill">0</span>
+                            </strong>
                         </div>
                     </div>
                 </a>
             </div>
         </div>
     </div>
+    @endif
 
+    @if(auth()->user()->role == 1 or auth()->user()->role == 4)
     <div class="col-md-4 mt-4">
         <div class="card card-hover shadow">
             <div class="card-body bg-info-light">
-                <a href="{{ route('prescription.index') }}">
+                <a href=" {{ route('medicine.index') }}">
                     <div class="h1">
-                        <i class="fas fa-file-prescription text-light"></i>
+                        <i class="fas fa-pills text-light"></i>
                     </div>
                     <div class="row">
                         <div class="mr-auto ml-2 display-5 text-light">
-                            Prescriptions <br>
-                            <div class="text-white-50">Today</div>
+                            <strong>Medicines</strong>
+                            <div class="text-white-50">Total</div>
                         </div>
-                        <div class="ml-auto text-light mt-2 mr-2 h5">
-                            <strong> <span id="card-presc" class="badge badge-info badge-pill">0</span></strong>
+                        <div class="ml-auto text-light mr-2 h5">
+                            <strong> <span id="card-medicine" class="badge badge-info badge-pill">0</span></strong>
                         </div>
                     </div>
                 </a>
@@ -88,18 +100,18 @@
     <div class="col-md-4 mt-4">
         <div class="card card-hover shadow">
             <div class="card-body bg-warning-light">
-                <a href="{{ route('application.doctorApplicationIndex') }}">
+                <a href=" {{ route('generic.index') }} ">
                     <div class="h1">
-                        <i class="fas fa-portrait text-light"></i>
+                        <i class="fas fa-flask text-light"></i>
                     </div>
                     <div class="row">
                         <div class="mr-auto ml-2 display-5 text-light">
-                            Doctor <br> Applications
+                            <strong>Generics</strong>
+                            <div class="text-white-50">Total</div>
                         </div>
-                        <div class="ml-auto text-light mt-2 mr-2 h5">
-                            <strong> <span id="card-doctor-application"
-                                    class="badge badge-warning text-light badge-pill">0</span>
-                            </strong>
+                        <div class="ml-auto text-light mr-2 h5">
+                            <strong> <span id="card-generic"
+                                    class="badge badge-warning text-light badge-pill">0</span></strong>
                         </div>
                     </div>
                 </a>
@@ -116,7 +128,8 @@
                     </div>
                     <div class="row">
                         <div class="mr-auto ml-2 display-5 text-light">
-                            Medicine <br> Applications
+                            <strong>Medicine Applications</strong>
+                            <div class="text-white-50">New</div>
                         </div>
                         <div class="ml-auto text-light mt-2 mr-2 h5">
                             <strong> <span id="card-medicine-application"
@@ -128,6 +141,8 @@
             </div>
         </div>
     </div>
+    @endif
+
 </div>
 
 <script>
@@ -142,10 +157,10 @@ $(document).ready(function() {
             dataType: "json",
             success: function(result) {
                 $('#card-doctor').html(result[0]);
-                $('#card-medicine').html(result[1]);
-                $('#card-generic').html(result[2]);
-                $('#card-presc').html(result[3]);
-                $('#card-doctor-application').html(result[4]);
+                $('#card-doctor-application').html(result[1]);
+                $('#card-doctor-modification').html(result[2]);
+                $('#card-medicine').html(result[3]);
+                $('#card-generic').html(result[4]);
                 $('#card-medicine-application').html(result[5]);
             }
         });

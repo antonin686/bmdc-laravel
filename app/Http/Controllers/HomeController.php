@@ -24,7 +24,7 @@ class HomeController extends Controller
     public function index()
     {
         $role = auth()->user()->role;
-        if($role == 1)
+        if($role == 1 or $role == 3 or $role == 4)
         {
             return view('admin.home');
         }

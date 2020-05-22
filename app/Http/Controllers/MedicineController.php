@@ -110,7 +110,7 @@ class MedicineController extends Controller
             Mail::to($authMed->applicant_email)->send(new MedicineApproved($data));
         }
 
-        $message = "Medicine Created Successfully";
+        $message = "Medicine Successfully Added";
 
         return redirect()->route('medicine.message')->with('message', $message)->with('id', $med->id);
     }

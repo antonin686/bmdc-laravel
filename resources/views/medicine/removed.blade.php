@@ -17,7 +17,7 @@
                         {{ session()->get('message') }}
                     </div>
                     @endif
-                    <table class="table table-striped table-responsive-sm table-hover" id="table">
+                    <table class="table table-striped table-responsive-sm table-hover table-hover" id="table">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -25,7 +25,9 @@
                                 <th scope="col">Generic</th>
                                 <th scope="col">Dosage</th>
                                 <th scope="col">Status</th>
+                                @if(auth()->user()->role == 1 or auth()->user()->role == 4)
                                 <th scope="col">Actions</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -36,11 +38,13 @@
                                 <td>{{ $med->generic_name }}</td>
                                 <td>{{ $med->dosage_form }}</td>
                                 <td>{{ $med->status }}</td>
+                                @if(auth()->user()->role == 1 or auth()->user()->role == 4)
                                 <td>
                                     <a title="Undo" class="btn btn-info mr-1"
                                         href="{{ route('medicine.removed.undo', $med->id)}}">
                                         <i class="fas fa-undo"></i> </a>
                                 </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

@@ -34,6 +34,7 @@
 
 
         <div class="collapse navbar-collapse" id="navbarNav">
+        <a class="btn  btn-primary" href="{{ route('download.doctorSoftware')}}"><i class="fas fa-download"></i> Doctor Software</a>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -41,9 +42,9 @@
                         Applications
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item text-secondary text-uppercase"
+                        <a class="dropdown-item  text-uppercase"
                             href="{{ route('application.doctorApplicationCreate') }}">Doctor Application</a>
-                        <a class="dropdown-item text-secondary text-uppercase"
+                        <a class="dropdown-item text-uppercase"
                             href="{{ route('application.medicine.create') }}">Medicine Application</a>
                     </div>
                 </li>
@@ -59,12 +60,12 @@
 
                 
 
-                <!-- <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                </li> -->
+                </li>
 
             </ul>
-            <a class="btn  btn-primary" href="{{ route('download.doctorSoftware')}}"><i class="fas fa-download"></i> Doctor Software</a>
+           
         </div>
     </nav>
     <div class="container mt-4">

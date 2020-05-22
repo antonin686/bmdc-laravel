@@ -14,9 +14,15 @@ use Illuminate\Http\Request;
  */
 Route::group(['middleware' => 'ApiAuth'], function () {
     Route::get('/doctor/show/{id}', 'ApiController@doctorShow');
+    Route::get('/doctor/list', 'ApiController@doctorList'); //changed to list from index
     Route::get('/doctor/index', 'ApiController@doctorIndex');
+    Route::post('/doctor/modify/store', 'DoctorModifyController@store');
+    Route::post('/doctor/password/change', 'DoctorController@passwordChange');
+
     Route::get('/prescription/{id}', 'ApiController@prescriptionInfo');
     Route::get('/prescription/list/citizen/{id}', 'ApiController@prescriptionListByCitizen');
+    Route::post('/prescription/store', 'ApiController@prescriptionStore');
+
     Route::get('/citizen/show/{id}', 'ApiController@getCitzenInfo');
 
     Route::get('/medicine/list/{date}', 'ApiController@medicineListByDate');
@@ -24,10 +30,8 @@ Route::group(['middleware' => 'ApiAuth'], function () {
     
     Route::get('/medicine/alert/list', 'ApiController@medAlertList');
     Route::get('/medicine/alert/list/{date}', 'ApiController@medAlertListByDate');
-    
-    Route::post('/prescription/store', 'ApiController@prescriptionStore');
-    Route::post('/doctor/modify/store', 'DoctorModifyController@store');
-    Route::post('/doctor/password/change', 'DoctorController@passwordChange');
+
+    Route::get('/complain/list/{id}', 'ApiController@complainList');
 });
 
 Route::get('/doctor/email/verify/{id}', 'ApiController@doctorEmailVerify');

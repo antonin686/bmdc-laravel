@@ -58,6 +58,8 @@
                                 value="{{ $app->basic_degree }}">
                         </div>
 
+                        <input type="hidden" name="docAppID" value="{{ $app->id }}">
+
                         <div class="form-group">
                             <label for="advance_degree">Advance Degree</label>
                             <input type="text" class="form-control" name="advance_degree"

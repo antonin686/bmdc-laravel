@@ -37,9 +37,11 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="{{ route('home')}}">Home<span class="sr-only">(current)</span></a>
                         </li>
+                        @if(auth()->user()->role == 1 or auth()->user()->role == 3)
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('doctor.index')}}">Doctor</a>
                         </li>
+                        @endif
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -47,35 +49,48 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('medicine.index')}}">Medicine</a>
+                                @if(auth()->user()->role == 1 or auth()->user()->role == 4)
                                 <a class="dropdown-item" href="{{ route('medAlert.index')}}">Medicine Alert</a>
+                                @endif
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('generic.index')}}">Generic</a>
                             </div>
                         </li>
-
+                        @if(auth()->user()->role == 1 or auth()->user()->role == 3)
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('prescription.index')}}">Prescription</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('complain.index')}}">Complain</a>
                         </li>
+                        @endif
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Authorization
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @if(auth()->user()->role == 1 or auth()->user()->role == 3)
                                 <a class="dropdown-item" href="{{ route('application.doctorApplicationIndex') }}">Doctor
                                     Applications</a>
                                 <a class="dropdown-item" href="{{ route('doctorModify.index') }}">Doctor Profile Change
                                     Requests</a>
+                                @endif
+                                @if(auth()->user()->role == 1)
                                 <div class="dropdown-divider"></div>
+                                @endif
+                                @if(auth()->user()->role == 1 or auth()->user()->role == 4)
                                 <a class="dropdown-item"
                                     href="{{ route('application.medicineApplicationIndex') }}">Medicine
                                     Applications</a>
+                                @endif
                             </div>
                         </li>
+
                     </ul>
+                    @if(auth()->user()->role == 1)
+                    <a class="btn btn-primary ml-3" href="{{ route('admin.index')}}">Admin</a>
+                    @endif
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
                             <button id="notification-btn" class="btn mx-auto text-light" type="button">
@@ -162,10 +177,9 @@
 
                     $('#notification-card').html(html);
 
-                    if(flag)
-                    {
+                    if (flag) {
                         $('#notification-circle').show();
-                    }else{
+                    } else {
                         $('#notification-circle').hide();
                     }
                 }

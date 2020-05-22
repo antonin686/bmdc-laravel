@@ -41,6 +41,12 @@ class ApiController extends Controller
         return new InfoResource($meds);
     }
 
+    public function complainList($id)
+    {
+        $complain = Complain::where('citizen_id', $id)->get();
+        return new InfoResource($complain);
+    }
+
     public function prescriptionInfo($id)
     {
         $prescription = Prescription::find($id);
@@ -257,7 +263,7 @@ class ApiController extends Controller
         return view('application.message')->with('mess', $message);
     }
 
-    public function doctorIndex()
+    public function doctorList()
     {
         $doctor = Doctor::all();
 

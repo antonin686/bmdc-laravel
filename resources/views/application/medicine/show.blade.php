@@ -99,13 +99,9 @@
 
                         </div>
                     </div>
-
                 </div>
 
-
-
-
-                <button type="submit" class="btn btn-primary">Approve Medicine</button>
+                <button type="submit" class="btn btn-primary">Approve</button>
                 <a class="btn btn-danger" href="{{ route('application.medicine.destroy', $medicine->id) }}">Reject</a>
 
             </form>

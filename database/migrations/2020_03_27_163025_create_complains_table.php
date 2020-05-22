@@ -17,7 +17,9 @@ class CreateComplainsTable extends Migration
             $table->bigIncrements('id');
             $table->text('complain_type');
             $table->text('complain_body');
-            $table->text('citizen_id');
+            $table->string('citizen_id');
+            $table->text('remark')->nullable();
+            $table->string('status')->default(0);
             $table->timestamps();
         });
     }

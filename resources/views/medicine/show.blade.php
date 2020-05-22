@@ -54,7 +54,7 @@
                         </div>
                     </div>
                 </div>
-
+                @if(auth()->user()->role == 1 or auth()->user()->role == 4)
                 <div class="row">
                     <a href="{{ route('medicine.edit', $medicine->id )}}" class="btn btn-info m-3">Edit Medicine</a>
                     <form class="m-3" action="{{ route('medicine.destroy', $medicine->id )}}" method="post">
@@ -63,6 +63,7 @@
                         <button class="btn btn-danger" type="submit">Remove Medicine</button>
                     </form>
                 </div>
+                @endif
 
             </div>
         </div>
