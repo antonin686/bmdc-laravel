@@ -16,7 +16,7 @@ class ComplainController extends Controller
         $complains = DB::table('complains')->leftjoin('citizens', function($join){
             $join->on('complains.citizen_id','=','citizens.nid');
             $join->orOn('complains.citizen_id','=','citizens.birthCer_id');
-        })->get();
+        })->select('complains.*', 'citizens.first_name', 'citizens.last_name')->get();
 
         foreach($complains as $complain)
         {
@@ -32,16 +32,27 @@ class ComplainController extends Controller
     {
         $complain = Complain::find($id);
         $complain->remark = $request->remark;
-        $complain->status = 1;
+
+        if($request->submit_type == 'accept')
+        {
+            $complain->status = 1;  
+            $message = 'Complain Has Been Accepted';
+         
+        }else if($request->submit_type == 'reject')
+        {
+            $complain->status = 2;
+            $message = 'Complain Has Been Rejected';
+        }
+
         $complain->save();
-        $message = 'Complain has been accepted';
+        
 
         return redirect()->route('complain.index')->with('message', $message);
     }
 
     public function destroy(Request $request, $id)
     {
-        dd($request);
+        
         $complain = Complain::find($id);
         $complain->status = 2;
         $complain->save();
@@ -53,7 +64,7 @@ class ComplainController extends Controller
 
     public function show(Complain $complain)
     {
-
+    
         $citizen = Citizen::where('nid', '=', $complain->citizen_id)
             ->orWhere('birthCer_id', '=', $complain->citizen_id)
             ->first();

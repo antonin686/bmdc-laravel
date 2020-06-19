@@ -67,12 +67,10 @@
                         @if($complain->status == 0)
                         <div class="col-md-12">
                             <div class="row">
-                                <button type="button" class="btn btn-success" data-toggle="modal"
-                                    data-target="#accept-modal">
+                                <button type="button" id="btn-accept" class="btn btn-success">
                                     Accept
                                 </button>
-                                <button type="button" class="btn btn-danger ml-3" data-toggle="modal"
-                                    data-target="#reject-modal">
+                                <button type="button" id="btn-reject" class="btn btn-danger ml-3">
                                     Reject
                                 </button>
                             </div>
@@ -89,10 +87,19 @@
 
                         </div>
                         @elseif($complain->status == 2)
-                        <div class="col-md-12">
+                        <div class="col-md-12 ml-0 pl-0">
+                            <br>
                             <p class="alert alert-danger mb-3">
                                 Complain has been rejected
                             </p>
+                            <br>
+                            <strong>Reason:</strong>
+                            <hr>
+                            <p>
+                                {!! nl2br($complain->remark) !!}
+                            </p>
+                          
+                            
                         </div>
                         @endif
 
@@ -104,7 +111,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="accept-modal" tabindex="-1" role="dialog" aria-labelledby="accept-modalLabel"
+<div class="modal fade" id="form-modal" tabindex="-1" role="dialog" aria-labelledby="accept-modalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -119,46 +126,43 @@
                 @method('PATCH')
                 <div class="modal-body">
 
+                    <input type="hidden" id="submit-type" name="submit_type">
                     <div class="form-group">
                         <textarea class="form-control" name="remark" id="remark" rows="3" required></textarea>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Done</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="btn-done" type="submit" class="btn btn-success">Done</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="reject-modal" tabindex="-1" role="dialog" aria-labelledby="accept-modalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="accept-modalLabel">Reason</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="POST" action="{{ route('complain.destroy', $complain->id) }}">
-                @csrf
-                @method('put')
-                <div class="modal-body">
 
-                    <div class="form-group">
-                        <textarea class="form-control" name="remark" id="remark" rows="3" required></textarea>
-                    </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger">Done</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<script>
+$(document).ready(function() {
+
+    $('#btn-accept').click(() => {
+        $('#submit-type').val('accept');
+        $('#btn-accept').removeClass('btn-danger');
+        $('#btn-accept').addClass('btn-success');
+        $('#accept-modalLabel').html('Remark');
+        $('#form-modal').modal('show');
+    });
+
+    $('#btn-reject').click(() => {
+        $('#submit-type').val('reject');
+        $('#btn-done').removeClass('btn-success');
+        $('#btn-done').addClass('btn-danger');
+        $('#accept-modalLabel').html('Reason');
+        $('#form-modal').modal('show');
+    });
+
+});
+</script>
 
 @endsection
