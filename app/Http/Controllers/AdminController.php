@@ -129,4 +129,32 @@ class AdminController extends Controller
     {
         //
     }
+
+    public function changePassword()
+    {
+        return view('admin.changePassword');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $this->validate($request, [
+            'password' => 'required|confirmed|min:6',
+            'currPass' => 'required',
+        ]);
+
+        $originalPass = auth()->user()->password;
+
+        if(Hash::check($request->currPass, $originalPass))
+        {
+            $user = User::find(auth()->user()->id);
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            return redirect()->route('admin.updatePassword')->with('message', 'Your password has been changed');
+        }else{
+            return redirect()->route('admin.updatePassword')->with('redMessage', 'Current password does not match');
+        }
+    }
+    
+
 }

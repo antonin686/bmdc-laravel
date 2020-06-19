@@ -69,6 +69,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkIfAdmin'], function () 
     Route::get('/doctor/message', 'DoctorController@message')->name('doctor.message');
     Route::get('/medicine/message', 'MedicineController@message')->name('medicine.message');
     Route::get('/medicine/alert/message', 'MedAlertController@message')->name('medAlert.message');
+    Route::get('/profile/changePassword', 'AdminController@changePassword')->name('admin.changePassword');
+    Route::post('/profile/changePassword', 'AdminController@updatePassword')->name('admin.updatePassword');
 
     Route::resource('medicine', 'MedicineController')->only([
         'index', 'show'

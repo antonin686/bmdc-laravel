@@ -91,7 +91,7 @@
                     @if(auth()->user()->role == 1)
                     <a class="btn btn-primary ml-3" href="{{ route('admin.index')}}">Admin</a>
                     @endif
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-auto mt-2">
                         <li class="nav-item">
                             <button id="notification-btn" class="btn mx-auto text-light" type="button">
                                 <span class="nofification-text fa-stack fa-1x">
@@ -101,12 +101,19 @@
                             </button>
                         </li>
 
-                        <li class="nav-item active mb-2">
-                            <form action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <button class="btn text-white" type="submit">Logout,
-                                    {{ auth()->user()->username }}</button>
-                            </form>
+                        <li class="nav-item dropdown ml-auto mt-2">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Welcome, {{ auth()->user()->username }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <form class="dropdown-item" action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button class="btn" type="submit">Logout</button>
+                                </form>
+                                <a class="dropdown-item"
+                                    href="{{ route('admin.changePassword')}}">Change Password</a>
+                            </div>
                         </li>
                     </ul>
                 </div>
