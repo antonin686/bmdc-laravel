@@ -20,6 +20,11 @@
                                     </tr>
 
                                     <tr>
+                                        <th>Username</th>
+                                        <td>{{ $admin->username }}</td>
+                                    </tr>
+
+                                    <tr>
                                         <th>Name</th>
                                         <td>{{ $admin->name }}</td>
                                     </tr>

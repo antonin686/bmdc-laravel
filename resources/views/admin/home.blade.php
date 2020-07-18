@@ -143,6 +143,11 @@
     </div>
     @endif
 
+    <div class="col-md-8 mt-4">
+        <div class="ct-chart ct-perfect-fourth"></div>
+    </div>
+
+
 </div>
 
 <script>
@@ -165,6 +170,23 @@ $(document).ready(function() {
             }
         });
     }
+
+    new Chartist.Bar('.ct-chart', {
+        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        series: [
+            [5, 4, 3, 7, 5, 10, 3]
+        ]
+    }, {
+        seriesBarDistance: 10,
+        
+        horizontalBars: true,
+        axisY: {
+            offset: 70
+        }
+    });
+
+
+
 });
 </script>
 @endsection
